@@ -76,19 +76,46 @@ For each pending task:
    - Run commands (if "Run test to verify it fails")
    - Implement (if "Write minimal implementation")
    - Verify (if "Run test to verify it passes")
+   - **Code review** (if "Code review" step exists):
+     a. Run `/code-flow code-review` (implicit mode - reviews current task files only)
+     b. **Check for P0/Compilation/Runtime/Security issues:**
+        - If found → **Fix immediately** before continuing to next task
+        - Read the file, apply fix, verify compilation passes
+        - Re-run code-review to confirm fix
+     c. **Log P1-P3 issues:** Continue to next task, accumulate for final summary
    - Commit (if "Commit")
 4. **Verify completion:** Check step success
 5. **Output proof:** `[filepath]#LstartLine-endLine`
 6. **Mark complete** and continue
 
-### Step 5: Handle Errors
+### Step 5: Handle Code Review Issues
 
-If step fails:
+After all tasks complete:
+
+1. **Check for accumulated P1-P3 issues** from code reviews
+2. **Generate summary:**
+   ```markdown
+   ## Code Review Summary
+
+   | Task | P1 ([MUST_FIX]) | P2 | P3 |
+   |------|-----------------|----|----|
+   | Task 1 | 0 | 1 | 2 |
+   | Task 2 | 1 | 0 | 0 |
+   ```
+3. **Ask user:** "Found N non-critical issues during code review. Review documents saved to `flow-docs/*/01_dev/code_review/`. Generate fix plans for [MUST_FIX] issues? (Y/N)"
+
+If user confirms Y:
+- Prompt: "Which review documents to generate fix plans for? (space-separated list or 'all')"
+- Run `/code-flow writing-plans --fix-for <review-doc>` for each
+
+### Step 6: Handle Errors
+
+If a non-code-review step fails:
 - Log error clearly
 - Explain what went wrong
 - Ask: "Continue to next task? (Y/N) or fix current task? (F)"
 
-### Step 6: Final Summary
+### Step 7: Final Summary
 
 After completion:
 - Display summary:

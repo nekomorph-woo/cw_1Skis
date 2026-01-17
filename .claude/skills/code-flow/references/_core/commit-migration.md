@@ -150,7 +150,12 @@ Based on summary intent (reference only). Adapt to target project's technology s
 Run: `mvn compile -DskipTests` / `npm run build` / `go build` / `pytest` (depending on technology)
 Expected: BUILD SUCCESS / build success / tests pass
 
-**Step 6: Commit**
+**Step 6: Code review**
+
+Run: `/code-flow code-review`
+Expected: Review document generated with no compilation errors
+
+**Step 7: Commit**
 
 Use `/code-flow git-commit` sub-skill to commit changes.
 

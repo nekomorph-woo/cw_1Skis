@@ -2,7 +2,7 @@
 
 ---
 name: code-flow
-description: This skill should be used when the user asks to "explore code", "understand existing code", "design a feature", "write an implementation plan", "execute a plan", "save context", "generate commit message", "analyze git commits", "create migration plan", or mentions development workflow tasks like code-insight, feature-design, writing-plans, executing-plans, save-context, git-commit, commit-change-log, commit-migration. Provides comprehensive development workflow guidance for feature development, code migration, and session management.
+description: This skill should be used when the user asks to "explore code", "understand existing code", "design a feature", "write an implementation plan", "execute a plan", "review code", "save context", "generate commit message", "analyze git commits", "create migration plan", or mentions development workflow tasks like code-insight, feature-design, writing-plans, executing-plans, code-review, save-context, git-commit, commit-change-log, commit-migration. Provides comprehensive development workflow guidance for feature development, code migration, session management, and code review.
 version: 1.0.0
 ---
 
@@ -82,26 +82,32 @@ See `references/README.md` for detailed technology-specific guidance.
 ### New Feature Development
 
 ```
-User Request → feature-design → writing-plans → executing-plans → git-commit
+User Request → feature-design → writing-plans → executing-plans (with code-review) → git-commit
               (optional: code-insight first if exploring existing code)
 ```
 
 ### Existing Code Modification
 
 ```
-User Request → code-insight → feature-design → writing-plans → executing-plans → git-commit
+User Request → code-insight → feature-design → writing-plans → executing-plans (with code-review) → git-commit
 ```
 
 ### Code Migration
 
 ```
-Git Commits → commit-change-log → commit-migration → executing-plans → git-commit
+Git Commits → commit-change-log → commit-migration → executing-plans (with code-review) → git-commit
 ```
 
 ### Quick Bug Fix
 
 ```
-Bug Report → writing-plans → executing-plans → git-commit
+Bug Report → writing-plans → executing-plans (with code-review) → git-commit
+```
+
+### Code Review Workflow
+
+```
+Code Review → code-review → (if issues) → writing-plans --fix-for → executing-plans → git-commit
 ```
 
 ## Sub-Skills
@@ -208,6 +214,19 @@ Bug Report → writing-plans → executing-plans → git-commit
 
 **Detailed guidance:** `references/git-commit.md`
 
+### code-review
+
+**Purpose:** Review code changes for compilation issues, bugs, security vulnerabilities, and best practice violations.
+
+**When to use:**
+- After completing implementation tasks (implicit)
+- Need comprehensive code review before committing (explicit)
+- Generating fix plans for identified issues
+
+**Output:** `01_dev/code_review/<seq>-review-YYYY-MM-DD.md`
+
+**Detailed guidance:** `references/code-review.md`
+
 ## Decision Guide
 
 ### code-insight vs feature-design
@@ -239,14 +258,16 @@ Use planning for:
 
 All documents use consistent structure under `flow-docs/<feature-name>/`:
 
-| Type | Path |
-|------|------|
-| Code Insight | `01_dev/code_insight/insight-YYYY-MM-DD-<name>.md` |
-| Feature Design | `01_dev/feature_design/ft-YYYY-MM-DD-<name>.md` |
-| Implementation Plan | `01_dev/impl_plan/plan-YYYY-MM-DD-<name>.md` |
-| Context | `02_memories/context_<feature-name>/active_context.md` |
-| Commit Log | `03_migration/commit-log-summary/<seq>_<short-hash>_commit_log.md` |
-| Migration Plan | `03_migration/migration-plan/<seq>_<short-hash>_migration_plan.md` |
+| Type | Path                                                              |
+|------|-------------------------------------------------------------------|
+| Code Insight | `01_dev/code_insight/<seq>-insight-YYYY-MM-DD.md`                |
+| Feature Design | `01_dev/feature_design/<seq>-ft-YYYY-MM-DD.md`                    |
+| Implementation Plan | `01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md`                       |
+| Fix Plan | `01_dev/impl_plan/fix-<seq>-plan-YYYY-MM-DD.md`                   |
+| Code Review | `01_dev/code_review/<seq>-review-YYYY-MM-DD.md`                   |
+| Context | `02_memories/context_<feature-name>/active_context.md`            |
+| Commit Log | `03_migration/commit-log-summary/<seq>-<short-hash>-commit-log.md` |
+| Migration Plan | `03_migration/migration-plan/<seq>-<short-hash>-migration-plan.md` |
 
 ## Quick Reference
 
@@ -256,6 +277,7 @@ All documents use consistent structure under `flow-docs/<feature-name>/`:
 | Design new feature | feature-design | `01_dev/feature_design/` |
 | Plan implementation | writing-plans | `01_dev/impl_plan/` |
 | Execute plan | executing-plans | (code) |
+| Review code | code-review | `01_dev/code_review/` |
 | Save session | save-context | `02_memories/context_*/` |
 | Analyze commits | commit-change-log | `03_migration/commit-log-summary/` |
 | Create migration plan | commit-migration | `03_migration/migration-plan/` |
@@ -270,6 +292,7 @@ All documents use consistent structure under `flow-docs/<feature-name>/`:
 - **`references/_core/feature-design.md`** - Feature design document template
 - **`references/_core/writing-plans.md`** - Implementation plan template
 - **`references/_core/executing-plans.md`** - Plan execution guide
+- **`references/_core/code-review.md`** - Code review guide
 - **`references/_core/save-context.md`** - Context saving guide
 - **`references/_core/commit-change-log.md`** - Commit analysis and summary
 - **`references/_core/commit-migration.md`** - Migration plan generation
@@ -320,6 +343,7 @@ Invoke sub-skills directly:
 - `/code-flow feature-design` - Design feature
 - `/code-flow writing-plans` - Write plan
 - `/code-flow executing-plans` - Execute plan
+- `/code-flow code-review` - Review code
 - `/code-flow save-context` - Save context
 - `/code-flow commit-change-log` - Analyze commits
 - `/code-flow commit-migration` - Create migration plan

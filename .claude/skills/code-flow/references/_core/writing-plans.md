@@ -87,7 +87,12 @@ function function(input) {
 Run: `npm test` / `pytest` / `mvn test`
 Expected: PASS
 
-**Step 5: Commit**
+**Step 5: Code review**
+
+Run: `/code-flow code-review`
+Expected: Review document generated with no P0 issues
+
+**Step 6: Commit**
 
 Use `/code-flow git-commit` sub-skill to commit changes.
 
@@ -160,6 +165,88 @@ Follow git-commit workflow:
 ## Output Path
 
 `flow-docs/<feature-name>/01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md`
+
+---
+
+## Fix Plan Mode
+
+When invoked with `--fix-for <review-doc>`:
+
+### Purpose
+
+Generate fix plan from code review document, extracting `[MUST_FIX]` issues.
+
+### Step 1: Load Review Document
+
+Read the specified review document from `flow-docs/<feature-name>/01_dev/code_review/<seq>-review-YYYY-MM-DD.md`.
+
+### Step 2: Extract Issues
+
+Parse review document for issues marked with:
+- `[MUST_FIX]` marker in issue title
+- P1 priority level
+
+### Step 3: Generate Fix Tasks
+
+For each `[MUST_FIX]` issue:
+
+```markdown
+### Task N: Fix [Issue Title]
+
+**Issue Reference:** [Original issue from review document]
+**Location:** `filepath:Lstart-Lend`
+
+**Step 1: Write failing test for the fix**
+
+```javascript
+function test_fixed_behavior() {
+    // Test that verifies the bug is fixed
+}
+```
+
+**Step 2: Run test to verify it fails**
+
+Run: `npm test` / `pytest` / `mvn test`
+Expected: FAIL
+
+**Step 3: Apply the fix**
+
+```javascript
+// File: filepath:Lstart-Lend
+// Fixed code from suggested fix in review
+```
+
+**Step 4: Run test to verify it passes**
+
+Run: `npm test` / `pytest` / `mvn test`
+Expected: PASS
+
+**Step 5: Code review**
+
+Run: `/code-flow code-review`
+Expected: No more issues for this location
+
+**Step 6: Commit**
+
+Use `/code-flow git-commit` sub-skill to commit changes.
+```
+
+### Step 4: Output Path
+
+Fix plan documents use `fix-` prefix:
+`flow-docs/<feature-name>/01_dev/impl_plan/fix-<seq>-plan-YYYY-MM-DD.md`
+
+### Step 5: Handoff
+
+After saving fix plan:
+
+"**Fix plan complete and saved to `flow-docs/<feature-name>/01_dev/impl_plan/fix-<seq>-plan-YYYY-MM-DD.md`**"
+
+"**Plan includes N fix tasks extracted from code review.**"
+
+"**Next step: Use `/code-flow executing-plans` to execute the fix plan.**"
+
+---
 
 ## Handoff
 
