@@ -1,395 +1,220 @@
 ---
 name: doc-architect
-description: This skill should be used when the user asks to "organize brainstorming notes", "convert ideas to documents", "generate engineering documents from discussions", "structure thoughts into specs", or mentions transforming unstructured content (meeting notes, brainstorming sessions, conversation logs) into standardized engineering documentation (PRD, architecture docs, API specs, etc.).
-version: 1.0.0
+description: This skill should be used when the user asks to "convert brainstorming to engineering docs", "organize ideas into specs", or mentions "transform unstructured notes" to PRD/architecture/API documentation. Follows a systematic "Thinking Funnel" workflow for document generation.
+version: 0.5.3
 ---
 
 # Doc Architect - Document Standard Operating Procedure
 
-This skill transforms unstructured brainstorming notes, meeting records, or conversation logs into standardized engineering documentation through a systematic "Thinking Funnel" workflow.
-
-## Core Workflow
-
-Execute the following phases in order when this skill is triggered:
+Transforms unstructured brainstorming notes into standardized engineering documentation through a systematic "Thinking Funnel" workflow.
 
 ---
 
-### Phase 0: User Intent Confirmation & Input Collection
+## Core Workflow
 
-**Goal:** Gather necessary information to proceed with document generation.
+Execute phases P0-P6 in order. For detailed rules, see `references/` directory.
 
-**Actions:**
+---
+
+### Phase 0: User Intent Confirmation
 
 1. **Confirm Input Source**
    - Ask user to provide the path to the brainstorming document
    - OR detect `*.md` files in current directory and present selection
    - Accept formats: Markdown (`.md`), Text (`.txt`)
 
-2. **Confirm Output Directory**
-   - Default: `./docs/`
-   - Allow user to specify custom path
+2. **Generate Output Directory** (if not specified by user)
+   - Read input document title or first heading
+   - Extract core concept/summary (2-5 words)
+   - Convert to kebab-case (lowercase, hyphens for spaces)
+   - Format: `docs/<core-concept>/`
+
+   **Example:**
+   - Input: "AI-Powered Task Manager Brainstorming"
+   - Output: `docs/ai-powered-task-manager/`
+
+3. **Confirm Output Directory**
+   - Auto-generated: `docs/<core-concept>/`
+   - Allow user to override with custom path
 
 **Output:** Validated input file path and output directory path
 
 ---
 
-### Phase 1: Template Scheme Selection
+### Phase 1: Template Selection
 
-**Goal:** Determine which document template structure to use.
-
-**Present the following options to the user:**
+Present options and load templates:
 
 ```
-[A] General Engineering Documentation (Recommended)
-    ├── 01_PRD.md (Product Requirements)
-    ├── 02_System_Architecture.md
-    └── 03_API_Documentation.md
-
-[B] Simplified Universal Template
-    ├── 01_Problem_Definition.md
-    ├── 02_Solution_Design.md
-    └── 03_Action_Plan.md
-
-[C] Custom Template Path
-    → User provides template directory path
+[A] General Engineering - 01_PRD.md, 02_System_Architecture.md, 03_API_Documentation.md
+[B] Simplified Universal - 01_Problem_Definition.md, 02_Solution_Design.md, 03_Action_Plan.md
+[C] Custom Template Path - User provides directory
 ```
-
-**Actions:**
-
-- Wait for user selection (A/B/C)
-- If A or B: Load corresponding templates from `templates/option-a/` or `templates/option-b/`
-- If C: Prompt user for custom template path and load from that location
-
-**Output:** Selected template scheme loaded into memory
 
 ---
 
-### Phase 2: Raw Capture (Fragment Collection)
+### Phase 2: Raw Capture
 
-**Input:** User-specified brainstorming document
+Read input document → Extract using `prompts/1_extraction.md` → Output `00_Key_Points_List.md`
 
-**Actions:**
-
-1. Read the entire input document
-2. Execute extraction logic from `prompts/1_extraction.md`
-3. Generate Key Points List with the following structure:
-   - Keyword list
-   - New concepts list
-   - Decision points list
-   - Question points list
-4. **Write intermediate output** to `OUTPUT_DIR/00_Key_Points_List.md`
-
-**Reference:** Use `prompts/1_extraction.md` for detailed extraction rules
-
-**Output:**
-- `00_Key_Points_List.md` - Visible intermediate product for user verification
-- Key Points List loaded in memory for next phase
+**Output:** Keywords, new concepts, decision points, question points
 
 ---
 
 ### Phase 3: Core Extraction & Categorization
 
-**Input:** Key Points List from Phase 2
-
-**Actions:**
-
-Apply the three-dimensional classification framework:
+Apply three-dimensional classification:
 
 ```
-[Dimension 1] Business / Value
-├── Pain Points (Why is this needed?)
-├── Core Interaction (How does user operate it?)
-└── Value Proposition (What makes it better?)
-
-[Dimension 2] Technical / Architecture
-├── Data Flow (Where does data come from? How is it processed?)
-├── Key Components (Which modules are involved?)
-└── Constraints (Security policies? Performance requirements?)
-
-[Dimension 3] Specs / Constraints
-├── Input/Output (What are the formats?)
-├── Directory Structure (Where should files be placed?)
-└── Error Handling (What happens on failure?)
+[Dimension 1] Business/Value → Pain Points, Core Interaction, Value Proposition
+[Dimension 2] Technical/Architecture → Data Flow, Key Components, Constraints
+[Dimension 3] Specs/Constraints → Input/Output, Directory Structure, Error Handling
 ```
 
-4. **Write intermediate output** to `OUTPUT_DIR/01_Structured_Notes.md`
-
-**Output:**
-- `01_Structured_Notes.md` - Visible intermediate product for user verification
-- Structured Notes loaded in memory for document mapping
+**Output:** `01_Structured_Notes.md`
 
 ---
 
 ### Phase 4: Document Mapping & Generation
 
-**Input:** Structured Notes from Phase 3, selected templates from Phase 1
+For each template file: Load skeleton → Apply `prompts/2_mapping.md` → Merge with existing (if any) → Write file
 
-**For each template file T in selected template scheme:**
-
-1. **Load Template Skeleton**
-   - Read T's markdown structure
-   - Identify placeholders/sections to fill
-
-2. **Apply Mapping Logic**
-   - Use `prompts/2_mapping.md` for mapping rules
-   - Map Structured Notes to corresponding sections in template
-
-3. **Check Target File**
-   - IF file exists: Read existing content → Perform diff → Merge differences → Preserve non-conflicting parts
-   - IF file doesn't exist: Create new file directly
-
-4. **Write File**
-   - Output path: `OUTPUT_DIR/T.md`
-
-**Mapping Relationships:**
-
-- Template A (General Engineering) ← Structured Notes
-- Template B (Simplified Universal) ← Structured Notes
-- Template C (User Custom) ← Structured Notes
-
-**Reference:** Use `prompts/2_mapping.md` for detailed mapping rules
-
-**Output:** Generated/updated document files in output directory
+**Output:** Final documents (`02_*.md`, `03_*.md`, etc.)
 
 ---
 
-### Phase 4.5: Value Detail Capture (Long-Tail Content Preservation)
+### Phase 4.5: Value Detail Capture
 
-**Goal:** Capture valuable details that don't fit into template structure but may be important later.
+**Identify unmapped content** → Assess value → Categorize → Output `99_Value_Details.md`
 
-**Input:**
-- Structured Notes from Phase 3 (`01_Structured_Notes.md`)
-- Key Points List from Phase 2 (`00_Key_Points_List.md`)
-- Original brainstorming document
-- Generated final documents from Phase 4
+**Categories:** Future Considerations, Alternative Approaches, Implementation Details, User Insights, Edge Cases, Dependencies, Open Questions
 
-**Actions:**
+**Reference:** `references/value-categorization.md` for detailed rules
 
-1. **Identify Unmapped Content**
-   - Compare `01_Structured_Notes.md` against all generated final documents
-   - Identify Structured Notes entries that were NOT mapped to any final document
-   - Check `00_Key_Points_List.md` for items not represented in final documents
-
-2. **Assess Value of Unmapped Content**
-   For each unmapped item, evaluate:
-   - **Relevance**: Could this be useful in future iterations?
-   - **Uniqueness**: Is this a unique insight or perspective?
-   - **Implementability**: Could this become a feature/requirement later?
-   - **Context Value**: Does this provide important context?
-
-3. **Categorize Unmapped Value Details**
-   Organize valuable unmapped content into categories:
-   - **Future Considerations**: Ideas for future versions
-   - **Alternative Approaches**: Discarded options worth documenting
-   - **Implementation Details**: Technical nuances not fitting templates
-   - **User Insights**: User feedback or preferences
-   - **Edge Cases**: Corner cases or special scenarios
-   - **Dependencies**: External factors or relationships
-   - **Open Questions**: Unresolved items needing attention
-
-4. **Generate Value Details Document**
-   Write to `OUTPUT_DIR/99_Value_Details_Outside_Template.md` with structure:
-   ```markdown
-   # Value Details Outside Template Scope
-
-   This document captures valuable details from the original brainstorming
-   that did not fit into the standardized template structure but may be
-   important for future reference or iteration.
-
-   ## Generation Context
-   - Input File: [INPUT_FILE]
-   - Template Scheme: [A/B/C]
-   - Generated On: [DATE]
-
-   ## Future Considerations
-   | Idea | Description | Potential Value |
-   |------|-------------|-----------------|
-   | [Idea] | [Detail] | [Why valuable] |
-
-   ## Alternative Approaches
-   | Approach | Why Discarded | When to Reconsider |
-   |----------|---------------|-------------------|
-   | [Approach] | [Reason] | [Condition] |
-
-   ## Implementation Details
-   | Detail | Context | Reference |
-   |--------|---------|-----------|
-   | [Detail] | [Context] | [Source] |
-
-   ## User Insights
-   | Insight | Source | Implication |
-   |---------|--------|-------------|
-   | [Insight] | | |
-
-   ## Edge Cases
-   | Case | Description | Handling Consideration |
-   |------|-------------|------------------------|
-   | [Case] | | |
-
-   ## Dependencies
-   | Dependency | Type | Impact |
-   |-------------|------|--------|
-   | [Dependency] | | |
-
-   ## Open Questions
-   | Question | Priority | Suggested Resolution |
-   |----------|----------|----------------------|
-   | [Question] | | |
-   ```
-
-5. **Cross-Reference Validation**
-   - Ensure no duplication with final documents
-   - Verify accuracy against original source
-   - Tag each item with source reference (e.g., `[Source: Original Doc, Line 45]`)
-
-**Output:**
-- `99_Value_Details_Outside_Template.md` - Mandatory output for all template schemes
-
-**Quality Criteria:**
-- Every valuable unmapped item should be captured
-- Clear categorization for easy reference
-- Source traceability maintained
-- Non-redundant with final documents
+**Output:** `99_Value_Details.md` (mandatory for all template schemes)
 
 ---
 
-### Phase 5-A: Iterative Validation & Correction
+### Phase 5-A: Iterative Validation
 
-**Goal:** Ensure documents accurately reflect original intent
-
-**Fact Sources (Priority Order):**
-1. ✓ Original brainstorming document (Primary - `INPUT_FILE`)
-2. ✓ `00_Key_Points_List.md` (Secondary - raw extraction)
-3. ✓ `01_Structured_Notes.md` (Tertiary - categorized extraction)
-4. ✗ Generated documents (`02_*.md`, `03_*.md`, etc.) - NOT allowed as reference
-
-**For each generated document D:**
+For each generated document, execute three iterations against source:
 
 ```
-Iteration 1: Error Check
-→ Compare against original document
-→ Check for misinterpretations
-→ Mark suspicious content
-→ Correct or ask user for clarification
-
-Iteration 2: Omission Check
-→ Compare against original document
-→ Check for missing key points
-→ Supplement omitted content
-
-Iteration 3: Contradiction Check
-→ Check for internal contradictions within document
-→ Check for contradictions with original document
-→ Resolve contradictions or mark for discussion
+Iteration 1: Error Check → Compare with original → Correct misinterpretations
+Iteration 2: Omission Check → Find missing key points → Supplement content
+Iteration 3: Contradiction Check → Resolve internal/external conflicts
 ```
 
-**Output:** Validated and corrected documents
+**Fact Sources:** Original doc → `00_Key_Points_List.md` → `01_Structured_Notes.md` (NOT generated docs)
+
+**Reference:** `references/validation-checklist.md` for detailed checklist
 
 ---
 
-### Phase 5-B: Cross-Document Consistency Check
+### Automated Validation (Post-P5A)
 
-**Constraint:** Never use generated documents to cross-reference each other. Always use original document and intermediate products as the source of truth.
+After manual validation iterations, run automated script validation:
 
-**Fact Sources:**
-1. ✓ Original brainstorming document (`INPUT_FILE`) - Primary
-2. ✓ `00_Key_Points_List.md` - Raw extraction reference
-3. ✓ `01_Structured_Notes.md` - Categorized extraction reference
-4. ✗ Generated documents - NOT allowed for cross-reference
-
-**Execute the following checks:**
-
-```
-Check 1: Concept Consistency
-→ Are definitions of the same concept consistent across documents?
-→ Verify against original document
-
-Check 2: Process Consistency
-→ Do workflows described in different documents align?
-→ Verify against original document
-
-Check 3: Constraint Consistency
-→ Are technical/business constraints consistent across documents?
-→ Verify against original document
+```bash
+bash scripts/validate-intermediate-output.sh docs/<core-concept>/
 ```
 
-**IF conflicts found:**
-- Record conflict points
-- Return to original document to verify facts
-- Correct relevant documents
+**On Success:** Continue to Phase 5-B
+**On Failure:** Report issues in execution report, continue workflow (non-blocking)
 
-**Output:** Consistent document set with no cross-document conflicts
+---
+
+### Phase 5-B: Cross-Document Consistency
+
+Never use generated docs for cross-reference. Always use original + intermediate products.
+
+```
+Check 1: Concept Consistency → Verify terms/definitions align
+Check 2: Process Consistency → Verify workflows align
+Check 3: Constraint Consistency → Verify constraints align
+```
+
+**Reference:** `references/validation-checklist.md`
 
 ---
 
 ### Phase 6: Execution Report
 
-**Generate comprehensive report including:**
+Generate comprehensive report with file creation summary, diff summary, quality metrics, and action items.
 
-**1. File Creation Summary**
-```
-✓ Intermediate Products Created:
-  - 00_Key_Points_List.md (Raw extraction)
-  - 01_Structured_Notes.md (Categorized extraction)
+**Step 1: Run Coverage Analysis**
 
-✓ Final Documents Created: [list]
-✓ Final Documents Updated: [list] with merge statistics
-
-✓ Value Details Document (Mandatory):
-  - 99_Value_Details_Outside_Template.md
-    - Future Considerations: N items
-    - Alternative Approaches: N items
-    - Implementation Details: N items
-    - User Insights: N items
-    - Edge Cases: N items
-    - Dependencies: N items
-    - Open Questions: N items
+```bash
+# Run coverage analysis (Node.js)
+if command -v node >/dev/null 2>&1; then
+    node scripts/check-template-coverage.js docs/<core-concept>/
+else
+    echo "⚠️  Coverage analysis skipped (Node.js unavailable)"
+fi
 ```
 
-**2. Diff Summary**
-For each updated file:
-```
-→ [filename.md]
-  - Added: N sections
-  - Modified: N sections
-  - Deleted: N sections
-  - Unchanged: N sections
+Capture output for inclusion in report.
+
+**Step 2: Generate Diff Report** (if previous version exists)
+
+```bash
+# Check for old directory, generate diff if found
+if [ -d "docs/<core-concept>.old" ]; then
+    bash scripts/diff-report-generator.sh docs/<core-concept>.old/ docs/<core-concept>/ docs/<core-concept>/diff-report.md
+fi
 ```
 
-**3. Quality Report**
-```
-→ Errors Corrected: N items
-→ Omissions Supplemented: N items
-→ Contradictions Resolved: N items
-→ Cross-Document Conflicts: N items
-```
+**Step 3: Compile Final Report**
 
-**4. Action Items**
-```
-→ Manual Review Points: [list]
-→ Information Still Needed: [list]
-```
+Include:
+- File creation summary
+- Script validation results
+- Coverage analysis (if available)
+- Diff summary (if applicable)
+- Quality metrics
+- Action items
 
-**Output:** Print report to user for review
+**Reference:** `references/report-format.md` for template
 
 ---
 
-## Constraints & Guidelines
+## Output File Structure
 
-### Writing Style
+```
+docs/
+└── <core-concept>/                    # Auto-generated from input title
+    ├── 00_Key_Points_List.md          # Intermediate: Raw extraction
+    ├── 01_Structured_Notes.md         # Intermediate: Categorized extraction
+    ├── 02_PRD.md                      # Final: Product Requirements
+    ├── 03_System_Architecture.md      # Final: Architecture Design
+    ├── 04_API_Documentation.md        # Final: API Documentation
+    └── 99_Value_Details.md            # Long-tail valuable details
+```
 
-- Use **imperative/infinitive form** (verb-first instructions)
-- Avoid second person ("You should...")
-- Be objective and instructional
+**Example:**
+```
+docs/
+└── ai-powered-task-manager/
+    ├── 00_Key_Points_List.md
+    ├── 01_Structured_Notes.md
+    ├── 02_PRD.md
+    ├── 03_System_Architecture.md
+    ├── 04_API_Documentation.md
+    └── 99_Value_Details.md
+```
 
-### Fact Source Rules
+---
+
+## Fact Source Rules
 
 | Phase | Fact Sources | NOT Allowed |
 |-------|--------------|-------------|
-| **P5-A** | Original doc → `00_Key_Points_List.md` → `01_Structured_Notes.md` | ❌ Using generated docs (`02_*.md`+) as reference |
-| **P5-B** | Original doc → `00_Key_Points_List.md` → `01_Structured_Notes.md` | ❌ Cross-referencing generated docs |
+| **P5-A** | Original → 00_ → 01_ | ❌ Generated docs |
+| **P5-B** | Original → 00_ → 01_ | ❌ Generated docs |
 
-### Merge Strategy
+---
+
+## Merge Strategy
 
 | Strategy | Behavior |
 |----------|----------|
@@ -397,57 +222,66 @@ For each updated file:
 | **Merge** | Merge differences into existing document |
 | **Preserve** | Keep non-conflicting parts unchanged |
 
-### Progressive Disclosure
+---
 
-- **SKILL.md** (this file): Core workflow and process (keep lean, ~2,000 words)
-- **prompts/1_extraction.md**: Detailed extraction rules
-- **prompts/2_mapping.md**: Detailed mapping rules and templates
-- **templates/**: Actual document templates
+## Progressive Disclosure
+
+| Resource | Purpose |
+|----------|---------|
+| **SKILL.md** (this file) | Core workflow (~2,000 words) |
+| **prompts/1_extraction.md** | Extraction and categorization logic |
+| **prompts/2_mapping.md** | Document mapping rules |
+| **references/value-categorization.md** | Phase 4.5 detailed rules |
+| **references/report-format.md** | Phase 6 report template |
+| **references/validation-checklist.md** | Phase 5 detailed checklist |
+| **templates/** | Actual document templates |
+| **examples/** | Input/output examples |
+| **scripts/** | Validation and analysis tools |
 
 ---
 
-## Additional Resources
+## Validation Scripts
 
-### Prompt Files
+Use scripts in `scripts/` directory:
 
-- **`prompts/1_extraction.md`** - Raw capture and categorization logic
-- **`prompts/2_mapping.md`** - Document mapping and generation rules
-
-### Template Directories
-
-- **`templates/option-a/`** - General engineering documentation templates
-- **`templates/option-b/`** - Simplified universal templates
+- **validate-intermediate-output.sh** - Validate 00_ and 01_ file formats
+- **check-template-coverage.js** - Analyze mapping coverage (Node.js)
+- **diff-report-generator.sh** - Generate diff reports
 
 ---
 
 ## Usage Example
 
 ```bash
-# In Claude Code CLI
+# Trigger the skill
 > "Use doc-architect skill to process brainstorm.md and generate engineering docs"
 ```
 
 The skill will:
 1. Ask for input file path (or detect markdown files)
 2. Present template options (A/B/C)
-3. Execute the Thinking Funnel workflow
-4. Generate **intermediate products** in `./docs/`:
-   - `00_Key_Points_List.md` - Raw extraction from brainstorm
-   - `01_Structured_Notes.md` - Categorized extraction
-5. Generate **final documents** in `./docs/`:
-   - `02_PRD.md`, `03_System_Architecture.md`, etc. (based on selected template)
-6. Generate **value details document** (mandatory for all template schemes):
-   - `99_Value_Details_Outside_Template.md` - Valuable details not fitting templates
-7. Provide execution report with diff summary
+3. Execute Thinking Funnel workflow (P0-P6)
+4. Generate intermediate products (00_, 01_)
+5. Generate final documents (02_+, 03_+, 04_+)
+6. Generate value details (99_)
+7. **Run automated validation scripts** (non-blocking)
+8. Provide execution report with diff summary and script results
 
-### Output File Structure
+---
 
-```
-docs/
-├── 00_Key_Points_List.md              # Intermediate: Raw extraction
-├── 01_Structured_Notes.md             # Intermediate: Categorized extraction
-├── 02_PRD.md                          # Final: Product Requirements
-├── 03_System_Architecture.md          # Final: Architecture Design
-├── 04_API_Documentation.md            # Final: API Documentation
-└── 99_Value_Details_Outside_Template.md  # Long-tail valuable details
-```
+## Writing Style
+
+- Use **imperative/infinitive form** (verb-first instructions)
+- Avoid second person ("You should...")
+- Be objective and instructional
+
+---
+
+## Version History
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 0.5.3 | 2024-01-17 | Migrate coverage analysis to JavaScript (Node.js) |
+| 0.5.2 | 2024-01-17 | Auto-generate semantic output directory from input title |
+| 0.5.1 | 2024-01-17 | Add automated script execution to workflow |
+| 0.5.0 | 2024-01-17 | Complete restructure with references/, examples/, scripts/ |
