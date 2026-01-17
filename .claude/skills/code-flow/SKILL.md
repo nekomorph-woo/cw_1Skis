@@ -175,10 +175,10 @@ All documents use consistent structure under `flow-docs/<feature-name>/`:
 
 **Context Inheritance:**
 ```
-User: "探索 scene creation 代码"
+User: "Explore scene creation code"
 → code-insight runs, context = "scene-creation"
 
-User: "编写实现计划"
+User: "Develop an implementation plan"
 → writing-plans runs, inherits context = "scene-creation"
 → Output: flow-docs/scene-creation/01_dev/impl_plan/...
 ```
