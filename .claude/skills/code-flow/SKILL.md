@@ -11,6 +11,61 @@ author: claude-code
 
 Guide through complete development workflows including code exploration, feature design, implementation planning, execution, and code migration. Use document-driven decoupling where sub-skills pass context through documents, enabling both standalone and combined usage.
 
+## Skill Selection Menu
+
+**When user invokes `/code-flow` without specific intent:**
+
+Display this menu to help user select the appropriate sub-skill:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔄 Code Flow - Development Workflow (v0.5.0)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Available Sub-Skills:
+
+  [1] code-insight       - Explore existing code structure and call chains
+  [2] feature-design     - Design features with technical analysis
+  [3] writing-plans      - Create implementation plans from designs
+  [4] executing-plans    - Execute plans step-by-step with verification
+  [5] code-review        - Review code for bugs and security issues
+  [6] save-context       - Save current session context and state
+  [7] commit-change-log  - Summarize git commits for migration
+  [8] commit-migration   - Create migration plans from summaries
+  [9] git-commit         - Generate Conventional Commit messages
+
+Quick Workflows:
+  • New Feature:     [2] → [3] → [4] → [9]
+  • Modify Code:     [1] → [2] → [3] → [4] → [9]
+  • Bug Fix:         [3] → [4] → [9]
+  • Code Review:     [5] → [3] → [4] → [9]  (if issues found)
+  • Migration:       [7] → [8] → [4] → [9]
+
+────────────────────────────────────────────────────────────────────────────────
+
+What would you like to do?
+
+  • Enter number [1-9] to select a sub-skill
+  • Describe your task in plain text (e.g., "explore user authentication code")
+  • Type "workflows" to see detailed workflow examples
+
+────────────────────────────────────────────────────────────────────────────────
+```
+
+**User Input Handling:**
+
+- If user enters **number** → Route to corresponding sub-skill
+- If user **describes task** → Match to appropriate sub-skill using trigger keywords
+- If user types **"workflows"** → Show detailed workflow examples from `## Development Workflows`
+- If user input is **unclear** → Ask follow-up question to clarify intent
+
+**Skip Menu Display:**
+
+Do NOT show this menu when user's intent is already clear from their input:
+- User: `/code-flow explore code` → Skip menu, directly invoke code-insight
+- User: `/code-flow create plan for user login` → Skip menu, directly invoke writing-plans
+- User: `/code-flow` or `/code-flow help` → Show menu above
+
 ## Core Concepts
 
 ### Document-Driven Architecture
