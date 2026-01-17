@@ -42,7 +42,7 @@ mkdir -p "$BASE_DIR/01_dev/code_insight"
 mkdir -p "$BASE_DIR/01_dev/feature_design"
 mkdir -p "$BASE_DIR/01_dev/impl_plan"
 mkdir -p "$BASE_DIR/01_dev/code_review"
-mkdir -p "$BASE_DIR/02_memories/context_${FEATURE_NAME}"
+mkdir -p "$BASE_DIR/02_memories"
 mkdir -p "$BASE_DIR/03_migration/commit-log-summary"
 mkdir -p "$BASE_DIR/03_migration/migration-plan"
 
@@ -61,7 +61,7 @@ This directory contains all development workflow documentation for ${FEATURE_NAM
 - **code_review/** - Code review documents (use code-review sub-skill)
 
 ### 02_memories/ - Session Memory
-- **context_${FEATURE_NAME}/** - Session context (use save-context sub-skill)
+- **active_context.md** - Session context (use save-context sub-skill)
 
 ### 03_migration/ - Migration Documents
 - **commit-log-summary/** - Commit log summaries (use commit-change-log sub-skill)
@@ -113,7 +113,7 @@ echo "   $BASE_DIR/01_dev/code_insight/"
 echo "   $BASE_DIR/01_dev/feature_design/"
 echo "   $BASE_DIR/01_dev/impl_plan/"
 echo "   $BASE_DIR/01_dev/code_review/"
-echo "   $BASE_DIR/02_memories/context_${FEATURE_NAME}/"
+echo "   $BASE_DIR/02_memories/"
 echo "   $BASE_DIR/03_migration/commit-log-summary/"
 echo "   $BASE_DIR/03_migration/migration-plan/"
 echo ""

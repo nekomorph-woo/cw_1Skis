@@ -10,6 +10,13 @@ Write comprehensive implementation plans that convert design documents into acti
 - Have requirements needing multi-step implementation
 - Preparing to start coding
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "create plan", "write implementation plan", "generate fix plan", "break down tasks"
+- "convert design to plan", "create actionable tasks"
+- "--fix-for" flag for fix plan mode
+
 ## Context Determination
 
 Follow context management rules: See `context-management.md`
@@ -27,10 +34,7 @@ If user hasn't provided design document, prompt: "Please provide design document
 
 ## Sequence Determination
 
-Check existing files in `flow-docs/*/01_dev/impl_plan/`:
-- Extract sequence numbers from filenames (pattern: `<seq>-plan-*.md` or `fix-<seq>-plan-*.md`)
-- Next sequence = max + 1
-- Start with `001` if no files exist
+See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Document Header
 

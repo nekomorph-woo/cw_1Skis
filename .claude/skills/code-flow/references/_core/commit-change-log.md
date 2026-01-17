@@ -9,6 +9,12 @@ Generate code change summary documents from git commits. Focus on **what changed
 - Need to migrate code changes to other projects
 - Need to record commit intent and scope
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "summarize commits", "analyze commit", "generate change log"
+- "document commit", "what changed in this commit"
+
 ## Context Determination
 
 Follow context management rules: See `context-management.md`
@@ -24,10 +30,7 @@ Start with: "I'm using the commit-change-log sub-skill to generate code change s
 
 ## Sequence Determination
 
-Check existing files in `flow-docs/*/03_migration/commit-log-summary/`:
-- Extract sequence numbers from filenames (pattern: `<seq>-<short-hash>-commit-log.md`)
-- Next sequence = max + 1
-- Start with `001` if no files exist
+See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Workflow
 

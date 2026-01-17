@@ -10,6 +10,12 @@ Save current session context to `flow-docs/*/02_memories/context_*/active_contex
 - Need to record current state for future reference
 - Before switching tasks
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "save context", "save session", "save progress"
+- "remember this", "save current state"
+
 ## Context Determination
 
 Follow context management rules: See `context-management.md`

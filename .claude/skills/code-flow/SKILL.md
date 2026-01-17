@@ -31,6 +31,8 @@ Each sub-skill operates independently:
 
 This skill auto-detects project technology stack and adapts commands/patterns accordingly.
 
+**Detection Method:** Scans project root for characteristic files (`package.json`, `pom.xml`, `go.mod`, `pubspec.yaml`, etc.) and analyzes dependencies to identify the technology stack.
+
 **Supported Stacks:**
 - **Backend:** Java/Spring Boot, Node/Express, Python/Django, Python/FastAPI, Go/Gin
 - **Frontend:** React, Vue, Angular, Next.js, Nuxt.js
@@ -51,7 +53,10 @@ The skill maintains a **current document context** (`<feature-name>`) to ensure 
 
 **Context Propagation:** Sub-skills automatically inherit context. For example: `code-insight` sets initial context → `writing-plans` inherits → `executing-plans` inherits from plan path.
 
-**Detailed rules:** See `references/_core/context-management.md`
+**Detailed rules:** See `references/_core/context-management.md` for:
+- Priority order: User explicit > Relative path > Current context > Ask user
+- Context switching patterns
+- Special cases (path extraction, validation)
 
 ## Development Workflows
 
@@ -65,17 +70,17 @@ The skill maintains a **current document context** (`<feature-name>`) to ensure 
 
 ## Sub-Skills
 
-| Sub-Skill | Purpose | Output | Guide |
-|-----------|---------|--------|-------|
-| `code-insight` | Explore existing code structure, call chains, implementation | `01_dev/code_insight/<seq>-insight-YYYY-MM-DD.md` | `code-insight.md` |
-| `feature-design` | Design features with technical analysis, API design, risk assessment | `01_dev/feature_design/<seq>-ft-YYYY-MM-DD.md` | `feature-design.md` |
-| `writing-plans` | Convert designs into actionable implementation plans | `01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md` | `writing-plans.md` |
-| `executing-plans` | Execute plans task-by-task with completion verification | (code implementation) | `executing-plans.md` |
-| `code-review` | Review code for bugs, security vulnerabilities, best practices | `01_dev/code_review/<seq>-review-YYYY-MM-DD.md` | `code-review.md` |
-| `save-context` | Save session context including tasks, decisions, files | `02_memories/context_<feature-name>/active_context.md` | `save-context.md` |
-| `commit-change-log` | Generate code change summaries from git commits | `03_migration/commit-log-summary/<seq>-<hash>-commit-log.md` | `commit-change-log.md` |
-| `commit-migration` | Generate migration plans from change summaries | `03_migration/migration-plan/<seq>-<hash>-migration-plan.md` | `commit-migration.md` |
-| `git-commit` | Generate Conventional Commit messages with emoji | (git commit) | `git-commit.md` |
+| Sub-Skill | Purpose | Triggers | Parameters | Output | Guide |
+|-----------|---------|----------|------------|--------|-------|
+| `code-insight` | Explore existing code structure, call chains, implementation | "explore code", "how is X implemented", "understand existing code", "trace call chain" | `<feature-name>` (optional) | `01_dev/code_insight/<seq>-insight-YYYY-MM-DD.md` | `code-insight.md` |
+| `feature-design` | Design features with technical analysis, API design, risk assessment | "design feature", "create design doc", "technical approach", "API design" | `<feature-name>` (optional) | `01_dev/feature_design/<seq>-ft-YYYY-MM-DD.md` | `feature-design.md` |
+| `writing-plans` | Convert designs into actionable implementation plans | "create plan", "write implementation plan", "generate fix plan", "break down tasks" | `<feature-name>` (optional), `--fix-for <review-doc>` (fix mode) | `01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md` or `fix-<seq>-plan-YYYY-MM-DD.md` | `writing-plans.md` |
+| `executing-plans` | Execute plans task-by-task with completion verification | "execute plan", "implement this plan", "run implementation" | `<plan-path>` (optional, auto-select if omitted) | (code implementation) | `executing-plans.md` |
+| `code-review` | Review code for bugs, security vulnerabilities, best practices | "review code", "code review", "check for issues" | `<feature-name>` (optional), `<scope>` (explicit mode only) | `01_dev/code_review/<seq>-review-YYYY-MM-DD.md` | `code-review.md` |
+| `save-context` | Save session context including tasks, decisions, files | "save context", "save session", "save progress" | `<feature-name>` (optional) | `02_memories/active_context.md` | `save-context.md` |
+| `commit-change-log` | Generate code change summaries from git commits | "summarize commits", "analyze commit", "generate change log" | `<feature-name>` (optional), `<commit-hash>` (required) | `03_migration/commit-log-summary/<seq>-<hash>-commit-log.md` | `commit-change-log.md` |
+| `commit-migration` | Generate migration plans from change summaries | "create migration plan", "migrate changes", "generate migration" | `<summary-doc-path>` (required) | `03_migration/migration-plan/<seq>-<hash>-migration-plan.md` | `commit-migration.md` |
+| `git-commit` | Generate Conventional Commit messages with emoji | "commit", "commit changes", "git commit" | none | (git commit) | `git-commit.md` |
 
 ## Decision Guide
 
@@ -85,11 +90,13 @@ Use `code-insight` when:
 - Question is "How is this implemented?"
 - Need to understand existing code structure
 - Exploring call chains and dependencies
+- Tracking bugs or performance issues in existing code
 
 Use `feature-design` when:
 - Question is "How should this be implemented?"
 - Designing new functionality
-- Need technical approach comparison
+- Need technical approach comparison (MVP vs Balanced vs Advanced)
+- Require API design and data model specifications
 
 ### When to Plan
 
@@ -104,9 +111,23 @@ Use planning for:
 - Architectural decisions required
 - Tasks touching 2-3+ files
 
+### code-review vs Manual Review
+
+Use `code-review` sub-skill when:
+- Need structured review document
+- Want issue categorization (P0-P3)
+- Plan to generate fix plans from issues
+
+Manual review is sufficient when:
+- Quick sanity check
+- Simple, isolated changes
+- No need for documentation
+
 ## Document Paths
 
 All documents use consistent structure under `flow-docs/<feature-name>/`:
+
+**Sequence Number (`<seq>`) Rule:** Auto-increment based on existing files in the target directory. Pattern: find max `<seq>` in directory, next = max + 1. Start with `001` if no files exist.
 
 | Type | Path |
 |------|------|
@@ -115,7 +136,7 @@ All documents use consistent structure under `flow-docs/<feature-name>/`:
 | Implementation Plan | `01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md` |
 | Fix Plan | `01_dev/impl_plan/fix-<seq>-plan-YYYY-MM-DD.md` |
 | Code Review | `01_dev/code_review/<seq>-review-YYYY-MM-DD.md` |
-| Context | `02_memories/context_<feature-name>/active_context.md` |
+| Context | `02_memories/active_context.md` |
 | Commit Log | `03_migration/commit-log-summary/<seq>-<short-hash>-commit-log.md` |
 | Migration Plan | `03_migration/migration-plan/<seq>-<short-hash>-migration-plan.md` |
 
@@ -125,11 +146,25 @@ All documents use consistent structure under `flow-docs/<feature-name>/`:
 
 **Universal Templates:** `references/_core/*.md` (apply to all technologies)
 
-**Technology-Specific Guides:** See `references/README.md` for detection signals
-- Backend: `backend/*.md` (Java/Spring Boot, Node/Express, Python/Django, Python/FastAPI, Go/Gin)
-- Frontend: `frontend/*.md` (React, Vue, Angular, Next.js, Nuxt.js)
-- Mobile: `mobile/*.md` (React Native, Flutter)
-- Full-Stack: `fullstack/*.md` (MERN, MEAN, T3 Stack)
+**Technology-Specific Guides:** Each guide contains:
+- Compile/Build commands
+- Test commands
+- File naming conventions
+- Language-specific patterns
+
+**Detection Signals:** See `references/README.md` for how technology is detected.
+
+**Backend:** `backend/*.md`
+- Java/Spring Boot, Node/Express, Python/Django, Python/FastAPI, Go/Gin
+
+**Frontend:** `frontend/*.md`
+- React, Vue, Angular, Next.js, Nuxt.js
+
+**Mobile:** `mobile/*.md`
+- React Native, Flutter
+
+**Full-Stack:** `fullstack/*.md`
+- MERN, MEAN, T3 Stack (combine backend + frontend patterns)
 
 ### Example Files & Scripts
 
@@ -154,24 +189,31 @@ User: "编写实现计划"
 
 ## Error Recovery & Edge Cases
 
+For comprehensive error recovery strategies, see detailed documentation in each sub-skill guide.
+
 ### Code Review Failures
 - **P0 issues found during executing-plans:** Fix immediately before continuing
 - **Fix introduces new issues:** Re-run code-review, repeat until clean
+- See `executing-plans.md:91-97` for detailed P0 handling flow
 
 ### Git Operation Failures
 - **Commit fails:** Check for merge conflicts, unmerged files, or permission issues
 - **Network issues:** Retry after checking connection, use `git fetch` to sync
 - **UTF-8 encoding issues (Windows):** Always use file-based commit method
+- See `git-commit.md:68-151` for platform-specific commit methods
 
 ### Edge Cases
 - **Feature name with special characters:** Validate before directory creation
 - **Manual document directory changes:** Warn user, recommend re-initializing
 - **Git branch switch:** Context remains valid unless documents were deleted
 - **Multiple tech stacks in monorepo:** Detect based on current working directory
+- **executing-plans completion verification:** Never skip tasks without code references (`executing-plans.md:60-78`)
 
 ## Language Convention
 
 All documentation, comments, and commit messages adaptively use **<user's language>** with UTF-8 encoding. Technical terms and code identifiers remain in original form.
+
+**See `context-management.md:114-120` for detailed UTF-8 encoding rules.**
 
 ---
 

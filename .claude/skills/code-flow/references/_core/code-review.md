@@ -9,6 +9,12 @@ Review code changes for compilation issues, bugs, security vulnerabilities, and 
 - **Implicitly:** After completing each task during plan execution (executing-plans)
 - **Explicitly:** User requests standalone code review via `/code-flow code-review`
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "review code", "code review", "check for issues"
+- "find bugs", "check for security issues", "review changes"
+
 ## Context Determination
 
 **Implicit Mode (Plan Execution):**
@@ -17,7 +23,7 @@ Review code changes for compilation issues, bugs, security vulnerabilities, and 
 
 **Explicit Mode (User Invocation):**
 
-Follow context management rules: See `context-management.md`
+First, determine context following context management rules: See `context-management.md`
 
 After context is determined, ask review scope:
 ```
@@ -82,10 +88,13 @@ When called during plan execution:
 |------------|---------|
 | Java/Spring Boot | `mvn compile -DskipTests` |
 | Node.js/Express | `npm run build` |
-| Python/Django | `python -m py_compile *.py` |
+| Python/Django | `python -m py_compile *.py` or `python manage.py check` |
 | Python/FastAPI | `python -m py_compile *.py` |
 | Go/Gin | `go build` |
-| React/Vue/Next.js | `npm run build` |
+| React/Vue/Angular/Next.js/Nuxt.js | `npm run build` |
+| React Native | `npx react-native bundle` or `npm run build` |
+| Flutter | `flutter build apk` or `flutter build ios` |
+| MERN/MEAN/T3 Stack | Use component commands (backend + frontend) |
 
 **If compilation fails:**
 - Output `❌ COMPILATION FAILED` section
@@ -168,13 +177,7 @@ For each modified file:
 
 ### Step 5: Determine Sequence
 
-Check existing review documents:
-```bash
-ls flow-docs/*/01_dev/code_review/
-```
-- Extract sequence numbers: `001-review-`, `002-review-`, etc.
-- Next sequence = max + 1
-- Start with `001` if no files exist
+See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ### Step 6: Generate Output Document
 

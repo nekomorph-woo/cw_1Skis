@@ -42,7 +42,7 @@ $Directories = @(
     "$BaseDir\01_dev\feature_design",
     "$BaseDir\01_dev\impl_plan",
     "$BaseDir\01_dev\code_review",
-    "$BaseDir\02_memories\context_$FeatureName",
+    "$BaseDir\02_memories",
     "$BaseDir\03_migration\commit-log-summary",
     "$BaseDir\03_migration\migration-plan"
 )
@@ -69,7 +69,7 @@ This directory contains all development workflow documentation for $FeatureName.
 - **code_review/** - Code review documents (use code-review sub-skill)
 
 ### 02_memories/ - Session Memory
-- **context_$FeatureName/** - Session context (use save-context sub-skill)
+- **active_context.md** - Session context (use save-context sub-skill)
 
 ### 03_migration/ - Migration Documents
 - **commit-log-summary/** - Commit log summaries (use commit-change-log sub-skill)
@@ -123,7 +123,7 @@ Write-Host "   $BaseDir\01_dev\code_insight\"
 Write-Host "   $BaseDir\01_dev\feature_design\"
 Write-Host "   $BaseDir\01_dev\impl_plan\"
 Write-Host "   $BaseDir\01_dev\code_review\"
-Write-Host "   $BaseDir\02_memories\context_$FeatureName\"
+Write-Host "   $BaseDir\02_memories\"
 Write-Host "   $BaseDir\03_migration\commit-log-summary\"
 Write-Host "   $BaseDir\03_migration\migration-plan\"
 Write-Host ""

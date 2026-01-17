@@ -9,6 +9,12 @@ Execute implementation or migration plans step-by-step. Check task completion st
 - Have implementation plan requiring execution
 - Have migration plan requiring execution
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "execute plan", "implement this plan", "run implementation"
+- "follow the plan", "complete the tasks"
+
 ## Context Determination
 
 **Extract context from plan document path:**

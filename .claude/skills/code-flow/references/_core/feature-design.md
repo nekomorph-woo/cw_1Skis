@@ -12,6 +12,13 @@ Write comprehensive feature design documents for new features or major enhanceme
 - Require risk assessment and test planning
 - Mode 0 (Inception) when analyzing requirements
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "design feature", "create design doc", "technical approach", "API design"
+- "how should this be implemented", "evaluate options"
+- "MVP vs balanced vs advanced", "architecture decision"
+
 ## Context Determination
 
 Follow context management rules: See `context-management.md`
@@ -29,10 +36,7 @@ If user hasn't provided requirements or insight document, prompt: "Please provid
 
 ## Sequence Determination
 
-Check existing files in `flow-docs/*/01_dev/feature_design/`:
-- Extract sequence numbers from filenames (pattern: `<seq>-ft-*.md`)
-- Next sequence = max + 1
-- Start with `001` if no files exist
+See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Document Structure
 

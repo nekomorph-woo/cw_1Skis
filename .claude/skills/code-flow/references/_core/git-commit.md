@@ -9,6 +9,12 @@ Generate git commit messages following Conventional Commit format with emoji pre
 - Completed code changes requiring commit
 - Need to follow project commit conventions
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "commit", "commit changes", "git commit"
+- "create commit message", "generate commit"
+
 ## Commit Message Format
 
 **Language:** User's language with UTF-8 encoding
@@ -21,7 +27,7 @@ Generate git commit messages following Conventional Commit format with emoji pre
 - Focus on changes most relevant to current goal
 - Avoid excessive detail
 
-**CRITICAL (Windows only):** Use file-based commit method to ensure UTF-8 encoding. Always delete temporary commit file after commit.
+**⚠️ CRITICAL (Windows):** Use file-based commit method to ensure UTF-8 encoding. **Always delete temporary `commit_msg.txt` file after commit** to avoid repository clutter.
 
 ## Commit Types & Emojis
 

@@ -12,6 +12,13 @@ Explore existing codebase to understand implementation details, call chains, and
 - Understanding call flows and data paths
 - Documenting existing implementation before changes
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "explore code", "how is this implemented", "understand existing code", "trace call chain"
+- "analyze code structure", "find where X is implemented"
+- "document existing implementation", "understand the codebase"
+
 ## Context Determination
 
 Follow context management rules: See `context-management.md`
@@ -27,10 +34,7 @@ Start with: "I'm using the code-insight sub-skill to explore the existing codeba
 
 ## Sequence Determination
 
-Check existing files in `flow-docs/*/01_dev/code_insight/`:
-- Extract sequence numbers from filenames (pattern: `<seq>-insight-*.md`)
-- Next sequence = max + 1
-- Start with `001` if no files exist
+See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Document Structure
 

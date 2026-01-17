@@ -9,6 +9,12 @@ Generate migration plans from code change summary documents. Analyze target proj
 - Have code change summary requiring migration plan
 - Preparing to migrate code to target project
 
+## Trigger Keywords
+
+Common phrases that indicate this sub-skill should be used:
+- "create migration plan", "migrate changes", "generate migration"
+- "adapt to target project", "port this code"
+
 ## Context Determination
 
 **Extract context from commit-log document path:**
@@ -138,7 +144,28 @@ Based on summary intent (reference only). Adapt to target project's technology s
 | **Python / FastAPI** | `async def method(request: Request) -> Response` | async + type hints |
 | **Go / Gin** | `func (s *Service) Method(req Request) (Response, error)` | Receiver + error return |
 
-> For detailed language-specific patterns, see: `backend/<tech>.md`
+### Frontend Syntax Comparison
+
+| Technology | Component Pattern | Key Characteristics |
+|------------|-------------------|---------------------|
+| **React** | `function Component(props)` | Hooks, JSX, functional components |
+| **Vue** | `<script setup>` | Composition API, SFC |
+| **Angular** | `@Component() class Component` | TypeScript, decorators, RxJS |
+| **Next.js** | `export default function Page()` | App Router, SSR/SSG |
+| **Nuxt.js** | `<script setup>` | File-based routing, auto-imports |
+
+### Mobile Syntax Comparison
+
+| Technology | Component Pattern | Key Characteristics |
+|------------|-------------------|---------------------|
+| **React Native** | `function Component(props)` | React patterns, native modules |
+| **Flutter** | `class Widget extends StatelessWidget` | Dart, widget composition |
+
+> For detailed language-specific patterns, see:
+> - Backend: `backend/<tech>.md`
+> - Frontend: `frontend/<tech>.md`
+> - Mobile: `mobile/<tech>.md`
+> - Fullstack: `fullstack/<stack>.md`
 
 **Implementation template (adapt to target syntax):**
 
@@ -230,11 +257,7 @@ Each task should be:
 
 ## Determine Sequence
 
-Check existing migration plans:
-- List files in `flow-docs/*/03_migration/migration-plan/`
-- Find pattern `XXX_migration-*.md`
-- Get highest sequence, add 1
-- Start with `001` if none exist
+See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Important Notes
 
