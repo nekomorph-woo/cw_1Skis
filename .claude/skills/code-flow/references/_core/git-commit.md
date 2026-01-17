@@ -21,7 +21,7 @@ Generate git commit messages following Conventional Commit format with emoji pre
 - Focus on changes most relevant to current goal
 - Avoid excessive detail
 
-**CRITICAL:** Use file-based commit method on Windows to ensure UTF-8 encoding and avoid character corruption. **Always delete temporary commit file after commit.**
+**CRITICAL (Windows only):** Use file-based commit method to ensure UTF-8 encoding. Always delete temporary commit file after commit.
 
 ## Commit Types & Emojis
 
@@ -92,6 +92,13 @@ git commit -F commit_msg.txt
 
 # Step 3: Delete temporary file (CRITICAL cleanup step)
 Remove-Item commit_msg.txt
+
+# OR use one-line with auto-cleanup:
+@"
+✨ feat: Add scene management API
+- Implement scene creation endpoint
+- Add scene query functionality
+"@ | Out-File -FilePath commit_msg.txt -Encoding UTF8; git commit -F commit_msg.txt; Remove-Item commit_msg.txt
 ```
 
 **Windows PowerShell (备选):**
@@ -221,12 +228,17 @@ rm commit_msg.txt
 
 ## Important
 
-**CRITICAL:** Always review `git diff --cached` before generating message.
+- Always review `git diff --cached` before generating message
+- On Windows, use file-based commit with UTF-8 encoding
+- Always delete temporary `commit_msg.txt` file after commit
+- Use user's language for commit message content
 
-**CRITICAL:** On Windows, ALWAYS use file-based commit with UTF-8 encoding to avoid character corruption.
+## Handoff
 
-**CRITICAL:** ALWAYS delete temporary `commit_msg.txt` file after commit.
+After successful commit:
 
-**CRITICAL:** Use **user's language** for commit message content.
+"**Commit created:** `[commit-hash]`"
 
-**CRITICAL:** Ensure UTF-8 encoding to avoid character corruption in commit messages.
+"**Message:** [commit message preview]"
+
+"**Files committed:** [X] files changed, [Y] insertions(+), [Z] deletions(-)"

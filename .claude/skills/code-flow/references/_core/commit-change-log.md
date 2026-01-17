@@ -11,34 +11,23 @@ Generate code change summary documents from git commits. Focus on **what changed
 
 ## Context Determination
 
-**Step 0: Determine document context**
+Follow context management rules: See `context-management.md`
 
-1. **Check if user explicitly specified `<feature-name>`:**
-   - Pattern: "为 [feature-name] 分析提交...", "[feature-name] 的提交日志..."
-   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
-
-2. **If explicitly specified:**
-   - Switch to specified context
-   - Initialize directory structure if not exists:
-     ```bash
-     mkdir -p flow-docs/<feature-name>/03_migration/commit-log-summary
-     ```
-   - Output: `"**Context Switch:** → <feature-name>"`
-   - Proceed with specified context
-
-3. **If not explicitly specified:**
-   - Check for current context from recent documents in conversation
-   - If exists → Use current context
-     - Output: `"**Current Context:** <feature-name>"`
-   - If not exists → Ask user:
-     - "No current context. Please specify `<feature-name>` or provide absolute path to existing document."
-
-4. **If user input is ambiguous:**
-   - Ask: "Which feature/context should I analyze commits for? Please provide `<feature-name>`."
+**Quick reference:**
+1. Check if user explicitly specified `<feature-name>`
+2. If not, use current context from conversation
+3. If no context, ask user to specify
 
 ## Announcement
 
 Start with: "I'm using the commit-change-log sub-skill to generate code change summary documents. Please provide commit hash..."
+
+## Sequence Determination
+
+Check existing files in `flow-docs/*/03_migration/commit-log-summary/`:
+- Extract sequence numbers from filenames (pattern: `<seq>-<short-hash>-commit-log.md`)
+- Next sequence = max + 1
+- Start with `001` if no files exist
 
 ## Workflow
 
@@ -59,14 +48,7 @@ Prompt: "Please provide commit hash (e.g., `aa8db135ca4bde0d08c31c65bee27a088820
 2. Identify common files across commits
 3. Analyze commit relationships
 
-### Step 3: Determine Sequence
-
-Check existing files in `flow-docs/*/03_migration/commit-log-summary/`:
-- Extract sequence numbers from filenames
-- Next sequence = max + 1
-- Start with `001` if no files exist
-
-### Step 4: Generate Document
+### Step 3: Generate Document
 
 **For single commit:**
 

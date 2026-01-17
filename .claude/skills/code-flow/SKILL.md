@@ -2,8 +2,9 @@
 
 ---
 name: code-flow
-description: This skill should be used when the user asks to "explore code", "understand existing code", "design a feature", "write an implementation plan", "execute a plan", "review code", "save context", "generate commit message", "analyze git commits", "create migration plan", or mentions development workflow tasks like code-insight, feature-design, writing-plans, executing-plans, code-review, save-context, git-commit, commit-change-log, commit-migration. Provides comprehensive development workflow guidance for feature development, code migration, session management, and code review.
+description: Development workflow skill for code exploration, feature design, implementation planning, execution, code review, and migration. Use document-driven decoupling where sub-skills pass context through documents.
 version: 1.0.0
+author: claude-code
 ---
 
 ## Purpose
@@ -28,133 +29,29 @@ Each sub-skill operates independently:
 
 ### Technology Stack Adaptation
 
-This skill supports multiple technology stacks. When invoked, it will:
+This skill auto-detects project technology stack and adapts commands/patterns accordingly.
 
-1. **Auto-detect the project's technology stack** from project files
-2. **Load appropriate technology-specific guidance** from `references/`
-3. **Adapt commands, patterns, and examples** to the detected stack
+**Supported Stacks:**
+- **Backend:** Java/Spring Boot, Node/Express, Python/Django, Python/FastAPI, Go/Gin
+- **Frontend:** React, Vue, Angular, Next.js, Nuxt.js
+- **Mobile:** React Native, Flutter
+- **Full-Stack:** MERN, MEAN, T3 Stack
 
-**Supported Technology Stacks:**
-
-**Backend:**
-- Java / Spring Boot
-- Node.js / Express (Pure JavaScript)
-- Python / Django
-- Python / FastAPI
-- Go / Gin
-
-**Frontend:**
-- React
-- Vue
-- Angular
-- Next.js (React SSR)
-- Nuxt.js (Vue SSR)
-
-**Mobile:**
-- React Native
-- Flutter
-
-**Full-Stack:**
-- MERN (MongoDB + Express + React + Node)
-- MEAN (MongoDB + Express + Angular + Node)
-- T3 Stack (TypeScript + tRPC + Tailwind + Next.js)
-
-**Technology Detection Signals:**
-| Stack | Detection Files |
-|-------|----------------|
-| Java/Spring Boot | `pom.xml`, `build.gradle`, `@SpringBootApplication` |
-| Node/Express | `package.json` with express, `server.js` |
-| Python/Django | `manage.py`, `settings.py` |
-| Python/FastAPI | `main.py` with FastAPI import |
-| Go/Gin | `go.mod`, `github.com/gin-gonic/gin` |
-| React | `package.json` with react, `.jsx` files |
-| Vue | `package.json` with vue, `.vue` files |
-| Angular | `angular.json`, `.component.ts` |
-| Next.js | `next.config.js`, `app/` directory |
-| Nuxt.js | `nuxt.config.ts`, `pages/` directory |
-| React Native | `react-native` in package.json |
-| Flutter | `pubspec.yaml`, `lib/main.dart` |
-
-See `references/README.md` for detailed technology-specific guidance.
+See `references/README.md` for detection signals and detailed guidance.
 
 ### Document Context Management
 
 The skill maintains a **current document context** (`<feature-name>`) to ensure all documents belong to the same feature during a session.
 
-#### Context Determination Rules
+**Key Rules:**
+- User explicitly specifies → Switch context
+- Relative path reference → Use current context (must exist)
+- No context information → Keep current context
+- No context exists → Ask user
 
-**Priority order:**
+**Context Propagation:** Sub-skills automatically inherit context. For example: `code-insight` sets initial context → `writing-plans` inherits → `executing-plans` inherits from plan path.
 
-1. **User explicitly specifies** → Switch to specified context
-2. **Relative path reference** → Use current context (must exist)
-3. **No context information** → Keep current context
-4. **No context exists** → Ask user
-
-#### When to Ask User
-
-Ask: "Which feature/context should I work with? Please provide `<feature-name>` or path to existing document."
-
-**In these scenarios:**
-- First sub-skill invocation in session
-- User input is ambiguous (could match multiple features)
-- No context can be determined from input
-
-#### Context Switching
-
-**When user explicitly specifies `<feature-name>`:**
-
-1. **Discard current context**
-2. **Switch to specified context**
-3. **Initialize if not exists:**
-   ```bash
-   mkdir -p flow-docs/<feature-name>/{01_dev/{code_insight,feature_design,impl_plan,code_review},02_memories/context_<feature-name>,03_migration/{commit-log-summary,migration-plan}}
-   ```
-
-**When user uses relative paths without explicit context:**
-
-- Use current context
-- Error if no current context exists
-- Ask: "No current context. Please specify `<feature-name>` or provide absolute path."
-
-#### Explicit Specification Patterns
-
-**User input contains these patterns = explicit context specification:**
-
-```markdown
-1. Direct feature-name mention:
-   - "为 [feature-name] 编写..." (Write for [feature-name]...)
-   - "[feature-name] 的实现计划" ([feature-name] implementation plan)
-   - "在 [feature-name] 功能中..." (In [feature-name] feature...)
-
-2. Absolute path reference:
-   - "读取 flow-docs/<feature-name>/..."
-   - "打开 flow-docs/*/01_dev/feature_design/..."
-```
-
-#### Context Propagation
-
-**Sub-skills inherit context automatically:**
-
-- `code-insight` → Sets initial context from exploration
-- `feature-design` → Inherits from code-insight or user input
-- `writing-plans` → Inherits from feature-design or user input
-- `executing-plans` → Inherits from plan document path
-- `code-review` → Inherits from executing-plans or user input
-
-**Example flow:**
-
-```
-User: "探索 scene creation 代码"
-→ code-insight runs, context = "scene-creation"
-
-User: "编写实现计划"
-→ writing-plans runs, uses context = "scene-creation" (from previous)
-→ Output: flow-docs/scene-creation/01_dev/impl_plan/...
-
-User: "为 user-management 编写实现计划"
-→ writing-plans runs, switches context to "user-management" (explicit)
-→ Output: flow-docs/user-management/01_dev/impl_plan/...
-```
+**Detailed rules:** See `references/_core/context-management.md`
 
 ## Development Workflows
 
@@ -337,14 +234,14 @@ Use planning for:
 
 All documents use consistent structure under `flow-docs/<feature-name>/`:
 
-| Type | Path                                                              |
-|------|-------------------------------------------------------------------|
-| Code Insight | `01_dev/code_insight/<seq>-insight-YYYY-MM-DD.md`                |
-| Feature Design | `01_dev/feature_design/<seq>-ft-YYYY-MM-DD.md`                    |
-| Implementation Plan | `01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md`                       |
-| Fix Plan | `01_dev/impl_plan/fix-<seq>-plan-YYYY-MM-DD.md`                   |
-| Code Review | `01_dev/code_review/<seq>-review-YYYY-MM-DD.md`                   |
-| Context | `02_memories/context_<feature-name>/active_context.md`            |
+| Type | Path |
+|------|------|
+| Code Insight | `01_dev/code_insight/<seq>-insight-YYYY-MM-DD.md` |
+| Feature Design | `01_dev/feature_design/<seq>-ft-YYYY-MM-DD.md` |
+| Implementation Plan | `01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md` |
+| Fix Plan | `01_dev/impl_plan/fix-<seq>-plan-YYYY-MM-DD.md` |
+| Code Review | `01_dev/code_review/<seq>-review-YYYY-MM-DD.md` |
+| Context | `02_memories/context_<feature-name>/active_context.md` |
 | Commit Log | `03_migration/commit-log-summary/<seq>-<short-hash>-commit-log.md` |
 | Migration Plan | `03_migration/migration-plan/<seq>-<short-hash>-migration-plan.md` |
 
@@ -431,45 +328,27 @@ Invoke sub-skills directly:
 ## Context Examples
 
 ### Scenario 1: First Invocation with Context
-
 ```
 User: "探索 scene creation 代码"
-→ code-insight runs
-→ Determines context = "scene-creation" (mentioned in input)
+→ code-insight runs, context = "scene-creation"
 → Output: flow-docs/scene-creation/01_dev/code_insight/...
 ```
 
 ### Scenario 2: Context Inheritance
-
 ```
 User: "编写实现计划"
-→ writing-plans runs
-→ No explicit context specified
-→ Uses current context = "scene-creation" (from previous)
+→ writing-plans runs, uses context = "scene-creation" (from previous)
 → Output: flow-docs/scene-creation/01_dev/impl_plan/...
 ```
 
 ### Scenario 3: Explicit Context Switch
-
 ```
 User: "为 user-management 编写实现计划"
-→ writing-plans runs
-→ Explicitly specified: "user-management"
-→ Switches context to "user-management"
+→ writing-plans runs, switches context to "user-management" (explicit)
 → Output: flow-docs/user-management/01_dev/impl_plan/...
 ```
 
-### Scenario 4: Relative Path Reference
-
-```
-User: "读取 feature-design 文档"
-→ No feature-name specified
-→ Uses current context = "user-management"
-→ Reads: flow-docs/user-management/01_dev/feature_design/...
-```
-
-### Scenario 5: Absolute Path (Auto Switch)
-
+### Scenario 4: Absolute Path (Auto Switch)
 ```
 User: "读取 flow-docs/scene-creation/01_dev/code_insight/..."
 → Extracts "scene-creation" from absolute path
@@ -477,8 +356,7 @@ User: "读取 flow-docs/scene-creation/01_dev/code_insight/..."
 → Reads the specified document
 ```
 
-### Scenario 6: No Context - Ask User
-
+### Scenario 5: No Context - Ask User
 ```
 User: "编写实现计划" (session first invocation)
 → No current context, no feature-name specified
@@ -488,21 +366,34 @@ User: "编写实现计划" (session first invocation)
 ### Context Output Format
 
 **When switching context:**
-
 ```markdown
 **Context Switch:** "scene-creation" → "user-management"
-
 All subsequent documents will be saved to:
 flow-docs/user-management/
 ```
 
 **When confirming context:**
-
 ```markdown
 **Current Context:** user-management
-
 Working directory: flow-docs/user-management/
 ```
+
+## Error Recovery & Edge Cases
+
+### Code Review Failures
+- **P0 issues found during executing-plans:** Fix immediately before continuing
+- **Fix introduces new issues:** Re-run code-review, repeat until clean
+
+### Git Operation Failures
+- **Commit fails:** Check for merge conflicts, unmerged files, or permission issues
+- **Network issues:** Retry after checking connection, use `git fetch` to sync
+- **UTF-8 encoding issues (Windows):** Always use file-based commit method
+
+### Edge Cases
+- **Feature name with special characters:** Validate before directory creation
+- **Manual document directory changes:** Warn user, recommend re-initializing
+- **Git branch switch:** Context remains valid unless documents were deleted
+- **Multiple tech stacks in monorepo:** Detect based on current working directory
 
 ## Language Convention
 

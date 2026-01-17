@@ -12,45 +12,23 @@ Review code changes for compilation issues, bugs, security vulnerabilities, and 
 ## Context Determination
 
 **Implicit Mode (Plan Execution):**
-
 - Inherit context from executing-plans
 - Use current context for output path: `flow-docs/<feature-name>/01_dev/code_review/`
-- No context determination needed
 
 **Explicit Mode (User Invocation):**
 
-**Step 0: Determine document context**
+Follow context management rules: See `context-management.md`
 
-1. **Check if user explicitly specified `<feature-name>` in review request:**
-   - Pattern: "为 [feature-name] 进行代码审查...", "审查 [feature-name] 的代码..."
-   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
-
-2. **If explicitly specified:**
-   - Switch to specified context
-   - Initialize directory structure if not exists:
-     ```bash
-     mkdir -p flow-docs/<feature-name>/01_dev/code_review
-     ```
-   - Output: `"**Context Switch:** → <feature-name>"`
-   - Proceed with review scope questions
-
-3. **If not explicitly specified:**
-   - Check for current context from recent documents in conversation
-   - If exists → Use current context
-     - Output: `"**Current Context:** <feature-name>"`
-   - If not exists → Ask user:
-     - "No current context. Please specify `<feature-name>` for the review output."
-
-4. **After context is determined, ask review scope:**
-   ```
-   Please specify review scope:
-   1. Local unpushed commits (current branch vs remote)
-   2. Local uncommitted changes (working directory + staged)
-   3. Specific commit hash (provide hash)
-   4. Branch diff from origin (branch name)
-   5. Specific files (provide paths)
-   6. Type any (describe your scope)
-   ```
+After context is determined, ask review scope:
+```
+Please specify review scope:
+1. Local unpushed commits (current branch vs remote)
+2. Local uncommitted changes (working directory + staged)
+3. Specific commit hash (provide hash)
+4. Branch diff from origin (branch name)
+5. Specific files (provide paths)
+6. Type any (describe your scope)
+```
 
 ## Announcement
 
@@ -335,7 +313,7 @@ Fix compilation errors before proceeding.
 ### With executing-plans (Implicit Mode)
 
 After each task completion:
-1. Run code-review automatically on task files
+1. Run code-review automatically on task files (files listed in current task's "Files:" section)
 2. **If P0 issues:** Fix immediately before continuing
 3. **If P1-P3 issues:** Document and accumulate for final summary
 
@@ -352,71 +330,7 @@ This will:
 2. Extract `[MUST_FIX]` issues
 3. Generate fix plan with prefix `fix-`
 
----
-
-## Fix Plan Integration
-
-When `writing-plans` is invoked with `--fix-for <review-doc>`:
-
-### Step 1: Load Review Document
-
-Read from `flow-docs/<feature-name>/01_dev/code_review/<seq>-review-YYYY-MM-DD.md`
-
-### Step 2: Extract MUST_FIX Issues
-
-Parse review document for issues marked with:
-- `[MUST_FIX]` in issue title
-- P1 priority level
-
-### Step 3: Generate Fix Tasks
-
-For each `[MUST_FIX]` issue:
-
-```markdown
-### Task N: Fix [Issue Title]
-
-**Issue Reference:** [Original issue from review]
-**Location:** `filepath:Lstart-Lend`
-
-**Step 1: Write failing test for the fix**
-
-```javascript
-function test_fixed_behavior() {
-    // Test that verifies the bug is fixed
-}
-```
-
-**Step 2: Run test to verify it fails**
-
-Run: `npm test` / `pytest` / `mvn test`
-Expected: FAIL
-
-**Step 3: Apply the fix**
-
-```javascript
-// File: filepath:Lstart-Lend
-// Fixed code from suggested fix in review
-```
-
-**Step 4: Run test to verify it passes**
-
-Run: `npm test` / `pytest` / `mvn test`
-Expected: PASS
-
-**Step 5: Code review**
-
-Run: `/code-flow code-review`
-Expected: No more issues for this location
-
-**Step 6: Commit**
-
-Use `/code-flow git-commit` sub-skill.
-```
-
-### Step 4: Output Path
-
-Fix plan documents use `fix-` prefix:
-`flow-docs/<feature-name>/01_dev/impl_plan/fix-<seq>-plan-YYYY-MM-DD.md`
+**Fix plan output:** `flow-docs/<feature-name>/01_dev/impl_plan/fix-<seq>-plan-YYYY-MM-DD.md`
 
 ---
 
@@ -427,8 +341,6 @@ Fix plan documents use `fix-` prefix:
 - Use `[MUST_FIX]` marker for P1 issues requiring fix plans
 - Output format must be consistent
 - Sequence numbers auto-increment based on existing files
-- Ensure UTF-8 encoding
-- Use user's language for descriptions
 - In implicit mode, only review current task files
 - In explicit mode, ask user for scope specification
 

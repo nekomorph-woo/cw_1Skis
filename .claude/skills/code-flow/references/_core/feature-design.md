@@ -14,34 +14,25 @@ Write comprehensive feature design documents for new features or major enhanceme
 
 ## Context Determination
 
-**Step 0: Determine document context**
+Follow context management rules: See `context-management.md`
 
-1. **Check if user explicitly specified `<feature-name>`:**
-   - Pattern: "为 [feature-name] 设计...", "[feature-name] 功能设计...", "在 [feature-name] 中..."
-   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
-
-2. **If explicitly specified:**
-   - Switch to specified context
-   - Initialize directory structure if not exists:
-     ```bash
-     mkdir -p flow-docs/<feature-name>/01_dev/feature_design
-     ```
-   - Output: `"**Context Switch:** → <feature-name>"`
-   - Proceed with specified context
-
-3. **If not explicitly specified:**
-   - Check for current context from recent documents in conversation
-   - If exists → Use current context
-     - Output: `"**Current Context:** <feature-name>"`
-   - If not exists → Ask user:
-     - "No current context. Please specify `<feature-name>` or provide absolute path to existing document."
-
-4. **If user input is ambiguous:**
-   - Ask: "Which feature/context should I design? Please provide `<feature-name>`."
+**Quick reference:**
+1. Check if user explicitly specified `<feature-name>`
+2. If not, use current context from conversation
+3. If no context, ask user to specify
 
 ## Announcement
 
-Start with: "I'm using the feature-design sub-skill to create the feature design document. If user hasn't provided a design document, prompt user to provide exploration document from `flow-docs/*/01_dev/code_insight/` or provide requirements description."
+Start with: "I'm using the feature-design sub-skill to create the feature design document..."
+
+If user hasn't provided requirements or insight document, prompt: "Please provide requirements description or insight document from `flow-docs/*/01_dev/code_insight/`."
+
+## Sequence Determination
+
+Check existing files in `flow-docs/*/01_dev/feature_design/`:
+- Extract sequence numbers from filenames (pattern: `<seq>-ft-*.md`)
+- Next sequence = max + 1
+- Start with `001` if no files exist
 
 ## Document Structure
 
@@ -55,7 +46,7 @@ Start with: "I'm using the feature-design sub-skill to create the feature design
 | Feature Name | [Feature name] |
 | Author | [Author] |
 | Date | [YYYY-MM-DD] |
-| Status | Draft / In Review / Articles/Approved / In Progress / Done |
+| Status | Draft / In Review / Approved / In Progress / Done |
 | Priority | P0 / P1 / P2 / P3 |
 ```
 
@@ -341,7 +332,6 @@ type XxxRequest struct {
 - Assess risks with probability, Impact, and mitigation strategies
 - Include comprehensive test scenarios and edge cases
 - Use **user's language** for all descriptions and explanations
-- Ensure UTF-8 encoding to avoid character corruption
 
 ## Handoff
 

@@ -22,6 +22,17 @@ fi
 # Define base directory
 BASE_DIR="flow-docs/$FEATURE_NAME"
 
+# Check if directory already exists
+if [ -d "$BASE_DIR" ]; then
+    echo "⚠️  Warning: Directory '$BASE_DIR' already exists."
+    read -p "Continue and add missing directories? (Y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "Cancelled."
+        exit 0
+    fi
+fi
+
 # Create directory structure
 echo "📁 Creating flow-docs directory structure..."
 echo "   Base directory: $BASE_DIR"
@@ -30,6 +41,7 @@ echo "   Base directory: $BASE_DIR"
 mkdir -p "$BASE_DIR/01_dev/code_insight"
 mkdir -p "$BASE_DIR/01_dev/feature_design"
 mkdir -p "$BASE_DIR/01_dev/impl_plan"
+mkdir -p "$BASE_DIR/01_dev/code_review"
 mkdir -p "$BASE_DIR/02_memories/context_${FEATURE_NAME}"
 mkdir -p "$BASE_DIR/03_migration/commit-log-summary"
 mkdir -p "$BASE_DIR/03_migration/migration-plan"
@@ -46,6 +58,7 @@ This directory contains all development workflow documentation for ${FEATURE_NAM
 - **code_insight/** - Code exploration documents (use code-insight sub-skill)
 - **feature_design/** - Feature design documents (use feature-design sub-skill)
 - **impl_plan/** - Implementation plan documents (use writing-plans sub-skill)
+- **code_review/** - Code review documents (use code-review sub-skill)
 
 ### 02_memories/ - Session Memory
 - **context_${FEATURE_NAME}/** - Session context (use save-context sub-skill)
@@ -71,6 +84,9 @@ Generate documentation using code-flow sub-commands:
 # Execute plan
 /code-flow executing-plans
 
+# Review code
+/code-flow code-review
+
 # Save context
 /code-flow save-context
 
@@ -89,12 +105,14 @@ Generate documentation using code-flow sub-commands:
 Created: $(date +"%Y-%m-%d %H:%M:%S")
 EOF
 
+echo ""
 echo "✅ Directory structure created successfully!"
 echo ""
 echo "📂 Created directories:"
 echo "   $BASE_DIR/01_dev/code_insight/"
 echo "   $BASE_DIR/01_dev/feature_design/"
 echo "   $BASE_DIR/01_dev/impl_plan/"
+echo "   $BASE_DIR/01_dev/code_review/"
 echo "   $BASE_DIR/02_memories/context_${FEATURE_NAME}/"
 echo "   $BASE_DIR/03_migration/commit-log-summary/"
 echo "   $BASE_DIR/03_migration/migration-plan/"

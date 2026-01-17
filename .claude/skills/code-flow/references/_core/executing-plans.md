@@ -11,28 +11,15 @@ Execute implementation or migration plans step-by-step. Check task completion st
 
 ## Context Determination
 
-**Step 0: Extract context from plan document**
+**Extract context from plan document path:**
 
-1. **Parse plan document path:**
-   - Extract `<feature-name>` from plan path
-   - Pattern: `flow-docs/<feature-name>/01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md`
-   - Pattern: `flow-docs/<feature-name>/03_migration/migration-plan/<seq>-<hash>-migration-plan.md`
+Parse plan document path to extract `<feature-name>`:
+- Pattern: `flow-docs/<feature-name>/01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md`
+- Pattern: `flow-docs/<feature-name>/03_migration/migration-plan/<seq>-<hash>-migration-plan.md`
 
-2. **Extract and switch context:**
-   - Switch to extracted context (discard current context)
-   - Output: `"**Current Context:** <feature-name> (from plan document)"`
+**Output:** `"**Current Context:** <feature-name> (from plan document)"`
 
-3. **Verify context consistency:**
-   - Ensure all task file paths belong to the same context
-   - Warn if task paths reference different `<feature-name>`
-
-**Example:**
-```
-Plan document: flow-docs/scene-creation/01_dev/impl_plan/001-plan-2024-01-15.md
-→ Extract: feature-name = "scene-creation"
-→ Switch context to "scene-creation"
-→ All task files should be within scene-creation feature
-```
+**Verify context:** Ensure all task file paths belong to the same context
 
 ## Announcement
 
@@ -180,8 +167,7 @@ After completion:
 - **Check before execute:** Verify completion status first
 - **Plan validation:** No plans → prompt; Single → confirm; Multiple → select
 - **Preserve code:** Follow existing maintenance rules
-- **User's language:** Use **user's language** for all messages
-- **UTF-8 encoding:** Ensure all files use UTF-8 encoding
+- **User's language:** Use user's language for all messages
 
 ## Output
 

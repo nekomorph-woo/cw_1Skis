@@ -20,7 +20,7 @@ User requests: "I need to add a new device control feature that supports remote 
 
 **Claude actions:**
 1. Ask for requirements or existing insight document
-2. Create `flow-docs/device-control/01_dev/feature_design/ft-2026-01-17-device-control.md`
+2. Create `flow-docs/device-control/01_dev/feature_design/001-ft-2026-01-17-device-control.md`
 3. Document: requirements, 3 technical approaches (MVP/Balanced/Advanced), API design, data design, risks
 
 ```
@@ -29,7 +29,7 @@ User requests: "I need to add a new device control feature that supports remote 
 
 **Claude actions:**
 1. Read design document from `01_dev/feature_design/`
-2. Create `flow-docs/device-control/01_dev/impl_plan/plan-2026-01-17-device-control.md`
+2. Create `flow-docs/device-control/01_dev/impl_plan/001-plan-2026-01-17-device-control.md`
 3. Break down into bite-sized tasks with TDD approach
 
 ```
@@ -88,7 +88,7 @@ User requests: "I need to modify the scene creation functionality to add device 
 1. Ask: "What functionality needs exploration?"
 2. Analyze scene creation code
 3. Document call chain, key code, file inventory
-4. Create `flow-docs/scene-online-check/01_dev/code_insight/insight-2026-01-17-scene-creation.md`
+4. Create `flow-docs/scene-online-check/01_dev/code_insight/001-insight-2026-01-17-scene-creation.md`
 
 ```
 /code-flow feature-design
@@ -97,7 +97,7 @@ User requests: "I need to modify the scene creation functionality to add device 
 **Claude actions:**
 1. Read insight document for context
 2. Create design with 3 approaches for adding online check
-3. Create `flow-docs/scene-online-check/01_dev/feature_design/ft-2026-01-17-online-validation.md`
+3. Create `flow-docs/scene-online-check/01_dev/feature_design/001-ft-2026-01-17-online-validation.md`
 
 ```
 /code-flow writing-plans
@@ -117,9 +117,9 @@ User requests: "I need to modify the scene creation functionality to add device 
 ```
 flow-docs/scene-online-check/
 ├── 01_dev/
-│   ├── code_insight/insight-2026-01-17-scene-creation.md
-│   ├── feature_design/ft-2026-01-17-online-validation.md
-│   └── impl_plan/plan-2026-01-17-online-validation.md
+│   ├── code_insight/001-insight-2026-01-17-scene-creation.md
+│   ├── feature_design/001-ft-2026-01-17-online-validation.md
+│   └── impl_plan/001-plan-2026-01-17-online-validation.md
 └── 02_memories/
     └── context_scene-online-check/active_context.md
 ```
@@ -142,7 +142,7 @@ User requests: "I need to migrate changes from commit aa8db135 to another projec
 1. Ask: "Please provide commit hash"
 2. User provides: `aa8db135ca4bde0d08c31c65bee27a088820b1b7`
 3. Analyze commit, extract changes
-4. Create `flow-docs/cloud-armed-migration/03_migration/commit-log-summary/001_aa8db13_commit_log.md`
+4. Create `flow-docs/cloud-armed-migration/03_migration/commit-log-summary/001-aa8db13-commit-log.md`
 
 ```
 /code-flow commit-migration
@@ -150,10 +150,10 @@ User requests: "I need to migrate changes from commit aa8db135 to another projec
 
 **Claude actions:**
 1. Ask: "Please provide summary document path"
-2. User provides: `flow-docs/cloud-armed-migration/03_migration/commit-log-summary/001_aa8db13_commit_log.md`
+2. User provides: `flow-docs/cloud-armed-migration/03_migration/commit-log-summary/001-aa8db13-commit-log.md`
 3. Analyze target project structure
 4. Generate adapted migration plan
-5. Create `flow-docs/cloud-armed-migration/03_migration/migration-plan/001_aa8db13_migration_plan.md`
+5. Create `flow-docs/cloud-armed-migration/03_migration/migration-plan/001-aa8db13-migration-plan.md`
 
 ```
 /code-flow executing-plans
@@ -173,8 +173,8 @@ User requests: "I need to migrate changes from commit aa8db135 to another projec
 ```
 flow-docs/cloud-armed-migration/
 └── 03_migration/
-    ├── commit-log-summary/001_aa8db13_commit_log.md
-    └── migration-plan/001_aa8db13_migration_plan.md
+    ├── commit-log-summary/001-aa8db13-commit-log.md
+    └── migration-plan/001-aa8db13-migration-plan.md
 ```
 
 ---
@@ -208,7 +208,7 @@ User requests: "Scene query API has a bug, needs fixing"
 ```
 flow-docs/scene-query-bug-fix/
 └── 01_dev/
-    └── impl_plan/plan-2026-01-17-scene-query-fix.md
+    └── impl_plan/001-plan-2026-01-17-scene-query-fix.md
 ```
 
 ---
@@ -231,7 +231,7 @@ User requests: "I need to migrate multiple commits: aa8db135 bb8db136 cc8db137"
 3. Ask if batch processing (if large)
 4. Analyze each commit
 5. Merge analysis for common files
-6. Create single summary: `002_aa8db13-cc8db13_commit_log.md`
+6. Create single summary: `002-aa8db13-cc8db13-commit-log.md`
 
 ```
 /code-flow commit-migration
@@ -254,7 +254,7 @@ User: "Help me understand how scene creation works"
 /code-flow code-insight
 ```
 
-**Output:** `01_dev/code_insight/insight-YYYY-MM-DD-scene-creation.md`
+**Output:** `01_dev/code_insight/001-insight-YYYY-MM-DD-scene-creation.md`
 
 No other sub-skills invoked. User can review and decide next steps.
 

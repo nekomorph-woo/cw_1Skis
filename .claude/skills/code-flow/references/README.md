@@ -190,10 +190,6 @@ When using code-flow, the skill will automatically detect your project's technol
 
 ---
 
-## Language & Encoding Reminder
+## Language & Encoding
 
-**CRITICAL:** Always generate documentation in the USER'S LANGUAGE with UTF-8 encoding:
-- Detect user language from request
-- Generate all documentation content (descriptions, comments) in that language
-- Keep technical terms and code identifiers in original form (English)
-- Ensure UTF-8 encoding to prevent character corruption
+Generate documentation in the USER'S LANGUAGE with UTF-8 encoding. Keep technical terms and code identifiers in original form.

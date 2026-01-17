@@ -11,23 +11,14 @@ Generate migration plans from code change summary documents. Analyze target proj
 
 ## Context Determination
 
-**Step 0: Extract context from commit-log document**
+**Extract context from commit-log document path:**
 
-1. **Parse commit-log document path:**
-   - Extract `<feature-name>` from commit-log path
-   - Pattern: `flow-docs/<feature-name>/03_migration/commit-log-summary/<seq>-<hash>-commit-log.md`
+Parse commit-log document path to extract `<feature-name>`:
+- Pattern: `flow-docs/<feature-name>/03_migration/commit-log-summary/<seq>-<hash>-commit-log.md`
 
-2. **Extract and switch context:**
-   - Switch to extracted context (discard current context)
-   - Output: `"**Current Context:** <feature-name> (from commit-log document)"`
+**Output:** `"**Current Context:** <feature-name> (from commit-log document)"`
 
-**Example:**
-```
-Commit-log document: flow-docs/scene-creation/03_migration/commit-log-summary/001-abc123-commit-log.md
-→ Extract: feature-name = "scene-creation"
-→ Switch context to "scene-creation"
-→ Migration plan output: flow-docs/scene-creation/03_migration/migration-plan/001-abc123-migration-plan.md
-```
+**Migration plan output:** `flow-docs/<feature-name>/03_migration/migration-plan/<seq>-<hash>-migration-plan.md`
 
 ## Announcement
 
@@ -254,7 +245,6 @@ Check existing migration plans:
 - **Read before write**
 - **Preserve code style**
 - **Use user's language** for all generated content
-- **Ensure UTF-8 encoding** to avoid character corruption
 
 ## Handoff
 

@@ -12,34 +12,25 @@ Write comprehensive implementation plans that convert design documents into acti
 
 ## Context Determination
 
-**Step 0: Determine document context**
+Follow context management rules: See `context-management.md`
 
-1. **Check if user explicitly specified `<feature-name>`:**
-   - Pattern: "为 [feature-name] 编写...", "[feature-name] 的实现计划...", "在 [feature-name] 中..."
-   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
-
-2. **If explicitly specified:**
-   - Switch to specified context
-   - Initialize directory structure if not exists:
-     ```bash
-     mkdir -p flow-docs/<feature-name>/01_dev/impl_plan
-     ```
-   - Output: `"**Context Switch:** → <feature-name>"`
-   - Proceed with specified context
-
-3. **If not explicitly specified:**
-   - Check for current context from recent documents in conversation
-   - If exists → Use current context
-     - Output: `"**Current Context:** <feature-name>"`
-   - If not exists → Ask user:
-     - "No current context. Please specify `<feature-name>` or provide absolute path to existing document."
-
-4. **If user input is ambiguous:**
-   - Ask: "Which feature/context should I write plan for? Please provide `<feature-name>`."
+**Quick reference:**
+1. Check if user explicitly specified `<feature-name>`
+2. If not, use current context from conversation
+3. If no context, ask user to specify
 
 ## Announcement
 
-Start with: "I'm using the writing-plans sub-skill to create the implementation plan. If user hasn't provided a design document, prompt user to provide design document from `flow-docs/*/01_dev/feature_design/` or provide requirements description."
+Start with: "I'm using the writing-plans sub-skill to create the implementation plan..."
+
+If user hasn't provided design document, prompt: "Please provide design document from `flow-docs/*/01_dev/feature_design/` or requirements description."
+
+## Sequence Determination
+
+Check existing files in `flow-docs/*/01_dev/impl_plan/`:
+- Extract sequence numbers from filenames (pattern: `<seq>-plan-*.md` or `fix-<seq>-plan-*.md`)
+- Next sequence = max + 1
+- Start with `001` if no files exist
 
 ## Document Header
 
@@ -186,8 +177,7 @@ Follow git-commit workflow:
 - Complete code in plan (not "add validation")
 - Exact commands with expected output
 - DRY, YAGNI, TDD, frequent commits
-- Use user's **user's language** for all content
-- Ensure UTF-8 encoding to avoid character corruption
+- Use user's language for all content
 
 ## Output Path
 
