@@ -1,0 +1,157 @@
+# Executing Plans - Plan Execution Guide
+
+## Purpose
+
+Execute implementation or migration plans step-by-step. Check task completion status before execution, output code references to prove completion, and execute only pending tasks.
+
+## When to Use
+
+- Have implementation plan requiring execution
+- Have migration plan requiring execution
+
+## Announcement
+
+Start with: "I'm using the executing-plans sub-skill to execute the implementation plan. First checking if a plan file is provided..."
+
+## Workflow
+
+### Step 1: Check for Plan File
+
+List all `.md` files in plan directories:
+- Implementation: `flow-docs/*/01_dev/impl_plan/`
+- Migration: `flow-docs/*/03_migration/migration-plan/`
+
+**Case 1: No plans (count = 0)**
+- Prompt: "⚠️ No plan files found in the plan directory. Please provide a path or use `/code-flow writing-plans` to create one"
+
+**Case 2: Single plan (count = 1)**
+- Prompt: "Found plan file: `[filename]`. Confirm execution? (Y/N)"
+
+**Case 3: Multiple plans (count > 1)**
+- List numbered: `1. plan-xxx.md\n2. plan-yyy.md\n...`
+- Prompt: "Please select (enter number or filename)"
+
+### Step 2: Parse Plan File
+
+Extract:
+- **Goal:** Feature goal
+- **Architecture:** Architecture approach
+- **Tech Stack:** Technologies used (detected from project)
+- **Tasks:** All tasks with steps
+
+### Step 3: Create Task List
+
+For each task:
+- Title: `Task N: [Component Name]`
+- Description: Files, steps, expected outcomes
+
+### Step 3.5: Check Task Completion Status
+
+**Before executing each task, verify completion:**
+
+For each task:
+1. **Read relevant files:** Load files from "Files:" section
+2. **Check code state:** For each modification:
+   - Read file and check if expected changes exist
+   - Match expected code patterns
+   - Check Git history for matching commits
+3. **Verify completion with code references:**
+   - **CRITICAL:** If completed, output `[filepath]#LstartLine-endLine`
+   - Example: `✅ Task N detected as completed, evidence: [filepath]#L45-50`
+   - **DO NOT skip without evidence**
+4. **Decision:**
+   - **Completed:** Mark as completed, skip execution
+   - **Incomplete:** Mark as pending, proceed to execution
+   - **Ambiguous:** Ask user
+
+**Important:** Never skip a task without code references.
+
+### Step 4: Execute Tasks Sequentially
+
+For each pending task:
+1. **Announce:** "Starting Task N: [Component Name]"
+2. **Read files:** Load relevant files
+3. **Execute steps:** Follow each step:
+   - Write code (if "Write the failing test")
+   - Run commands (if "Run test to verify it fails")
+   - Implement (if "Write minimal implementation")
+   - Verify (if "Run test to verify it passes")
+   - Commit (if "Commit")
+4. **Verify completion:** Check step success
+5. **Output proof:** `[filepath]#LstartLine-endLine`
+6. **Mark complete** and continue
+
+### Step 5: Handle Errors
+
+If step fails:
+- Log error clearly
+- Explain what went wrong
+- Ask: "Continue to next task? (Y/N) or fix current task? (F)"
+
+### Step 6: Final Summary
+
+After completion:
+- Display summary:
+  - Total tasks: X
+  - Completed: Y
+  - Failed: Z
+  - Skipped: W
+- List remaining todos
+- Ask: "Continue with remaining tasks? (Y/N)"
+
+## Code Execution Rules
+
+### Technology-Specific Commands
+
+| Technology | Compile | Test | Verify | Commit |
+|------------|---------|------|--------|--------|
+| **Java/Spring Boot** | `mvn compile -DskipTests` | `mvn test` | BUILD SUCCESS | `/code-flow git-commit` |
+| **Node.js/Express** | N/A | `npm test` | tests pass | `/code-flow git-commit` |
+| **Python/Django** | N/A | `python manage.py test` | tests pass | `/code-flow git-commit` |
+| **Python/FastAPI** | N/A | `pytest` | tests pass | `/code-flow git-commit` |
+| **Go/Gin** | `go build` | `go test` | build success | `/code-flow git-commit` |
+| **React** | `npm run build` | `npm test` | build success | `/code-flow git-commit` |
+| **Vue** | `npm run build` | `npm run test` | build success | `/code-flow git-commit` |
+| **Angular** | `ng build` | `ng test` | build success | `/code-flow git-commit` |
+| **Next.js** | `npm run build` | `npm run test` | build success | `/code-flow git-commit` |
+
+> **For detailed technology-specific commands, see:** `backend/<tech>.md`, `frontend/<tech>.md`, `fullstack/<stack>.md`
+
+### File Modifications
+
+- Read first → Edit tool → Preserve structure/style
+- New files: Follow conventions for the detected technology
+
+## Important Notes
+
+- **Prove completion:** Always output `[filepath]#LstartLine-endLine` when skipping
+- **Check before execute:** Verify completion status first
+- **Plan validation:** No plans → prompt; Single → confirm; Multiple → select
+- **Preserve code:** Follow existing maintenance rules
+- **User's language:** Use **user's language** for all messages
+- **UTF-8 encoding:** Ensure all files use UTF-8 encoding
+
+## Output
+
+Code implementation (no document created)
+
+## Quick Reference
+
+| Technology | Commands Summary |
+|------------|-----------------|
+| Java/Spring Boot | `mvn compile -DskipTests`, `mvn test` |
+| Node.js/Express | `npm test`, `npm install` |
+| Python/Django | `python manage.py test`, `pip install -r` |
+| Python/FastAPI | `pytest`, `pip install -r` |
+| Go/Gin | `go build`, `go test` |
+| React/Vue/Angular | `npm run build`, `npm run test` |
+
+---
+
+## Handoff
+
+After plan execution:
+
+"**Plan execution complete. Summary:** Total: X, Completed: Y, Failed: Z, Skipped: W."
+
+"**Continue with remaining tasks?**"
