@@ -10,6 +10,33 @@ Save current session context to `flow-docs/*/02_memories/context_*/active_contex
 - Need to record current state for future reference
 - Before switching tasks
 
+## Context Determination
+
+**Step 0: Determine document context**
+
+1. **Check if user explicitly specified `<feature-name>`:**
+   - Pattern: "为 [feature-name] 保存上下文...", "保存 [feature-name] 的上下文..."
+   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
+
+2. **If explicitly specified:**
+   - Switch to specified context
+   - Initialize directory structure if not exists:
+     ```bash
+     mkdir -p flow-docs/<feature-name>/02_memories/context_<feature-name>
+     ```
+   - Output: `"**Context Switch:** → <feature-name>"`
+   - Proceed with specified context
+
+3. **If not explicitly specified:**
+   - Check for current context from recent documents in conversation
+   - If exists → Use current context
+     - Output: `"**Current Context:** <feature-name>"`
+   - If not exists → Ask user:
+     - "No current context. Please specify `<feature-name>` or provide absolute path to existing document."
+
+4. **If user input is ambiguous:**
+   - Ask: "Which feature/context should I save? Please provide `<feature-name>`."
+
 ## Announcement
 
 Start with: "I'm using the save-context sub-skill to save the current session context..."

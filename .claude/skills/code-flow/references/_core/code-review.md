@@ -9,6 +9,49 @@ Review code changes for compilation issues, bugs, security vulnerabilities, and 
 - **Implicitly:** After completing each task during plan execution (executing-plans)
 - **Explicitly:** User requests standalone code review via `/code-flow code-review`
 
+## Context Determination
+
+**Implicit Mode (Plan Execution):**
+
+- Inherit context from executing-plans
+- Use current context for output path: `flow-docs/<feature-name>/01_dev/code_review/`
+- No context determination needed
+
+**Explicit Mode (User Invocation):**
+
+**Step 0: Determine document context**
+
+1. **Check if user explicitly specified `<feature-name>` in review request:**
+   - Pattern: "为 [feature-name] 进行代码审查...", "审查 [feature-name] 的代码..."
+   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
+
+2. **If explicitly specified:**
+   - Switch to specified context
+   - Initialize directory structure if not exists:
+     ```bash
+     mkdir -p flow-docs/<feature-name>/01_dev/code_review
+     ```
+   - Output: `"**Context Switch:** → <feature-name>"`
+   - Proceed with review scope questions
+
+3. **If not explicitly specified:**
+   - Check for current context from recent documents in conversation
+   - If exists → Use current context
+     - Output: `"**Current Context:** <feature-name>"`
+   - If not exists → Ask user:
+     - "No current context. Please specify `<feature-name>` for the review output."
+
+4. **After context is determined, ask review scope:**
+   ```
+   Please specify review scope:
+   1. Local unpushed commits (current branch vs remote)
+   2. Local uncommitted changes (working directory + staged)
+   3. Specific commit hash (provide hash)
+   4. Branch diff from origin (branch name)
+   5. Specific files (provide paths)
+   6. Type any (describe your scope)
+   ```
+
 ## Announcement
 
 Start with: "I'm using the code-review sub-skill to review the code..."
@@ -24,21 +67,7 @@ When called during plan execution:
 
 ### Explicit Mode (User Invocation)
 
-When user invokes `/code-flow code-review` directly:
-
-**Ask user to specify review scope:**
-
-```
-Please specify review scope:
-1. Local unpushed commits (current branch vs remote)
-2. Local uncommitted changes (working directory + staged)
-3. Specific commit hash (provide hash)
-4. Branch diff from origin (branch name)
-5. Specific files (provide paths)
-6. Type any (describe your scope)
-```
-
-**Based on user choice:**
+**Based on user's scope choice:**
 
 | Option | Git Command | Scope |
 |--------|-------------|-------|

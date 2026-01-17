@@ -9,6 +9,26 @@ Generate migration plans from code change summary documents. Analyze target proj
 - Have code change summary requiring migration plan
 - Preparing to migrate code to target project
 
+## Context Determination
+
+**Step 0: Extract context from commit-log document**
+
+1. **Parse commit-log document path:**
+   - Extract `<feature-name>` from commit-log path
+   - Pattern: `flow-docs/<feature-name>/03_migration/commit-log-summary/<seq>-<hash>-commit-log.md`
+
+2. **Extract and switch context:**
+   - Switch to extracted context (discard current context)
+   - Output: `"**Current Context:** <feature-name> (from commit-log document)"`
+
+**Example:**
+```
+Commit-log document: flow-docs/scene-creation/03_migration/commit-log-summary/001-abc123-commit-log.md
+→ Extract: feature-name = "scene-creation"
+→ Switch context to "scene-creation"
+→ Migration plan output: flow-docs/scene-creation/03_migration/migration-plan/001-abc123-migration-plan.md
+```
+
 ## Announcement
 
 Start with: "I'm using the commit-migration sub-skill to generate migration execution plan. Please provide summary document path..."

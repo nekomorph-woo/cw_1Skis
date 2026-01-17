@@ -9,6 +9,33 @@ Generate code change summary documents from git commits. Focus on **what changed
 - Need to migrate code changes to other projects
 - Need to record commit intent and scope
 
+## Context Determination
+
+**Step 0: Determine document context**
+
+1. **Check if user explicitly specified `<feature-name>`:**
+   - Pattern: "为 [feature-name] 分析提交...", "[feature-name] 的提交日志..."
+   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
+
+2. **If explicitly specified:**
+   - Switch to specified context
+   - Initialize directory structure if not exists:
+     ```bash
+     mkdir -p flow-docs/<feature-name>/03_migration/commit-log-summary
+     ```
+   - Output: `"**Context Switch:** → <feature-name>"`
+   - Proceed with specified context
+
+3. **If not explicitly specified:**
+   - Check for current context from recent documents in conversation
+   - If exists → Use current context
+     - Output: `"**Current Context:** <feature-name>"`
+   - If not exists → Ask user:
+     - "No current context. Please specify `<feature-name>` or provide absolute path to existing document."
+
+4. **If user input is ambiguous:**
+   - Ask: "Which feature/context should I analyze commits for? Please provide `<feature-name>`."
+
 ## Announcement
 
 Start with: "I'm using the commit-change-log sub-skill to generate code change summary documents. Please provide commit hash..."

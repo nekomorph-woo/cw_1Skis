@@ -10,6 +10,33 @@ Write comprehensive implementation plans that convert design documents into acti
 - Have requirements needing multi-step implementation
 - Preparing to start coding
 
+## Context Determination
+
+**Step 0: Determine document context**
+
+1. **Check if user explicitly specified `<feature-name>`:**
+   - Pattern: "为 [feature-name] 编写...", "[feature-name] 的实现计划...", "在 [feature-name] 中..."
+   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
+
+2. **If explicitly specified:**
+   - Switch to specified context
+   - Initialize directory structure if not exists:
+     ```bash
+     mkdir -p flow-docs/<feature-name>/01_dev/impl_plan
+     ```
+   - Output: `"**Context Switch:** → <feature-name>"`
+   - Proceed with specified context
+
+3. **If not explicitly specified:**
+   - Check for current context from recent documents in conversation
+   - If exists → Use current context
+     - Output: `"**Current Context:** <feature-name>"`
+   - If not exists → Ask user:
+     - "No current context. Please specify `<feature-name>` or provide absolute path to existing document."
+
+4. **If user input is ambiguous:**
+   - Ask: "Which feature/context should I write plan for? Please provide `<feature-name>`."
+
 ## Announcement
 
 Start with: "I'm using the writing-plans sub-skill to create the implementation plan. If user hasn't provided a design document, prompt user to provide design document from `flow-docs/*/01_dev/feature_design/` or provide requirements description."
@@ -176,9 +203,22 @@ When invoked with `--fix-for <review-doc>`:
 
 Generate fix plan from code review document, extracting `[MUST_FIX]` issues.
 
-### Step 1: Load Review Document
+### Step 1: Load Review Document and Extract Context
 
 Read the specified review document from `flow-docs/<feature-name>/01_dev/code_review/<seq>-review-YYYY-MM-DD.md`.
+
+**Extract context from review document path:**
+- Parse `<feature-name>` from the review document path
+- Switch to this context (discard current context)
+- Output: `"**Context Switch:** → <feature-name> (from review document)"`
+
+**Example:**
+```
+Review document: flow-docs/scene-creation/01_dev/code_review/001-review-2024-01-15.md
+→ Extract: feature-name = "scene-creation"
+→ Switch context to "scene-creation"
+→ Fix plan output: flow-docs/scene-creation/01_dev/impl_plan/fix-001-plan-2024-01-15.md
+```
 
 ### Step 2: Extract Issues
 

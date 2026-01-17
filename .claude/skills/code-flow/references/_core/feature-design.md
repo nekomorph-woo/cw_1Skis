@@ -12,6 +12,33 @@ Write comprehensive feature design documents for new features or major enhanceme
 - Require risk assessment and test planning
 - Mode 0 (Inception) when analyzing requirements
 
+## Context Determination
+
+**Step 0: Determine document context**
+
+1. **Check if user explicitly specified `<feature-name>`:**
+   - Pattern: "为 [feature-name] 设计...", "[feature-name] 功能设计...", "在 [feature-name] 中..."
+   - Pattern: Absolute path like `flow-docs/<feature-name>/...`
+
+2. **If explicitly specified:**
+   - Switch to specified context
+   - Initialize directory structure if not exists:
+     ```bash
+     mkdir -p flow-docs/<feature-name>/01_dev/feature_design
+     ```
+   - Output: `"**Context Switch:** → <feature-name>"`
+   - Proceed with specified context
+
+3. **If not explicitly specified:**
+   - Check for current context from recent documents in conversation
+   - If exists → Use current context
+     - Output: `"**Current Context:** <feature-name>"`
+   - If not exists → Ask user:
+     - "No current context. Please specify `<feature-name>` or provide absolute path to existing document."
+
+4. **If user input is ambiguous:**
+   - Ask: "Which feature/context should I design? Please provide `<feature-name>`."
+
 ## Announcement
 
 Start with: "I'm using the feature-design sub-skill to create the feature design document. If user hasn't provided a design document, prompt user to provide exploration document from `flow-docs/*/01_dev/code_insight/` or provide requirements description."

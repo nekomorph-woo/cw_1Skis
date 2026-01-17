@@ -9,6 +9,31 @@ Execute implementation or migration plans step-by-step. Check task completion st
 - Have implementation plan requiring execution
 - Have migration plan requiring execution
 
+## Context Determination
+
+**Step 0: Extract context from plan document**
+
+1. **Parse plan document path:**
+   - Extract `<feature-name>` from plan path
+   - Pattern: `flow-docs/<feature-name>/01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md`
+   - Pattern: `flow-docs/<feature-name>/03_migration/migration-plan/<seq>-<hash>-migration-plan.md`
+
+2. **Extract and switch context:**
+   - Switch to extracted context (discard current context)
+   - Output: `"**Current Context:** <feature-name> (from plan document)"`
+
+3. **Verify context consistency:**
+   - Ensure all task file paths belong to the same context
+   - Warn if task paths reference different `<feature-name>`
+
+**Example:**
+```
+Plan document: flow-docs/scene-creation/01_dev/impl_plan/001-plan-2024-01-15.md
+→ Extract: feature-name = "scene-creation"
+→ Switch context to "scene-creation"
+→ All task files should be within scene-creation feature
+```
+
 ## Announcement
 
 Start with: "I'm using the executing-plans sub-skill to execute the implementation plan. First checking if a plan file is provided..."
