@@ -8,7 +8,7 @@ Define how the code-flow skill manages document context (`<feature-name>`) acros
 
 The skill maintains a **current document context** to ensure all documents belong to the same feature during a session.
 
-## Context Determination Rules
+## Context Determination Rules {#context-rules}
 
 ### Priority Order
 
@@ -58,7 +58,7 @@ Prompt: "Which feature/context should I work with? Please provide `<feature-name
    - "打开 flow-docs/*/01_dev/feature_design/..."
 ```
 
-## Context Propagation
+## Context Propagation {#context-propagation}
 
 **Sub-skills inherit context automatically:**
 
@@ -111,7 +111,7 @@ Plan document: flow-docs/scene-creation/01_dev/impl_plan/001-plan-2024-01-15.md
 - Ensure all task file paths belong to the same context
 - Warn if task paths reference different `<feature-name>`
 
-## UTF-8 Encoding Reminder
+## UTF-8 Encoding Reminder {#utf8-encoding}
 
 **CRITICAL:** Always generate documentation in the USER'S LANGUAGE with UTF-8 encoding:
 - Detect user language from request

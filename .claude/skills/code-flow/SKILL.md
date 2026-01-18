@@ -82,7 +82,7 @@ Each sub-skill operates independently:
 - Combine sub-skills for complete workflows
 - Documents serve as the decoupling medium between skills
 
-### Technology Stack Adaptation
+### Technology Stack Adaptation {#tech-stack}
 
 This skill auto-detects project technology stack and adapts commands/patterns accordingly.
 
@@ -178,7 +178,7 @@ Manual review is sufficient when:
 - Simple, isolated changes
 - No need for documentation
 
-## Document Paths
+## Document Paths {#seq-rules}
 
 All documents use consistent structure under `flow-docs/<feature-name>/`:
 
@@ -242,33 +242,33 @@ User: "Develop an implementation plan"
 - Switch: `"**Context Switch:** scene-creation → user-management"`
 - Confirm: `"**Current Context:** user-management"`
 
-## Error Recovery & Edge Cases
+## Error Recovery & Edge Cases {#error-recovery}
 
 For comprehensive error recovery strategies, see detailed documentation in each sub-skill guide.
 
 ### Code Review Failures
 - **P0 issues found during executing-plans:** Fix immediately before continuing
 - **Fix introduces new issues:** Re-run code-review, repeat until clean
-- See `executing-plans.md@Step 4: Execute Tasks Sequentially → Code review` for detailed P0 handling flow
+- See `executing-plans.md#execute-tasks` for detailed P0 handling flow
 
 ### Git Operation Failures
 - **Commit fails:** Check for merge conflicts, unmerged files, or permission issues
 - **Network issues:** Retry after checking connection, use `git fetch` to sync
 - **UTF-8 encoding issues (Windows):** Always use file-based commit method
-- See `git-commit.md@4. Execute Commit` for platform-specific commit methods
+- See `git-commit.md#execute-commit` for platform-specific commit methods
 
 ### Edge Cases
 - **Feature name with special characters:** Validate before directory creation
 - **Manual document directory changes:** Warn user, recommend re-initializing
 - **Git branch switch:** Context remains valid unless documents were deleted
 - **Multiple tech stacks in monorepo:** Detect based on current working directory
-- **executing-plans completion verification:** Never skip tasks without code references (`executing-plans.md@Step 3.5: Check Task Completion Status`)
+- **executing-plans completion verification:** Never skip tasks without code references (`executing-plans.md#check-completion`)
 
 ## Language Convention
 
 All documentation, comments, and commit messages adaptively use **<user's language>** with UTF-8 encoding. Technical terms and code identifiers remain in original form.
 
-**See `context-management.md@UTF-8 Encoding Reminder` for detailed UTF-8 encoding rules.**
+**See `context-management.md#utf8-encoding` for detailed UTF-8 encoding rules.**
 
 ---
 

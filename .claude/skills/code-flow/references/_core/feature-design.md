@@ -41,7 +41,7 @@ If user hasn't provided requirements or insight document, prompt: "Please provid
 
 ## Sequence Determination
 
-See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
+See `SKILL.md#seq-rules` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Document Structure
 

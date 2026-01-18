@@ -34,7 +34,7 @@ Generate git commit messages following Conventional Commit format with emoji pre
 
 **⚠️ CRITICAL (Windows):** Use file-based commit method to ensure UTF-8 encoding. **Always delete temporary `commit_msg.txt` file after commit** to avoid repository clutter.
 
-## Commit Types & Emojis
+## Commit Types & Emojis {#commit-types}
 
 | Type | Emoji | Description |
 |------|-------|-------------|
@@ -74,7 +74,7 @@ Based on actual changes:
 - Focus on most relevant
 - Use **user's language**
 
-### 4. Execute Commit
+### 4. Execute Commit {#execute-commit}
 
 #### CRITICAL: Use file-based commit method for UTF-8 safety
 

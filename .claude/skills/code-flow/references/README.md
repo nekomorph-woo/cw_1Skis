@@ -7,6 +7,7 @@ This directory contains technology-specific guides for the code-flow skill. Use 
 ```
 references/
 ├── _core/              # Universal templates (always use these)
+│   ├── anchors.md              # Cross-document anchor definitions
 │   ├── trigger-keywords.md    # Unified trigger keyword management
 │   ├── tech-commands.md        # Unified technology stack commands
 │   ├── context-management.md   # Document context management rules
@@ -26,6 +27,7 @@ references/
 ```
 
 > **Note:** The `_core/` directory contains unified reference documents that are used across all sub-skills:
+> - `anchors.md` - Single source of truth for cross-document anchor definitions
 > - `trigger-keywords.md` - Single source of truth for sub-skill trigger keywords
 > - `tech-commands.md` - Single source of truth for technology-specific commands
 

@@ -40,7 +40,7 @@ If user hasn't provided design document, prompt: "Please provide design document
 
 ## Sequence Determination
 
-See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
+See `SKILL.md#seq-rules` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Document Header
 

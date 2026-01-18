@@ -40,7 +40,7 @@ Start with: "I'm using the code-insight sub-skill to explore the existing codeba
 
 ## Sequence Determination
 
-See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
+See `SKILL.md#seq-rules` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Document Structure
 

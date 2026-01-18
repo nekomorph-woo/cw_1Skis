@@ -69,7 +69,7 @@ For each task:
 - Title: `Task N: [Component Name]`
 - Description: Files, steps, expected outcomes
 
-### Step 3.5: Check Task Completion Status
+### Step 3.5: Check Task Completion Status {#check-completion}
 
 **Before executing each task, verify completion:**
 
@@ -90,7 +90,7 @@ For each task:
 
 **Important:** Never skip a task without code references.
 
-### Step 4: Execute Tasks Sequentially
+### Step 4: Execute Tasks Sequentially {#execute-tasks}
 
 For each pending task:
 1. **Announce:** "Starting Task N: [Component Name]"
@@ -112,7 +112,7 @@ For each pending task:
 5. **Output proof:** `[filepath]#LstartLine-endLine`
 6. **Mark complete** and continue
 
-### Step 5: Handle Code Review Issues
+### Step 5: Handle Code Review Issues {#code-review-issues}
 
 After all tasks complete:
 
@@ -150,7 +150,7 @@ After completion:
 - List remaining todos
 - Ask: "Continue with remaining tasks? (Y/N)"
 
-## Code Execution Rules
+## Code Execution Rules {#code-execution}
 
 > **Complete command reference:** See `tech-commands.md` for all technologies.
 

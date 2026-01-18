@@ -183,7 +183,7 @@ For each modified file:
 
 ### Step 5: Determine Sequence
 
-See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
+See `SKILL.md#seq-rules` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ### Step 6: Generate Output Document
 

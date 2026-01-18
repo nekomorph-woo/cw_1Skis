@@ -34,7 +34,7 @@ Start with: "I'm using the commit-change-log sub-skill to generate code change s
 
 ## Sequence Determination
 
-See `SKILL.md:130` for sequence number rules: Auto-increment based on existing files in target directory.
+See `SKILL.md#seq-rules` for sequence number rules: Auto-increment based on existing files in target directory.
 
 ## Workflow
 
