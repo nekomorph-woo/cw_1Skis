@@ -24,15 +24,15 @@ Display this menu to help user select the appropriate sub-skill:
 
 Available Sub-Skills:
 
-  [1] code-insight       - Explore existing code structure and call chains
-  [2] feature-design     - Design features with technical analysis
-  [3] writing-plans      - Create implementation plans from designs
-  [4] executing-plans    - Execute plans step-by-step with verification
-  [5] code-review        - Review code for bugs and security issues
-  [6] save-context       - Save current session context and state
-  [7] commit-change-log  - Summarize git commits for migration
-  [8] commit-migration   - Create migration plans from summaries
-  [9] git-commit         - Generate Conventional Commit messages
+  [1] code-insight       - Explore existing code structure and call chains [<feature-name>?]
+  [2] feature-design     - Design features with technical analysis [<feature-name>?]
+  [3] writing-plans      - Create implementation plans from designs [<feature-name>?, --fix-for <doc>?]
+  [4] executing-plans    - Execute plans step-by-step with verification [<plan-path>?]
+  [5] code-review        - Review code for bugs and security issues [<feature-name>?, <scope>?]
+  [6] save-context       - Save current session context and state [<feature-name>?]
+  [7] commit-change-log  - Summarize git commits for migration [<feature-name>?, <commit-hash>]
+  [8] commit-migration   - Create migration plans from summaries [<summary-doc-path>]
+  [9] git-commit         - Generate Conventional Commit messages [no params]
 
 Quick Workflows:
   • New Feature:     [2] → [3] → [4] → [9]
