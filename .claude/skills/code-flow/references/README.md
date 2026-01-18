@@ -220,3 +220,32 @@ When using code-flow, the skill will automatically detect your project's technol
 ## Language & Encoding
 
 Generate documentation in the USER'S LANGUAGE with UTF-8 encoding. Keep technical terms and code identifiers in original form.
+
+---
+
+## Version Management
+
+**Current Version:** See `SKILL.md` for the current version number.
+
+**Changelog:** See `CHANGELOG.md` for complete version history and changes.
+
+**Auto-Update:** When making significant changes to the code-flow skill:
+
+1. Use the bump-version script to update version and changelog:
+   ```bash
+   # Bash/Linux/macOS
+   ./scripts/bump-version.sh minor "Add unified trigger keyword management"
+
+   # PowerShell/Windows
+   ./scripts/bump-version.ps1 minor "Add unified trigger keyword management"
+   ```
+
+2. The script will automatically:
+   - Update version number in `SKILL.md`
+   - Append change record to `CHANGELOG.md`
+
+3. Commit the changes:
+   ```bash
+   git add .claude/skills/code-flow/SKILL.md .claude/skills/code-flow/CHANGELOG.md
+   git commit -m "docs: Release version X.Y.Z"
+   ```

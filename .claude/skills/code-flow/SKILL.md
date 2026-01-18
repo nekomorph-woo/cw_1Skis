@@ -4,6 +4,7 @@
 name: code-flow
 description: Development workflow skill for code exploration, feature design, implementation planning, execution, code review, and migration. Use document-driven decoupling where sub-skills pass context through documents.
 version: 0.5.0
+changelog: CHANGELOG.md
 author: claude-code
 ---
 
@@ -269,6 +270,16 @@ For comprehensive error recovery strategies, see detailed documentation in each 
 All documentation, comments, and commit messages adaptively use **<user's language>** with UTF-8 encoding. Technical terms and code identifiers remain in original form.
 
 **See `context-management.md#utf8-encoding` for detailed UTF-8 encoding rules.**
+
+---
+
+## Version Information
+
+**Current Version:** 0.5.0
+
+**Changelog:** See [CHANGELOG.md](CHANGELOG.md) for complete version history and changes.
+
+**Stability Status:** Pre-1.0 development - minor versions may include breaking changes. Always review changelog before updating.
 
 ---
 
