@@ -14,10 +14,15 @@ Write comprehensive feature design documents for new features or major enhanceme
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "design feature", "create design doc", "technical approach", "API design"
-- "how should this be implemented", "evaluate options"
-- "MVP vs balanced vs advanced", "architecture decision"
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "design feature"
+- "create design doc"
+- "technical approach"
+- "API design"
+- "design new functionality"
+- "feature specification"
 
 ## Context Determination
 

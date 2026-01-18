@@ -7,11 +7,27 @@ This directory contains technology-specific guides for the code-flow skill. Use 
 ```
 references/
 ├── _core/              # Universal templates (always use these)
+│   ├── trigger-keywords.md    # Unified trigger keyword management
+│   ├── tech-commands.md        # Unified technology stack commands
+│   ├── context-management.md   # Document context management rules
+│   ├── code-insight.md         # Code exploration template
+│   ├── feature-design.md       # Feature design template
+│   ├── writing-plans.md        # Implementation plan template
+│   ├── executing-plans.md      # Plan execution guide
+│   ├── code-review.md          # Code review guide
+│   ├── save-context.md         # Session context saving
+│   ├── commit-change-log.md    # Commit summarization
+│   ├── commit-migration.md     # Migration plan generation
+│   └── git-commit.md           # Git commit message generator
 ├── backend/           # Backend technology-specific guides
 ├── frontend/          # Frontend technology-specific guides
 ├── mobile/            # Mobile development guides
 └── fullstack/         # Full-stack framework guides
 ```
+
+> **Note:** The `_core/` directory contains unified reference documents that are used across all sub-skills:
+> - `trigger-keywords.md` - Single source of truth for sub-skill trigger keywords
+> - `tech-commands.md` - Single source of truth for technology-specific commands
 
 ---
 
@@ -176,6 +192,10 @@ When using code-flow, the skill will automatically detect your project's technol
 
 ## Quick Reference Matrix
 
+> **For complete command reference, see:** `_core/tech-commands.md`
+
+**Quick summary for common technologies:**
+
 | Technology | Install | Dev Server | Build | Test | Lint |
 |------------|---------|------------|-------|------|------|
 | Java Spring | `mvn install` | `mvn spring-boot:run` | `mvn package` | `mvn test` | - |
@@ -187,6 +207,11 @@ When using code-flow, the skill will automatically detect your project's technol
 | Vue | `npm install` | `npm run dev` | `npm run build` | `npm test` | `npm run lint` |
 | Angular | `npm install` | `ng serve` | `ng build` | `ng test` | `ng lint` |
 | Next.js | `npm install` | `npm run dev` | `npm run build` | `npm test` | `npm run lint` |
+
+> **See `_core/tech-commands.md` for:**
+> - Complete command matrix including Mobile and Full-stack technologies
+> - Expected output definitions
+> - Special handling notes (Windows UTF-8, virtual environments, etc.)
 
 ---
 

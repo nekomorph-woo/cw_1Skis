@@ -11,9 +11,15 @@ Execute implementation or migration plans step-by-step. Check task completion st
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "execute plan", "implement this plan", "run implementation"
-- "follow the plan", "complete the tasks"
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "execute plan"
+- "implement this plan"
+- "run implementation"
+- "follow the plan"
+- "complete the tasks"
+- "step by step execution"
 
 ## Context Determination
 
@@ -146,21 +152,26 @@ After completion:
 
 ## Code Execution Rules
 
-### Technology-Specific Commands
+> **Complete command reference:** See `tech-commands.md` for all technologies.
 
-| Technology | Compile | Test | Verify | Commit |
-|------------|---------|------|--------|--------|
-| **Java/Spring Boot** | `mvn compile -DskipTests` | `mvn test` | BUILD SUCCESS | `/code-flow git-commit` |
-| **Node.js/Express** | N/A | `npm test` | tests pass | `/code-flow git-commit` |
-| **Python/Django** | N/A | `python manage.py test` | tests pass | `/code-flow git-commit` |
-| **Python/FastAPI** | N/A | `pytest` | tests pass | `/code-flow git-commit` |
-| **Go/Gin** | `go build` | `go test` | build success | `/code-flow git-commit` |
-| **React** | `npm run build` | `npm test` | build success | `/code-flow git-commit` |
-| **Vue** | `npm run build` | `npm run test` | build success | `/code-flow git-commit` |
-| **Angular** | `ng build` | `ng test` | build success | `/code-flow git-commit` |
-| **Next.js** | `npm run build` | `npm run test` | build success | `/code-flow git-commit` |
+**Quick reference for plan execution:**
 
-> **For detailed technology-specific commands, see:** `backend/<tech>.md`, `frontend/<tech>.md`, `fullstack/<stack>.md`
+| Technology | Verify Command | Expected Output | Commit |
+|------------|----------------|-----------------|--------|
+| Java/Spring Boot | `mvn compile -DskipTests` | BUILD SUCCESS | `/code-flow git-commit` |
+| Node.js/Express | `npm test` | tests pass | `/code-flow git-commit` |
+| Python/Django | `pytest` | tests pass | `/code-flow git-commit` |
+| Python/FastAPI | `pytest` | tests pass | `/code-flow git-commit` |
+| Go/Gin | `go build` | build success | `/code-flow git-commit` |
+| React | `npm run build` | build success | `/code-flow git-commit` |
+| Vue | `npm run build` | build success | `/code-flow git-commit` |
+| Angular | `ng build` | build success | `/code-flow git-commit` |
+| Next.js | `npm run build` | build success | `/code-flow git-commit` |
+
+> **See `tech-commands.md` for:**
+> - Complete command matrix (Install, Dev Server, Test, Lint, etc.)
+> - All supported technologies
+> - Special handling notes
 
 ### File Modifications
 

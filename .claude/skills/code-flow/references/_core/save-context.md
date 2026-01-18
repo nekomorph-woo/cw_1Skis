@@ -12,9 +12,13 @@ Save current session context to `flow-docs/*/02_memories/context_*/active_contex
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "save context", "save session", "save progress"
-- "remember this", "save current state"
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "save context"
+- "save session"
+- "save progress"
+- "checkpoint state"
 
 ## Context Determination
 

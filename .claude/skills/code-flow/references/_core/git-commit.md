@@ -11,9 +11,14 @@ Generate git commit messages following Conventional Commit format with emoji pre
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "commit", "commit changes", "git commit"
-- "create commit message", "generate commit"
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "commit"
+- "commit changes"
+- "git commit"
+- "create commit message"
+- "generate commit"
 
 ## Commit Message Format
 
@@ -67,7 +72,7 @@ Based on actual changes:
 - Use appropriate emoji and type
 - List key changes as bullet points
 - Focus on most relevant
-- Use **user's user's language**
+- Use **user's language**
 
 ### 4. Execute Commit
 
@@ -107,7 +112,7 @@ Remove-Item commit_msg.txt
 "@ | Out-File -FilePath commit_msg.txt -Encoding UTF8; git commit -F commit_msg.txt; Remove-Item commit_msg.txt
 ```
 
-**Windows PowerShell (备选):**
+**Windows PowerShell (fallback):**
 
 ```powershell
 git commit -m @"
@@ -120,7 +125,7 @@ git commit -m @"
 
 **Important:** After commit, **ALWAYS delete the temporary `commit_msg.txt` file** to avoid cluttering the repository.
 
-**Windows CMD (备选):**
+**Windows CMD (fallback):**
 
 ```cmd
 # Step 1: Create UTF-8 file with echo
@@ -137,7 +142,7 @@ git commit -F commit_msg.txt
 del commit_msg.txt
 ```
 
-**Cross-platform Bash (备选):**
+**Cross-platform Bash (fallback):**
 
 ```bash
 # Step 1: Create file

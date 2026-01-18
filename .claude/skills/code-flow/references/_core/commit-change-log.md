@@ -11,9 +11,13 @@ Generate code change summary documents from git commits. Focus on **what changed
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "summarize commits", "analyze commit", "generate change log"
-- "document commit", "what changed in this commit"
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "summarize commits"
+- "analyze commit"
+- "generate change log"
+- "commit summary"
 
 ## Context Determination
 

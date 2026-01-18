@@ -127,15 +127,15 @@ The skill maintains a **current document context** (`<feature-name>`) to ensure 
 
 | Sub-Skill | Purpose | Triggers | Parameters | Output | Guide |
 |-----------|---------|----------|------------|--------|-------|
-| `code-insight` | Explore existing code structure, call chains, implementation | "explore code", "how is X implemented", "understand existing code", "trace call chain" | `<feature-name>` (optional) | `01_dev/code_insight/<seq>-insight-YYYY-MM-DD.md` | `code-insight.md` |
-| `feature-design` | Design features with technical analysis, API design, risk assessment | "design feature", "create design doc", "technical approach", "API design" | `<feature-name>` (optional) | `01_dev/feature_design/<seq>-ft-YYYY-MM-DD.md` | `feature-design.md` |
-| `writing-plans` | Convert designs into actionable implementation plans | "create plan", "write implementation plan", "generate fix plan", "break down tasks" | `<feature-name>` (optional), `--fix-for <review-doc>` (fix mode) | `01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md` or `fix-<seq>-plan-YYYY-MM-DD.md` | `writing-plans.md` |
-| `executing-plans` | Execute plans task-by-task with completion verification | "execute plan", "implement this plan", "run implementation" | `<plan-path>` (optional, auto-select if omitted) | (code implementation) | `executing-plans.md` |
-| `code-review` | Review code for bugs, security vulnerabilities, best practices | "review code", "code review", "check for issues" | `<feature-name>` (optional), `<scope>` (explicit mode only) | `01_dev/code_review/<seq>-review-YYYY-MM-DD.md` | `code-review.md` |
-| `save-context` | Save session context including tasks, decisions, files | "save context", "save session", "save progress" | `<feature-name>` (optional) | `02_memories/active_context.md` | `save-context.md` |
-| `commit-change-log` | Generate code change summaries from git commits | "summarize commits", "analyze commit", "generate change log" | `<feature-name>` (optional), `<commit-hash>` (required) | `03_migration/commit-log-summary/<seq>-<hash>-commit-log.md` | `commit-change-log.md` |
-| `commit-migration` | Generate migration plans from change summaries | "create migration plan", "migrate changes", "generate migration" | `<summary-doc-path>` (required) | `03_migration/migration-plan/<seq>-<hash>-migration-plan.md` | `commit-migration.md` |
-| `git-commit` | Generate Conventional Commit messages with emoji | "commit", "commit changes", "git commit" | none | (git commit) | `git-commit.md` |
+| `code-insight` | Explore existing code structure, call chains, implementation | See `trigger-keywords.md` | `<feature-name>` (optional) | `01_dev/code_insight/<seq>-insight-YYYY-MM-DD.md` | `code-insight.md` |
+| `feature-design` | Design features with technical analysis, API design, risk assessment | See `trigger-keywords.md` | `<feature-name>` (optional) | `01_dev/feature_design/<seq>-ft-YYYY-MM-DD.md` | `feature-design.md` |
+| `writing-plans` | Convert designs into actionable implementation plans | See `trigger-keywords.md` | `<feature-name>` (optional), `--fix-for <review-doc>` (fix mode) | `01_dev/impl_plan/<seq>-plan-YYYY-MM-DD.md` or `fix-<seq>-plan-YYYY-MM-DD.md` | `writing-plans.md` |
+| `executing-plans` | Execute plans task-by-task with completion verification | See `trigger-keywords.md` | `<plan-path>` (optional, auto-select if omitted) | (code implementation) | `executing-plans.md` |
+| `code-review` | Review code for bugs, security vulnerabilities, best practices | See `trigger-keywords.md` | `<feature-name>` (optional), `<scope>` (explicit mode only) | `01_dev/code_review/<seq>-review-YYYY-MM-DD.md` | `code-review.md` |
+| `save-context` | Save session context including tasks, decisions, files | See `trigger-keywords.md` | `<feature-name>` (optional) | `02_memories/active_context.md` | `save-context.md` |
+| `commit-change-log` | Generate code change summaries from git commits | See `trigger-keywords.md` | `<feature-name>` (optional), `<commit-hash>` (required) | `03_migration/commit-log-summary/<seq>-<hash>-commit-log.md` | `commit-change-log.md` |
+| `commit-migration` | Generate migration plans from change summaries | See `trigger-keywords.md` | `<summary-doc-path>` (required) | `03_migration/migration-plan/<seq>-<hash>-migration-plan.md` | `commit-migration.md` |
+| `git-commit` | Generate Conventional Commit messages with emoji | See `trigger-keywords.md` | none | (git commit) | `git-commit.md` |
 
 ## Decision Guide
 
@@ -249,26 +249,26 @@ For comprehensive error recovery strategies, see detailed documentation in each 
 ### Code Review Failures
 - **P0 issues found during executing-plans:** Fix immediately before continuing
 - **Fix introduces new issues:** Re-run code-review, repeat until clean
-- See `executing-plans.md:91-97` for detailed P0 handling flow
+- See `executing-plans.md@Step 4: Execute Tasks Sequentially → Code review` for detailed P0 handling flow
 
 ### Git Operation Failures
 - **Commit fails:** Check for merge conflicts, unmerged files, or permission issues
 - **Network issues:** Retry after checking connection, use `git fetch` to sync
 - **UTF-8 encoding issues (Windows):** Always use file-based commit method
-- See `git-commit.md:68-151` for platform-specific commit methods
+- See `git-commit.md@4. Execute Commit` for platform-specific commit methods
 
 ### Edge Cases
 - **Feature name with special characters:** Validate before directory creation
 - **Manual document directory changes:** Warn user, recommend re-initializing
 - **Git branch switch:** Context remains valid unless documents were deleted
 - **Multiple tech stacks in monorepo:** Detect based on current working directory
-- **executing-plans completion verification:** Never skip tasks without code references (`executing-plans.md:60-78`)
+- **executing-plans completion verification:** Never skip tasks without code references (`executing-plans.md@Step 3.5: Check Task Completion Status`)
 
 ## Language Convention
 
 All documentation, comments, and commit messages adaptively use **<user's language>** with UTF-8 encoding. Technical terms and code identifiers remain in original form.
 
-**See `context-management.md:114-120` for detailed UTF-8 encoding rules.**
+**See `context-management.md@UTF-8 Encoding Reminder` for detailed UTF-8 encoding rules.**
 
 ---
 

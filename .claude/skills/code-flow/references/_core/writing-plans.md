@@ -12,10 +12,16 @@ Write comprehensive implementation plans that convert design documents into acti
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "create plan", "write implementation plan", "generate fix plan", "break down tasks"
-- "convert design to plan", "create actionable tasks"
-- "--fix-for" flag for fix plan mode
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "create plan"
+- "write implementation plan"
+- "generate fix plan"
+- "break down tasks"
+- "convert design to plan"
+- "create actionable tasks"
+- `--fix-for` flag for fix plan mode
 
 ## Context Determination
 
@@ -142,24 +148,27 @@ Follow git-commit workflow:
 
 ## Technology-Specific Commands
 
-### Compile & Test Commands Reference
+> **Complete command reference:** See `tech-commands.md` for all technologies.
 
-| Technology | Install | Dev Server | Build | Test | Lint |
-|------------|---------|------------|-------|------|------|
-| **Java/Spring Boot** | `mvn install` | `mvn spring-boot:run` | `mvn package` | `mvn test` | - |
-| **Node.js/Express** | `npm install` | `npm start` / `npm run dev` | - | `npm test` | `npm run lint` |
-| **Python/Django** | `pip install -r` | `python manage.py runserver` | - | `pytest` | `flake8` |
-| **Python/FastAPI** | `pip install -r` | `uvicorn main:app --reload` | - | `pytest` | `ruff` |
-| **Go/Gin** | `go mod download` | `air` | `go build` | `go test` | `golangci-lint run` |
-| **React** | `npm install` | `npm run dev` | `npm run build` | `npm test` | `npm run lint` |
-| **Vue** | `npm install` | `npm run dev` | `npm run build` | `npm run test` | `npm run lint` |
-| **Angular** | `npm install` | `ng serve` | `ng build` | `ng test` | `ng lint` |
-| **Next.js** | `npm install` | `npm run dev` | `npm run build` | `npm run test` | `npm run lint` |
+**Quick reference for plan writing:**
 
-> **For detailed technology-specific commands and patterns, see:**
-> - Backend: `backend/<tech>.md` (e.g., `backend/java-spring-boot.md`)
-> - Frontend: `frontend/<tech>.md` (e.g., `frontend/react.md`)
-> - Full-stack: `fullstack/<stack>.md` (e.g., `fullstack/mern.md`)
+| Technology | Test Command | Expected Output |
+|------------|-------------|-----------------|
+| Java/Spring Boot | `mvn test` | Tests pass |
+| Node.js/Express | `npm test` | Tests pass |
+| Python/Django | `pytest` | Tests pass |
+| Python/FastAPI | `pytest` | Tests pass |
+| Go/Gin | `go test` | Tests pass |
+| React | `npm test` | Tests pass |
+| Vue | `npm run test` | Tests pass |
+| Angular | `ng test` | Tests pass |
+| Next.js | `npm run test` | Tests pass |
+
+> **See `tech-commands.md` for:**
+> - Install, Dev Server, Build commands
+> - Linting and verification commands
+> - Mobile and full-stack commands
+> - Special handling (Windows UTF-8, virtual environments)
 
 ### File Conventions
 

@@ -11,9 +11,15 @@ Review code changes for compilation issues, bugs, security vulnerabilities, and 
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "review code", "code review", "check for issues"
-- "find bugs", "check for security issues", "review changes"
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "review code"
+- "code review"
+- "check for issues"
+- "analyze issues"
+- "check for bugs"
+- "find security issues"
 
 ## Context Determination
 

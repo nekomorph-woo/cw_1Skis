@@ -14,10 +14,16 @@ Explore existing codebase to understand implementation details, call chains, and
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "explore code", "how is this implemented", "understand existing code", "trace call chain"
-- "analyze code structure", "find where X is implemented"
-- "document existing implementation", "understand the codebase"
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "explore code"
+- "how is this implemented"
+- "understand existing code"
+- "trace call chain"
+- "analyze code structure"
+- "find where X is implemented"
+- "document existing implementation"
 
 ## Context Determination
 

@@ -11,9 +11,13 @@ Generate migration plans from code change summary documents. Analyze target proj
 
 ## Trigger Keywords
 
-Common phrases that indicate this sub-skill should be used:
-- "create migration plan", "migrate changes", "generate migration"
-- "adapt to target project", "port this code"
+> **Complete keyword list:** See `references/_core/trigger-keywords.md` for complete keyword list and routing logic.
+
+**Common phrases that trigger this sub-skill:**
+- "create migration plan"
+- "migrate changes"
+- "generate migration"
+- "port changes"
 
 ## Context Determination
 
