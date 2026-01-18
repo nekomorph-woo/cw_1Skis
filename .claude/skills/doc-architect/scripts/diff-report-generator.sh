@@ -12,9 +12,9 @@ BLUE='\033[0;34m'
 NC='\033[0m'
 
 # Default values
-OLD_DIR="${1:-./docs.old}"
-NEW_DIR="${2:-./docs}"
-OUTPUT_FILE="${3:-./docs/diff-report.md}"
+OLD_DIR="${1:-./doc-arch.old}"
+NEW_DIR="${2:-./doc-arch}"
+OUTPUT_FILE="${3:-./doc-arch/diff-report.md}"
 
 echo "════════════════════════════════════════════════════════════════"
 echo "              DOC-ARCHITECT DIFF REPORT GENERATOR"

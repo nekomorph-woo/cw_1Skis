@@ -199,7 +199,7 @@ function analyzeValueDetails(docsDir) {
  * Main function
  */
 function main() {
-  const docsDir = process.argv[2] || './docs';
+  const docsDir = process.argv[2] || './doc-arch';
 
   if (!fs.existsSync(docsDir)) {
     console.log(`${Colors.RED}Error: Directory '${docsDir}' does not exist${Colors.NC}`);

@@ -9,21 +9,21 @@ This document illustrates the expected output structure when using the doc-archi
 Based on the input document title **"AI-Powered Task Manager"**, the skill auto-generates:
 
 ```
-docs/ai-powered-task-manager/
+doc-arch/ai-powered-task-manager/
 ```
 
 **Extraction Logic:**
 1. Read first heading: `# AI-Powered Task Manager`
 2. Extract core concept: "AI-Powered Task Manager"
 3. Convert to kebab-case: `ai-powered-task-manager`
-4. Create directory: `docs/ai-powered-task-manager/`
+4. Create directory: `doc-arch/ai-powered-task-manager/`
 
 ---
 
 ## Directory Structure
 
 ```
-docs/
+doc-arch/
 └── ai-powered-task-manager/              # Auto-generated from input title
     ├── 00_Key_Points_List.md            # Intermediate: Raw extraction
     ├── 01_Structured_Notes.md           # Intermediate: Categorized extraction
@@ -31,7 +31,7 @@ docs/
     ├── 03_System_Architecture.md        # Final: Architecture Design
     ├── 04_API_Documentation.md          # Final: API Documentation
     ├── 99_Value_Details.md              # Value details (long-tail content)
-    └── diff-report.md                   # Optional: Generated if docs.old exists
+    └── diff-report.md                   # Optional: Generated if doc-arch.old exists
 ```
 
 ---
@@ -42,7 +42,7 @@ docs/
 
 **Purpose:** Raw extraction of all key points from brainstorming
 
-**Location:** `docs/ai-powered-task-manager/00_Key_Points_List.md`
+**Location:** `doc-arch/ai-powered-task-manager/00_Key_Points_List.md`
 
 **Content Structure:**
 
@@ -84,7 +84,7 @@ docs/
 
 **Purpose:** Three-dimensional categorization of extracted content
 
-**Location:** `docs/ai-powered-task-manager/01_Structured_Notes.md`
+**Location:** `doc-arch/ai-powered-task-manager/01_Structured_Notes.md`
 
 **Content Structure:**
 
@@ -154,7 +154,7 @@ docs/
 
 **Purpose:** Product Requirements Document
 
-**Location:** `docs/ai-powered-task-manager/02_PRD.md`
+**Location:** `doc-arch/ai-powered-task-manager/02_PRD.md`
 
 **Key Sections Populated:**
 
@@ -172,7 +172,7 @@ docs/
 
 **Purpose:** System Architecture Design
 
-**Location:** `docs/ai-powered-task-manager/03_System_Architecture.md`
+**Location:** `doc-arch/ai-powered-task-manager/03_System_Architecture.md`
 
 **Key Sections Populated:**
 
@@ -189,7 +189,7 @@ docs/
 
 **Purpose:** API Documentation
 
-**Location:** `docs/ai-powered-task-manager/04_API_Documentation.md`
+**Location:** `doc-arch/ai-powered-task-manager/04_API_Documentation.md`
 
 **Key Sections Populated:**
 
@@ -206,7 +206,7 @@ docs/
 
 **Purpose:** Valuable details not fitting into standard templates
 
-**Location:** `docs/ai-powered-task-manager/99_Value_Details.md`
+**Location:** `doc-arch/ai-powered-task-manager/99_Value_Details.md`
 
 **Content Structure:**
 
@@ -322,7 +322,7 @@ docs/
 After manual validation, the skill automatically runs:
 
 ```bash
-bash scripts/validate-intermediate-output.sh docs/ai-powered-task-manager/
+bash scripts/validate-intermediate-output.sh doc-arch/ai-powered-task-manager/
 ```
 
 **Expected Output:**
@@ -369,7 +369,7 @@ The skill automatically runs coverage analysis:
 ```bash
 # Run coverage analysis (Node.js)
 if command -v node >/dev/null 2>&1; then
-    node scripts/check-template-coverage.js docs/ai-powered-task-manager/
+    node scripts/check-template-coverage.js doc-arch/ai-powered-task-manager/
 else
     echo "⚠️  Coverage analysis skipped (Node.js unavailable)"
 fi
@@ -380,7 +380,7 @@ fi
 ```
 DOC-ARCHITECT TEMPLATE COVERAGE ANALYZER
 
-Analyzing directory: docs/ai-powered-task-manager
+Analyzing directory: doc-arch/ai-powered-task-manager
 
 COVERAGE SUMMARY
 Total Items Analyzed:  25
@@ -422,10 +422,10 @@ Total Value Items: 25
 
 After generation, verify:
 
-- [ ] Output directory created: `docs/ai-powered-task-manager/`
+- [ ] Output directory created: `doc-arch/ai-powered-task-manager/`
 - [ ] All pain points from input appear in PRD
 - [ ] All technical components in architecture
-- [ ] Value details contain items not in other docs
+- [ ] Value details contain items not in other documents
 - [ ] No duplication between 99_ and other files
 - [ ] All open questions captured
 - [ ] Source references present in 99_ file
@@ -439,7 +439,7 @@ After generation, verify:
 ### Step-by-Step Process
 
 1. **Input:** Start with raw brainstorming notes (like `input-example.md`)
-2. **Auto-Directory:** Skill generates `docs/<core-concept>/` from title
+2. **Auto-Directory:** Skill generates `doc-arch/<core-concept>/` from title
 3. **Template Selection:** Choose A (General Engineering) for software projects
 4. **Generation:** Skill creates all intermediate and final documents
 5. **Auto-Validation:** Skill runs validation scripts automatically
@@ -453,13 +453,13 @@ If you want to manually re-run validation:
 
 ```bash
 # Validate intermediate output format
-bash scripts/validate-intermediate-output.sh docs/ai-powered-task-manager/
+bash scripts/validate-intermediate-output.sh doc-arch/ai-powered-task-manager/
 
 # Analyze template coverage (Node.js)
-node scripts/check-template-coverage.js docs/ai-powered-task-manager/
+node scripts/check-template-coverage.js doc-arch/ai-powered-task-manager/
 
 # Generate diff report (if previous version exists)
-bash scripts/diff-report-generator.sh docs/ai-powered-task-manager.old/ docs/ai-powered-task-manager/
+bash scripts/diff-report-generator.sh doc-arch/ai-powered-task-manager.old/ doc-arch/ai-powered-task-manager/
 ```
 
 ---
@@ -468,11 +468,11 @@ bash scripts/diff-report-generator.sh docs/ai-powered-task-manager.old/ docs/ai-
 
 | Input Title | Generated Directory |
 |-------------|---------------------|
-| `AI-Powered Task Manager` | `docs/ai-powered-task-manager/` |
-| `E-commerce Payment System Design` | `docs/e-commerce-payment-system/` |
-| `User Authentication Flow Discussion` | `docs/user-authentication-flow/` |
-| `Kura Platform Architecture` | `docs/kura-platform-architecture/` |
-| `Mobile App Onboarding Improvement` | `docs/mobile-app-onboarding/` |
+| `AI-Powered Task Manager` | `doc-arch/ai-powered-task-manager/` |
+| `E-commerce Payment System Design` | `doc-arch/e-commerce-payment-system/` |
+| `User Authentication Flow Discussion` | `doc-arch/user-authentication-flow/` |
+| `Kura Platform Architecture` | `doc-arch/kura-platform-architecture/` |
+| `Mobile App Onboarding Improvement` | `doc-arch/mobile-app-onboarding/` |
 
 **Extraction Rules:**
 - Read first `#` heading in document

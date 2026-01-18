@@ -27,14 +27,14 @@ Execute phases P0-P6 in order. For detailed rules, see `references/` directory.
    - Read input document title or first heading
    - Extract core concept/summary (2-5 words)
    - Convert to kebab-case (lowercase, hyphens for spaces)
-   - Format: `docs/<core-concept>/`
+   - Format: `doc-arch/<core-concept>/`
 
    **Example:**
    - Input: "AI-Powered Task Manager Brainstorming"
-   - Output: `docs/ai-powered-task-manager/`
+   - Output: `doc-arch/ai-powered-task-manager/`
 
 3. **Confirm Output Directory**
-   - Auto-generated: `docs/<core-concept>/`
+   - Auto-generated: `doc-arch/<core-concept>/`
    - Allow user to override with custom path
 
 **Output:** Validated input file path and output directory path
@@ -116,7 +116,7 @@ Iteration 3: Contradiction Check → Resolve internal/external conflicts
 After manual validation iterations, run automated script validation:
 
 ```bash
-bash scripts/validate-intermediate-output.sh docs/<core-concept>/
+bash scripts/validate-intermediate-output.sh doc-arch/<core-concept>/
 ```
 
 **On Success:** Continue to Phase 5-B
@@ -147,7 +147,7 @@ Generate comprehensive report with file creation summary, diff summary, quality 
 ```bash
 # Run coverage analysis (Node.js)
 if command -v node >/dev/null 2>&1; then
-    node scripts/check-template-coverage.js docs/<core-concept>/
+    node scripts/check-template-coverage.js doc-arch/<core-concept>/
 else
     echo "⚠️  Coverage analysis skipped (Node.js unavailable)"
 fi
@@ -159,8 +159,8 @@ Capture output for inclusion in report.
 
 ```bash
 # Check for old directory, generate diff if found
-if [ -d "docs/<core-concept>.old" ]; then
-    bash scripts/diff-report-generator.sh docs/<core-concept>.old/ docs/<core-concept>/ docs/<core-concept>/diff-report.md
+if [ -d "doc-arch/<core-concept>.old" ]; then
+    bash scripts/diff-report-generator.sh doc-arch/<core-concept>.old/ doc-arch/<core-concept>/ doc-arch/<core-concept>/diff-report.md
 fi
 ```
 
@@ -181,7 +181,7 @@ Include:
 ## Output File Structure
 
 ```
-docs/
+doc-arch/
 └── <core-concept>/                    # Auto-generated from input title
     ├── 00_Key_Points_List.md          # Intermediate: Raw extraction
     ├── 01_Structured_Notes.md         # Intermediate: Categorized extraction
@@ -193,7 +193,7 @@ docs/
 
 **Example:**
 ```
-docs/
+doc-arch/
 └── ai-powered-task-manager/
     ├── 00_Key_Points_List.md
     ├── 01_Structured_Notes.md

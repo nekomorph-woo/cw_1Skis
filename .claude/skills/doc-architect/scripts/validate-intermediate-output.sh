@@ -11,7 +11,7 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Default directory
-DOCS_DIR="${1:-./docs}"
+DOCS_DIR="${1:-./doc-arch}"
 
 echo "════════════════════════════════════════════════════════════════"
 echo "         DOC-ARCHITECT INTERMEDIATE OUTPUT VALIDATOR"
@@ -20,7 +20,7 @@ echo ""
 echo "Validating directory: $DOCS_DIR"
 echo ""
 
-# Check if docs directory exists
+# Check if doc-arch directory exists
 if [ ! -d "$DOCS_DIR" ]; then
     echo -e "${RED}✗ Error: Directory '$DOCS_DIR' does not exist${NC}"
     exit 1

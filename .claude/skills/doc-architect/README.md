@@ -55,7 +55,7 @@ The skill will guide you through:
 ## Output Structure
 
 ```
-docs/
+doc-arch/
 └── <core-concept>/                    # Auto-generated from input title
     ├── 00_Key_Points_List.md          # Raw extraction from brainstorm
     ├── 01_Structured_Notes.md         # Categorized extraction (3 dimensions)
@@ -70,10 +70,10 @@ docs/
 
 | Input Title | Generated Directory |
 |-------------|---------------------|
-| `AI-Powered Task Manager` | `docs/ai-powered-task-manager/` |
-| `E-commerce Payment System Design` | `docs/e-commerce-payment-system/` |
-| `User Authentication Flow Discussion` | `docs/user-authentication-flow/` |
-| `Kura Platform Architecture` | `docs/kura-platform-architecture/` |
+| `AI-Powered Task Manager` | `doc-arch/ai-powered-task-manager/` |
+| `E-commerce Payment System Design` | `doc-arch/e-commerce-payment-system/` |
+| `User Authentication Flow Discussion` | `doc-arch/user-authentication-flow/` |
+| `Kura Platform Architecture` | `doc-arch/kura-platform-architecture/` |
 
 **Extraction Rules:**
 - Read first `#` heading in document
@@ -189,7 +189,7 @@ Scripts run automatically during the workflow:
 ### P5-A: Intermediate Output Validation
 
 ```bash
-bash scripts/validate-intermediate-output.sh docs/<core-concept>/
+bash scripts/validate-intermediate-output.sh doc-arch/<core-concept>/
 ```
 
 **What it checks:**
@@ -204,7 +204,7 @@ bash scripts/validate-intermediate-output.sh docs/<core-concept>/
 ```bash
 # Run coverage analysis (Node.js)
 if command -v node >/dev/null 2>&1; then
-    node scripts/check-template-coverage.js docs/<core-concept>/
+    node scripts/check-template-coverage.js doc-arch/<core-concept>/
 else
     echo "⚠️  Coverage analysis skipped (Node.js unavailable)"
 fi
@@ -220,7 +220,7 @@ fi
 ### P6: Diff Report Generation
 
 ```bash
-bash scripts/diff-report-generator.sh docs/<core-concept>.old/ docs/<core-concept>/
+bash scripts/diff-report-generator.sh doc-arch/<core-concept>.old/ doc-arch/<core-concept>/
 ```
 
 **What it provides:**
@@ -238,13 +238,13 @@ You can also run scripts manually after generation:
 
 ```bash
 # Validate intermediate output format
-bash scripts/validate-intermediate-output.sh docs/<core-concept>/
+bash scripts/validate-intermediate-output.sh doc-arch/<core-concept>/
 
 # Analyze template coverage (Node.js)
-node scripts/check-template-coverage.js docs/<core-concept>/
+node scripts/check-template-coverage.js doc-arch/<core-concept>/
 
 # Generate diff report (requires previous version)
-bash scripts/diff-report-generator.sh docs/<core-concept>.old/ docs/<core-concept>/
+bash scripts/diff-report-generator.sh doc-arch/<core-concept>.old/ doc-arch/<core-concept>/
 ```
 
 ---
