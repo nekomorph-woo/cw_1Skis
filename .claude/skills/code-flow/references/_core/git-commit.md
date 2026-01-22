@@ -87,62 +87,43 @@ git commit -m "✨ feat: Add scene management API
 - Improve parameter validation"
 ```
 
-**Windows PowerShell (UTF-8 safe method - 推荐):**
+**Windows Git Bash (Recommended - Cross-platform Compatible):**
 
-```powershell
-# Step 1: Create UTF-8 encoded file
-@"
-✨ feat: Add scene management API
-- Implement scene creation endpoint
-- Add scene query functionality
-- Improve parameter validation
-"@ | Out-File -FilePath commit_msg.txt -Encoding UTF8
+> Use Unicode escape sequences `\uXXXX` to handle non-ASCII characters and avoid encoding issues
 
-# Step 2: Commit using file (ensures UTF-8 encoding)
+```bash
+# Method 1: Using file (recommended for multi-line messages)
+# Unicode escape example: 中文 → \u4e2d\u6587, ✨ → \u2728
+printf '\u2728 feat: Add scene management API\n' > commit_msg.txt
+printf '- Implement scene creation endpoint\n' >> commit_msg.txt
+printf '- Add scene query functionality\n' >> commit_msg.txt
+printf '- Improve parameter validation\n' >> commit_msg.txt
 git commit -F commit_msg.txt
-
-# Step 3: Delete temporary file (CRITICAL cleanup step)
-Remove-Item commit_msg.txt
-
-# OR use one-line with auto-cleanup:
-@"
-✨ feat: Add scene management API
-- Implement scene creation endpoint
-- Add scene query functionality
-"@ | Out-File -FilePath commit_msg.txt -Encoding UTF8; git commit -F commit_msg.txt; Remove-Item commit_msg.txt
+rm commit_msg.txt
 ```
 
-**Windows PowerShell (fallback):**
-
-```powershell
-git commit -m @"
-✨ feat: Add scene management API
-- Implement scene creation endpoint
-- Add scene query functionality
-- Improve parameter validation
-"@
+```bash
+# Method 2: Using pipe (recommended for single-line messages)
+printf '\u2728 feat: Add scene management API\n' | git commit -F -
 ```
 
-**Important:** After commit, **ALWAYS delete the temporary `commit_msg.txt` file** to avoid cluttering the repository.
+**Common Unicode Escape Sequences:**
 
-**Windows CMD (fallback):**
+| Character | Unicode Escape | Description |
+|-----------|----------------|-------------|
+| ✨ | `\u2728` | sparkles |
+| 🐛 | `\u1f41b` | bug |
+| 📝 | `\u1f4dd` | memo |
+| 💄 | `\u1f484` | lipstick |
+| ♻️ | `\u267b\ufe0f` | recycle |
+| ⚡ | `\u26a1` | high voltage |
+| ✅ | `\u2705` | check mark |
+| 🔧 | `\u1f527` | wrench |
+| 👷 | `\u1f477` | construction worker |
 
-```cmd
-# Step 1: Create UTF-8 file with echo
-echo ✨ feat: Add scene management API > commit_msg.txt
-echo.>> commit_msg.txt
-echo - Implement scene creation endpoint >> commit_msg.txt
-echo.>> commit_msg.txt
-echo.>> commit_msg.txt
+> **Note:** Search online for "Unicode escape converter" or "character to Unicode" to find escape sequences for any character
 
-# Step 2: Commit using file
-git commit -F commit_msg.txt
-
-# Step 3: Delete temporary file
-del commit_msg.txt
-```
-
-**Cross-platform Bash (fallback):**
+**跨平台 Bash (标准方式 - 适用于非中文场景):**
 
 ```bash
 # Step 1: Create file
