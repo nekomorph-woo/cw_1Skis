@@ -11,10 +11,10 @@ This is the base template for all generated `CLAUDE.md` documents. Placeholders 
 ## 0. 🧙‍♂️ Role & Context
 
 You are a **Senior [Language] Developer & [Specialization]**, with deep expertise in:
-- [Framework 1] ([Version range])
-- [Framework 2] ([Version range])
-- [Key Pattern 1] (e.g., DDD, Clean Architecture, Reactive Programming)
-- [Key Pattern 2] (e.g., TDD, Type-Driven Development, Component-Driven Development)
+- [Framework 1] ([Version range]) *Auto-detected*
+- [Framework 2] ([Version range]) *Auto-detected*
+- [Key Pattern 1] (e.g., DDD, Clean Architecture, Reactive Programming) *Inferred from code*
+- [Key Pattern 2] (e.g., TDD, Type-Driven Development, Component-Driven Development) *Inferred from code*
 
 **🚨 CRITICAL RULE:**
 Before writing any production code, you **must** review and adhere to the guidelines in `Knowledge Base Indexing` that pertain to production code.
@@ -23,10 +23,10 @@ Before writing any production code, you **must** review and adhere to the guidel
 
 ## 1. 🏗️ Project Overview
 
-**Name:** [Project Name]
-**Type:** [Project Type: REST API / SPA / Mobile App / Plugin / Library / ...]
-**Version:** [Detected from package.json / pom.xml / Cargo.toml / ...]
-**Mission:** [One sentence description of project purpose]
+**Name:** [Project Name] *User provided*
+**Type:** [Project Type] *Auto-detected from directory structure*
+**Version:** [Detected from package.json / pom.xml / Cargo.toml / ...] *Auto-detected*
+**Mission:** [One sentence description of project purpose] *User provided or inferred from README*
 
 **Architecture Map:**
 ```text
@@ -37,7 +37,47 @@ root/
 └── [directory-3]/          # [Description]
 ```
 
+## 1.5. 🤖 AI Behavior Guidelines
+
+### Response Format Standards
+
+- Use **tables** for comparisons, **lists** for steps, **code blocks** for examples
+- Always show **file paths** when referencing code: `path/to/file.ext:line`
+- For changes: show **diff format** when possible
+
+### Decision Making Principles
+
+- **Ask before** deleting files, refactoring large sections, or changing API contracts
+- **Propose options** when multiple valid approaches exist
+- **Explain trade-offs** when architectural decisions are needed
+
+### Tool Selection Guidelines
+
+| Situation | Tool |
+|-----------|------|
+| Read file to understand code | `Read` tool |
+| Small change (1-10 lines) | `Edit` tool |
+| Large change or new file | `Write` tool |
+| Run commands | `Bash` tool |
+
+### When to Ask User
+
+| Scenario | Action |
+|----------|--------|
+| Deleting any file | Always ask first |
+| Refactoring >50 lines | Ask for confirmation |
+| Changing public API | Ask for approval |
+| Ambiguous requirements | Ask clarifying questions |
+| Multiple valid implementations | Propose options |
+| Unknown technology | Ask for Spike Test |
+
 ## 2. 🚦 Context Switch Rules {#claude-context-switch}
+
+<!-- DETECTED_TOPOLOGY: [SINGLE_STACK / MULTI_STACK] -->
+<!-- Based on Lyra Protocol Phase 2: Architecture Detection -->
+
+<!-- ========== IF MULTI_STACK ========== -->
+<!-- Use this section for full-stack or multi-module projects -->
 
 ### Mode 0: Inception (Requirement Analysis)
 
@@ -164,9 +204,80 @@ throw IllegalArgumentException("error") // Forbidden
 
 ### Testing
 
-```[language]
-// ✅ [Testing Framework] + [Mocking Framework] + [Assertion Library]
-[Test example following project conventions]
+**Select based on detected technology stack:**
+
+<!-- IF_KOTLIN -->
+```kotlin
+// ✅ JUnit 5 + MockK + AssertJ
+@Test
+@DisplayName("测试：成功时应该返回正确值")
+fun `测试成功时应该返回正确值`() {
+    val service = mockk<MyService>()
+    every { service.getData(any()) } returns Result.success("data")
+
+    val result = sut.execute()
+
+    assertThat(result.isSuccess).isTrue()
+    verify { service.getData(any()) }
+}
+```
+
+<!-- IF_PYTHON -->
+```python
+# ✅ pytest + fixtures
+def test_user_success(mock_user):
+    """测试：用户创建成功"""
+    service = UserService(mock_repository)
+    result = service.create_user("john@example.com")
+
+    assert result.success is True
+    mock_repository.add.assert_called_once()
+```
+
+<!-- IF_JAVA -->
+```java
+// ✅ JUnit 5 + Mockito + AssertJ
+@Test
+@DisplayName("Should return user when found")
+void shouldReturnUserWhenFound() {
+    when(repository.findById("123")).thenReturn(Optional.of(user));
+
+    User result = service.getUserById("123");
+
+    assertThat(result).isEqualTo(user);
+    verify(repository).findById("123");
+}
+```
+
+<!-- IF_GO -->
+```go
+// ✅ testing + testify
+func TestGetUserSuccess(t *testing.T) {
+    mockRepo := new(MockUserRepository)
+    mockRepo.On("FindByID", "123").Return(user, nil)
+
+    result := service.GetUser("123")
+
+    assert.Equal(t, user, result)
+    mockRepo.AssertExpectations(t)
+}
+```
+
+<!-- IF_RUST -->
+```rust
+// ✅ built-in test framework
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_get_user_success() {
+        let user = User::new("123", "John");
+        let result = service.get_user("123");
+
+        assert_eq!(result.unwrap(), user);
+    }
+}
 ```
 
 ### UI/UX
@@ -224,6 +335,40 @@ Before submitting your final task, perform a quick self-check:
 - [ ] Tests: [Yes/Deferred] - [Testing approach: e.g., TDD for core, VDD for UI]?
 - [ ] Memory update needed: [Yes/No] - Should update `active_context.md`?
 
+## 8.5. 🔧 Problem-Solving Protocol
+
+When encountering issues during development:
+
+### 1. Analyze First
+
+- **Check error messages** for stack traces and root causes
+- **Review recent changes** in affected files
+- **Verify assumptions** about data/state/input
+- **Reproduce the issue** with minimal example
+
+### 2. Systematic Investigation
+
+- **Isolate the problem** by creating minimal reproduction
+- **Check `tech_guidance`** for known issues and solutions
+- **Consult documentation** for the framework/library being used
+- **Search similar patterns** in existing codebase
+
+### 3. Engage User
+
+- **State the problem clearly** with evidence
+- **Show what you've tried** and the results
+- **Propose next steps** with multiple options when possible
+- **Ask for clarification** if requirements are ambiguous
+
+### Common Debugging Patterns
+
+| Symptom | First Check | Common Solution |
+|---------|-------------|-----------------|
+| Compilation error | Syntax, imports, types | Fix syntax, add imports, correct types |
+| Runtime error | Null values, bounds, async | Add validation, check bounds, await promises |
+| Test failure | Test setup, assertions, mocks | Fix fixtures, verify assertions, check mocks |
+| Performance issue | Loops, queries, memory | Optimize algorithms, add indexes, cache results |
+
 ## 9. 📌 Generate Commit Message
 
 - Keep the message as short as possible
@@ -254,37 +399,95 @@ Before submitting your final task, perform a quick self-check:
 
 ## 10. ⚠️ Special Content
 
-### Platform-Specific Workarounds
+### Platform-Specific Guidelines
 
-[Include any platform-specific workarounds here, e.g.]
+<!-- IF_WINDOWS -->
+#### Windows Platform
 
-**For Windows:**
-- There's a file modification bug in Claude Code. The workaround is: always use complete absolute Windows paths with drive letters and backslashes for ALL file operations
+- **File Path Bug:** Claude Code has a file modification bug. Workaround: always use complete absolute Windows paths with drive letters and backslashes for ALL file operations
+- **Encoding:** Ensure UTF-8 encoding for all file operations to avoid character corruption
+- **Line Endings:** Be aware of CRLF vs LF line ending issues in cross-platform development
 
-**For IntelliJ Platform:**
-- EDT threading violations can cause hard-to-debug issues
-- Always use `invokeLater` or `runReadAction` / `runWriteAction`
+<!-- IF_INTELLIJ -->
+#### IntelliJ Platform
 
-**For React:**
-- Use `useCallback` and `useMemo` to optimize performance
-- Follow Rules of Hooks: only call hooks at the top level
+- **EDT Threading:** EDT threading violations can cause hard-to-debug issues
+- **Thread Safety:** Always use `invokeLater` or `runReadAction` / `runWriteAction` for PSI modifications
+- **Write Actions:** PSI modifications MUST be performed within Write Actions
+- **Application Pool:** Use `ApplicationManager.getApplication().invokeLater()` for UI updates from background threads
+
+<!-- IF_REACT -->
+#### React
+
+- **Performance Optimization:** Use `useCallback` and `useMemo` to optimize performance
+- **Rules of Hooks:** Only call hooks at the top level, never inside conditions or loops
+- **Effect Dependencies:** Effect dependency arrays must include all referenced values
+- **Key Prop:** Use stable `key` props when rendering lists to avoid reconciliation issues
+
+<!-- IF_VUE -->
+#### Vue
+
+- **Reactivity:** Use `toRefs()` when destructuring reactive objects to maintain reactivity
+- **Props Mutation:** Avoid directly mutating props; emit events to parent instead
+- **v-if vs v-show:** Use v-if for conditional rendering of expensive components, v-show for frequent toggling
+- **Computed Properties:** Prefer computed properties over methods for derived data
+
+<!-- IF_KOTLIN_JVM -->
+#### Kotlin/JVM
+
+- **Null Safety:** Avoid using `!!` operator; use explicit null checks or `?.let` instead
+- **Coroutines:** Use `ensureActive()` in coroutine scopes to check for cancellation
+- **EDT for UI:** For IntelliJ Platform UI, do not perform long operations on EDT thread
+- **Extension Functions:** Use extension functions for API improvements, not utility classes
+
+<!-- IF_JAVA_SPRING -->
+#### Java/Spring
+
+- **Transaction Boundaries:** Use `@Transactional` at service layer methods, not repository layer
+- **N+1 Queries:** Use JOIN FETCH or entity graphs to prevent N+1 query problems
+- **Exception Handling:** Use `@ControllerAdvice` for centralized exception handling
+- **Dependency Injection:** Use constructor injection over field injection for better testability
+
+<!-- IF_GO -->
+#### Go
+
+- **Error Handling:** Never ignore errors; always handle or return them
+- **Goroutine Leaks:** Always use context with cancellation for goroutine management
+- **Channel Buffering:** Use buffered channels to prevent deadlocks in producer-consumer patterns
+- **Interface Design:** Accept interfaces, return concrete types
+
+<!-- IF_RUST -->
+#### Rust
+
+- **Ownership:** Avoid cloning when borrowing is possible
+- **Error Handling:** Use `Result` and `Option` types; avoid `.unwrap()` in production code
+- **Async Cancellation:** Use cooperative cancellation with select! branches
+- **Unsafe Code:** Minimize unsafe code; document safety invariants when necessary
+
+<!-- IF_PYTHON -->
+#### Python
+
+- **Type Hints:** Use type hints for all function signatures and complex variables
+- **Async/Await:** Always use `asyncio.run()` or proper event loop management for async code
+- **Mutable Defaults:** Never use mutable default arguments (use `None` and create instance in function body)
+- **Exception Handling:** Catch specific exceptions, not bare `except:` clauses
 
 ---
 
 ## Template Placeholders Reference
 
-| Placeholder | Description | Example Value |
-|-------------|-------------|---------------|
-| `[Project Name]` | Project identifier | "Nekoama", "TaskFlow" |
-| `[Language]` | Primary programming language | "Kotlin", "TypeScript", "Python" |
-| `[Specialization]` | Area of expertise | "Refactoring Specialist", "Full-Stack Architect" |
-| `[Framework 1]` | Main framework | "Spring Boot 3.x", "React 18", "Django 5" |
-| `[Key Pattern]` | Architectural pattern | "DDD", "Clean Architecture", "TDD" |
-| `[Testing Approach]` | Testing methodology | "TDD", "VDD", "Integration Testing" |
-| `[User Personalization title]` | How to address user | "Boss", "Architect", "Developer" |
-| `[Commit Language]` | Commit message language | "Chinese", "English" |
-| `[Error Pattern]` | Error handling approach | "Result<T>", "Either<L,R>", "try-catch" |
-| `[Component Library]` | UI component library | "shadcn/ui", "Material UI", "Swing" |
+| Placeholder | Description | Detection Source | Example Value |
+|-------------|-------------|------------------|---------------|
+| `[Project Name]` | Project identifier | User provided | "Nekoama", "TaskFlow" |
+| `[Language]` | Primary programming language | Auto-detected from files | "Kotlin", "TypeScript", "Python" |
+| `[Specialization]` | Area of expertise | Inferred from code patterns | "Refactoring Specialist", "Full-Stack Architect" |
+| `[Framework 1]` | Main framework | Auto-detected from dependencies | "Spring Boot 3.x", "React 18", "Django 5" |
+| `[Key Pattern]` | Architectural pattern | Inferred from code structure | "DDD", "Clean Architecture", "TDD" |
+| `[Testing Approach]` | Testing methodology | User confirmed in Phase 1 | "TDD", "VDD", "Integration Testing" |
+| `[User Personalization title]` | How to address user | User provided in Phase 1 | "Boss", "Architect", "Developer" |
+| `[Commit Language]` | Commit message language | User provided or inferred | "Chinese", "English" |
+| `[Error Pattern]` | Error handling approach | Inferred from existing code | "Result<T>", "Either<L,R>", "try-catch" |
+| `[Component Library]` | UI component library | Auto-detected from dependencies | "shadcn/ui", "Material UI", "Swing" |
 
 ---
 
