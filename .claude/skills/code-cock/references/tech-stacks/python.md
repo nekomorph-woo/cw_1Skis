@@ -29,7 +29,7 @@ fastapi==0.109.0  # Detected: FastAPI project
 
 ## Auto-Inferred Constraint Files {#python-constraints}
 
-Based on Python detection, suggest these `agent_docs/tech_guidance` files:
+Based on Python detection, suggest these `cock-docs/tech-guidance` files:
 
 | File | Description |
 |------|-------------|
@@ -512,16 +512,16 @@ initialize()
 Add to **Tech Constraints** table:
 
 ```markdown
-| `agent_docs/tech_guidance/python-type-hinting-rules.md` | Type annotations, mypy configuration |
-| `agent_docs/tech_guidance/python-asyncio-rules.md` | Async/await, event loop management |
-| `agent_docs/tech_guidance/python-error-handling-rules.md` | Exception hierarchy, error propagation |
-| `agent_docs/tech_guidance/python-testing-rules.md` | Pytest patterns, fixtures, parametrization |
+| `cock-docs/tech-guidance/python-type-hinting-rules.md` | Type annotations, mypy configuration |
+| `cock-docs/tech-guidance/python-asyncio-rules.md` | Async/await, event loop management |
+| `cock-docs/tech-guidance/python-error-handling-rules.md` | Exception hierarchy, error propagation |
+| `cock-docs/tech-guidance/python-testing-rules.md` | Pytest patterns, fixtures, parametrization |
 ```
 
 ### Self-Verification Loop
 
 ```markdown
-- [ ] Python: [OK/Unclear] - Checked `agent_docs/tech_guidance/python-*-rules.md`?
+- [ ] Python: [OK/Unclear] - Checked `cock-docs/tech-guidance/python-*-rules.md`?
 - [ ] Type Hints: [Yes/No] - All functions have type annotations?
 - [ ] Async: [Yes/N/A] - Proper async/await usage?
 - [ ] Tests: [Yes/No] - Tests follow pytest best practices?

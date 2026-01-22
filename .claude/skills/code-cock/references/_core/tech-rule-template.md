@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Template for generating technical rule documents in `agent_docs/tech_guidance/`. These documents define technology-specific constraints and best practices for CLAUDE.md integration.
+Template for generating technical rule documents in `cock-docs/tech-guidance/`. These documents define technology-specific constraints and best practices for CLAUDE.md integration.
 
 ---
 
@@ -78,7 +78,7 @@ Template for generating technical rule documents in `agent_docs/tech_guidance/`.
 Add this entry to the **Tech Constraints** table in `## 3. 📚 Knowledge Base Indexing`:
 
 ```markdown
-| `agent_docs/tech_guidance/[filename].md` | [Brief description] |
+| `cock-docs/tech-guidance/[filename].md` | [Brief description] |
 ```
 
 ### Context Switch Rules
@@ -87,7 +87,7 @@ If this rule applies to a specific Mode, add reference:
 
 ```markdown
 ### Mode [X]: [Mode Name]
-- **Constraint:** Follow `agent_docs/tech_guidance/[filename].md`
+- **Constraint:** Follow `cock-docs/tech-guidance/[filename].md`
 ```
 
 ### Self-Verification Loop
@@ -95,7 +95,7 @@ If this rule applies to a specific Mode, add reference:
 Add to `## 8. 🤔 Self-Verification Loop`:
 
 ```markdown
-- [ ] [Technology Point]: [OK/Unclear] - Checked `agent_docs/tech_guidance/[filename].md`?
+- [ ] [Technology Point]: [OK/Unclear] - Checked `cock-docs/tech-guidance/[filename].md`?
 ```
 
 ## 6. Examples (示例)
@@ -231,7 +231,7 @@ npm run test
 ### Knowledge Base Indexing
 
 ```markdown
-| `agent_docs/tech_guidance/react-hooks-rules.md` | React Hooks usage rules and ESLint configuration |
+| `cock-docs/tech-guidance/react-hooks-rules.md` | React Hooks usage rules and ESLint configuration |
 ```
 ```
 

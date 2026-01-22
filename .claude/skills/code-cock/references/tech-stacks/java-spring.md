@@ -27,7 +27,7 @@ Technology-specific guidance for Java and Spring Boot development workflows. Use
 
 ## Auto-Inferred Constraint Files {#java-spring-constraints}
 
-Based on Java/Spring detection, suggest these `agent_docs/tech_guidance` files:
+Based on Java/Spring detection, suggest these `cock-docs/tech-guidance` files:
 
 | File | Description |
 |------|-------------|
@@ -485,15 +485,15 @@ public class UserWithOrdersDTO {
 Add to **Tech Constraints** table:
 
 ```markdown
-| `agent_docs/tech_guidance/spring-service-layer-rules.md` | Service layer patterns, transaction management |
-| `agent_docs/tech_guidance/spring-rest-controller-rules.md` | REST API design, validation, error handling |
-| `agent_docs/tech_guidance/spring-data-jpa-rules.md` | JPA repository patterns, N+1 prevention |
+| `cock-docs/tech-guidance/spring-service-layer-rules.md` | Service layer patterns, transaction management |
+| `cock-docs/tech-guidance/spring-rest-controller-rules.md` | REST API design, validation, error handling |
+| `cock-docs/tech-guidance/spring-data-jpa-rules.md` | JPA repository patterns, N+1 prevention |
 ```
 
 ### Self-Verification Loop
 
 ```markdown
-- [ ] Spring: [OK/Unclear] - Checked `agent_docs/tech_guidance/spring-*-rules.md`?
+- [ ] Spring: [OK/Unclear] - Checked `cock-docs/tech-guidance/spring-*-rules.md`?
 - [ ] Layer Separation: [Yes/No] - Business logic in service layer?
 - [ ] Transactions: [Yes/No] - Proper @Transactional usage?
 - [ ] N+1 Queries: [Yes/No] - Used JOIN FETCH or entity graphs?

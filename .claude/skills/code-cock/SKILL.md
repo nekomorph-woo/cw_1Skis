@@ -26,7 +26,7 @@ Display this menu to help user select the appropriate operation:
 Available Operations:
 
   [1] generate           - Generate CLAUDE.md for new or existing projects
-  [2] refresh            - Sync CLAUDE.md with current project structure
+  [2] refresh            - Sync CLAUDE.md with current project structure or tech guidance
   [3] analyze            - Analyze and optimize CLAUDE.md quality
   [4] tech-rule          - Generate technical guidance rules
   [5] validate           - Validate CLAUDE.md against project state
@@ -72,7 +72,7 @@ The skill automatically detects project technology stack by scanning:
 
 **Detection results** are used to:
 - Generate appropriate Knowledge Base tables
-- Suggest relevant `tech_guidance` files
+- Suggest relevant `tech-guidance` files
 - Configure Context Switch Rules (Mode A/B/C)
 - Fill technology-specific coding standards
 
@@ -93,7 +93,7 @@ The CLAUDE.md generation follows a three-phase protocol:
 **Phase 3: Template Generation**
 - Use `claude-template.md` as base
 - Dynamically fill sections based on detected stack
-- Generate `agent_docs/tech_guidance` suggestions
+- Generate `cock-docs/tech-guidance` suggestions
 
 See `references/_core/lyra-protocol.md` for detailed protocol.
 
@@ -111,7 +111,7 @@ The skill maintains awareness of existing `CLAUDE.md` state:
 | `generate` | Generate CLAUDE.md for projects | See `trigger-keywords.md` | `--new` / `--legacy` | `CLAUDE.md` | `lyra-protocol.md` |
 | `refresh` | Sync CLAUDE.md with project state | See `trigger-keywords.md` | none | Updated `CLAUDE.md` | (inline logic) |
 | `analyze` | Analyze quality and suggest improvements | See `trigger-keywords.md` | `--fix` | Analysis report | (inline logic) |
-| `tech-rule` | Generate technical rule documents | See `trigger-keywords.md` | `<tech-point>` | `agent_docs/tech_guidance/*.md` | `tech-rule-template.md` |
+| `tech-rule` | Generate technical rule documents | See `trigger-keywords.md` | `<tech-point>` | `cock-docs/tech-guidance/*.md` | `tech-rule-template.md` |
 | `validate` | Validate CLAUDE.md consistency | See `trigger-keywords.md` | none | Validation report | (inline logic) |
 
 ## Operation Details
@@ -129,7 +129,7 @@ Generate a new `CLAUDE.md` for the project.
 2. Detect technology stack
 3. Follow Lyra Protocol (Phase 1 → Phase 2 → Phase 3)
 4. Generate `CLAUDE.md` at project root
-5. Suggest `agent_docs/tech_guidance` files to create
+5. Suggest `cock-docs/tech-guidance` files to create
 
 **Output:** `CLAUDE.md` with Vibe Coding principles, Context Switch Rules, Knowledge Base Indexing, and technology-specific standards.
 
@@ -140,7 +140,7 @@ Synchronize existing `CLAUDE.md` with current project state.
 **Check Dimensions:**
 - Project structure changes (new directories, removed files)
 - Dependency updates (version changes in manifest files)
-- New/removed `agent_docs/tech_guidance` files
+- New/removed `cock-docs/tech-guidance` files
 - Code pattern drift (actual code vs documentation description)
 
 **Process:**
@@ -184,14 +184,14 @@ Generate a technical guidance rule document for a specific technology point.
 5. Include Verification checklist
 6. Auto-trigger `refresh` to update `CLAUDE.md` Knowledge Base
 
-**Output:** `agent_docs/tech_guidance/<tech-point>-rules.md`
+**Output:** `cock-docs/tech-guidance/<tech-point>-rules.md`
 
 ### validate
 
 Validate `CLAUDE.md` consistency against project state.
 
 **Validation Checks:**
-- All `tech_guidance` files referenced exist
+- All `tech-guidance` files referenced exist
 - Project structure matches Architecture Map
 - Mode file extensions actually present in codebase
 - Commit message format matches examples

@@ -28,9 +28,14 @@ The Lyra Protocol consists of three phases:
 
 ## Phase 1: Progressive Information Collection {#lyra-phase1}
 
+**STOP & SCAN:** Do not generate CLAUDE.md immediately. Analyze the input for completeness.
+If critical information is missing or ambiguous, you **MUST** ask clarifying questions.
+
 ### Principle
 
-**Ask one question at a time. Always provide multiple choice options to reduce user friction.**
+**🚨 CRITICAL RULE:**
+- **Ask one question at a time; don't bombard the user with all your questions at once.**
+- When asking, **always provide [multiple solutions or options]** to reduce user friction.
 
 ### Information Collection Order
 
@@ -125,6 +130,12 @@ Is this correct?
 - **MUST** call user **[User Personalization title]** and Output **Current Mode** ...
 ```
 
+**CONTINUE ONLY WHEN:** You have:
+- [ ] Confirmed technology stack with user
+- [ ] Identified project type (new/legacy)
+- [ ] Understood testing strategy
+- [ ] Obtained user personalization title
+
 ---
 
 ## Phase 2: Architecture Detection {#lyra-phase2}
@@ -178,7 +189,7 @@ Each Mode MUST bind to specific file extensions to trigger context switching:
 1. **Load Base Template** - Use `claude-template.md` as foundation
 2. **Fill Detected Information** - Populate with gathered context
 3. **Configure Modes** - Generate Context Switch Rules based on topology
-4. **Generate Knowledge Base** - Create `agent_docs/tech_guidance` suggestions
+4. **Generate Knowledge Base** - Create `cock-docs/tech-guidance` suggestions
 5. **Apply Technology Constraints** - Add tech-specific rules
 
 ### Dynamic Section Generation
@@ -219,7 +230,9 @@ You are a **Senior [Detected Language] Developer & [Specialization]**, with deep
 ```markdown
 ## 2. 🚦 Context Switch Rules
 
-### Mode 0: Inception (Requirement Analysis)
+### Mode 0: Inception (Requirement Analysis) ⚠️ **COPY VERBATIM**
+
+**⚠️ IMPORTANT:** This section should be copied exactly as-is into all generated CLAUDE.md files.
 [Standard Vibe Coding Inception protocol]
 
 ### Mode A: Backend / Core Logic
@@ -242,13 +255,8 @@ You are a **Senior [Detected Language] Developer & [Specialization]**, with deep
 ### Tech Constraints (技术约束)
 | File | Description |
 |------|-------------|
-| `agent_docs/tech_guidance/[tech]-rules.md` | [Description] |
+| `cock-docs/tech-guidance/[tech]-rules.md` | [Description] |
 | [Auto-generated based on detected stack] |
-
-### Templates (模板)
-| File | Usage |
-|------|-------|
-| `agent_docs/_templates/feature_implementation_plan.md` | Mode 0 output template |
 ```
 
 ---
@@ -264,7 +272,7 @@ You are a **Senior [Detected Language] Developer & [Specialization]**, with deep
 
 **Approach:**
 - Enforce strict standards from the start
-- Generate comprehensive `tech_guidance` files
+- Generate comprehensive `tech-guidance` files
 - Set up testing infrastructure
 - Define clear architecture patterns
 
@@ -298,8 +306,8 @@ You are a **Senior [Detected Language] Developer & [Specialization]**, with deep
 
 **CLAUDE.md Emphasis:**
 - Mode L: Legacy Maintenance (The Safety Mode)
-- `agent_docs/tech_guidance/legacy_patterns.md` - Document old patterns
-- `agent_docs/tech_guidance/refactoring_rules.md` - Refactoring guidelines
+- `cock-docs/tech-guidance/legacy_patterns.md` - Document old patterns
+- `cock-docs/tech-guidance/refactoring_rules.md` - Refactoring guidelines
 - Stability over style for existing code
 
 ---
@@ -308,7 +316,7 @@ You are a **Senior [Detected Language] Developer & [Specialization]**, with deep
 
 ### Auto-Inferred Constraint Files
 
-Based on detected technology stack, suggest these `agent_docs/tech_guidance` files:
+Based on detected technology stack, suggest these `cock-docs/tech-guidance` files:
 
 | Technology | Auto-Inferred Constraint Files |
 |------------|------------------------------|
@@ -356,8 +364,10 @@ After Phase 3, verify:
 When implementing this protocol:
 
 1. **Follow the three phases in order** - Don't skip ahead
-2. **Ask one question at a time** - Progressive disclosure reduces cognitive load
-3. **Auto-detect before asking** - Reduce user input, confirm instead
-4. **Provide multiple choices** - Always give options with clear descriptions
-5. **Use the templates** - `claude-template.md` and `tech-rule-template.md`
-6. **Update anchors** - Add new anchors to `anchors.md` when creating new sections
+2. **STOP & SCAN first** - Analyze input completeness before generating
+3. **Ask one question at a time** - Progressive disclosure reduces cognitive load
+4. **Auto-detect before asking** - Reduce user input, confirm instead
+5. **Provide multiple choices** - Always give options with clear descriptions
+6. **Use the templates** - `claude-template.md` and `tech-rule-template.md`
+7. **Copy Mode 0 verbatim** - The Inception section should be copied exactly
+8. **Update anchors** - Add new anchors to `anchors.md` when creating new sections

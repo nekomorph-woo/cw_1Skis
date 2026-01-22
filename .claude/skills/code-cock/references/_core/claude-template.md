@@ -48,6 +48,7 @@ root/
 ### Decision Making Principles
 
 - **Ask before** deleting files, refactoring large sections, or changing API contracts
+- **Spike Test for Unknowns:** When unsure about unfamiliar technologies, propose a **Spike Test** (write a small Demo) to verify feasibility with the user
 - **Propose options** when multiple valid approaches exist
 - **Explain trade-offs** when architectural decisions are needed
 
@@ -82,15 +83,15 @@ root/
 ### Mode 0: Inception (Requirement Analysis)
 
 - **Trigger:** User provides a raw idea, a one-sentence request, or asks for "brainstorming"
-- **Goal:** Transmute a vague thought into a concrete `agent_docs/requirements/*.md` spec
+- **Goal:** Transmute a vague thought into a concrete spec doc
 - **Protocol:**
   1. **Consult:** Ask clarifying questions if Tech Stack or Scope is ambiguous
-  2. **Plan:** Generate a plan strictly following the template: `agent_docs/_templates/feature_implementation_plan.md`
+  2. **Plan:** Generate a plan strictly following user's requirements
   3. **Refine:** Wait for user approval on the plan before moving to implementation
 - **Constraint:**
   - **NO CODE GENERATION:** Do not write implementation code in this mode
   - **Devil's Advocate:** You must aggressively identify **Blind Spots** (Performance bottlenecks, Technology limitations, Edge cases)
-  - **Options First:** Never assume one solution; always propose 3 variants (MVP / Balanced / Advanced)
+  - **Options First:** Never assume one solution; always propose multiple variants
 
 ### Mode A: Backend / Core Logic [for multi-stack or backend-only]
 
@@ -103,7 +104,7 @@ root/
   3. **Implement:** Make test pass with minimal code
   4. **Refactor:** Clean up while tests remain green
 - **Constraint:**
-  - Follow `agent_docs/tech_guidance/[tech]-testing-rules.md`
+  - Follow `cock-docs/tech-guidance/[tech]-testing-rules.md`
   - Use [Error handling pattern: e.g., Result<T>, Either, custom error types]
 
 ### Mode B: Frontend / UI Layer [for multi-stack or frontend-only]
@@ -117,19 +118,20 @@ root/
   3. **Integration:** Connect to backend services
   4. **Test After:** Add integration tests for critical paths
 - **Constraint:**
-  - Follow `agent_docs/tech_guidance/[ui-framework]-rules.md`
+  - Follow `cock-docs/tech-guidance/[ui-framework]-rules.md`
   - Use [Component library: e.g., shadcn/ui, Material UI, Ant Design]
 
 ### Mode L: Legacy Maintenance [for legacy projects only]
 
 - **Trigger:** Modifying files created before [Current Date] or lacking tests
 - **Goal:** Bug fix or Refactor without regression
+- **Boy Scout Rule:** "Leave the campsite cleaner than you found it"
 - **Workflow:**
   1. **Analysis:** Explain the existing logic *before* touching it
   2. **Pinning Test:** Create a test to lock down current behavior (if possible)
   3. **Minimal Change:** Apply the fix
   4. **Verify:** Ensure no side effects
-- **Boy Scout Rule:** When touching a legacy file, add Types/Comments or extract one method if safe
+  5. **Improve:** Add Types/Comments or extract one method if safe
 
 ## 3. 📚 Knowledge Base Indexing {#claude-kb-indexing}
 
@@ -139,20 +141,9 @@ root/
 
 | File | Description |
 |------|-------------|
-| `agent_docs/tech_guidance/[tech]-rules.md` | [Technology-specific constraints] |
-| `agent_docs/tech_guidance/[testing]-rules.md` | [Testing framework rules] |
+| `cock-docs/tech-guidance/[tech]-rules.md` | [Technology-specific constraints] |
+| `cock-docs/tech-guidance/[testing]-rules.md` | [Testing framework rules] |
 | [Auto-generated based on detected stack] | |
-
-### Templates (模板)
-
-| File | Usage |
-|------|-------|
-| `agent_docs/_templates/feature_implementation_plan.md` | Mode 0 output template |
-| `agent_docs/_templates/tech_rule.md` | New technical rule template |
-
-### Memories (记忆)
-
-- `agent_docs/memories/active_context.md` - Current context memory (create if not exists)
 
 ## 4. ⚙️ Vibe Coding Workflow {#claude-workflow}
 
@@ -160,7 +151,7 @@ root/
 
 1. **Expansion:** Propose 3 implementation approaches with distinct User Experience flows
 2. **Critique:** Perform a "Technical Pre-mortem" (Identify risks, API pitfalls, and other issues)
-3. **Convergence:** Upon user selection, generate a standardized requirement document in `agent_docs/requirements/`
+3. **Convergence:** Upon user selection, generate a standardized requirement document in `cock-docs/requirements/`
 
 ### For New Features (The Vibe Loop)
 
@@ -283,7 +274,7 @@ mod tests {
 ### UI/UX
 
 - **Component Library:** [UI Library: e.g., shadcn/ui, Material UI, Swing, SwiftUI]
-- **Theme:** Support [Light/Dark/Both] themes (see `agent_docs/tech_guidance/[ui]-theme-rules.md`)
+- **Theme:** Support [Light/Dark/Both] themes (see `cock-docs/tech-guidance/[ui]-theme-rules.md`)
 - **Internationalization:** Use [i18n approach: e.g., i18next, ResourceBundle, Fluent]
 
 ### Code Modification
@@ -301,18 +292,19 @@ mod tests {
 - **Be Concise:** No fluff
 - **Be Structural:** Use lists/tables
 - **Be Honest:**
-  - If unsure about unfamiliar technologies, ask for a Spike Test to write a Demo to verify feasibility with the user
+  - If unsure about unfamiliar technologies, ask for a **Spike Test** to write a Demo to verify feasibility with the user
   - If unsure about a user's requirements, give questions to force the user to clarify
+- **MUST** call user **[User Personalization title]** at the start of each response
+- **MUST** output **Current Mode** (Single/Mixed) for context tracking
+- **MUST** force **UTF-8 encoding** for ALL string output to prevent garbled text
 - **Code Modification:**
   - **Prefer Edit tool for incremental changes** - Use Edit tool in segments for files with complex string content (triple quotes, `${}` interpolation) instead of Write/Bash heredoc
   - **Read before Edit** - Always Read file first to get current state; external modifications (linter/user) cause sync errors
-- **MUST** call user **[User Personalization title]** and Output **Current Mode (Single Mode or Mixed them)** and Fixed string **Force to output using UTF-8 encoding for ANY string** at the beginning of each response for memory check
 
 ## 7. 📂 File Management
 
 - **DO NOT** create top-level `Util` classes without permission
-- **DO NOT** modify `agent_docs/tech_guidance` unless instructed
-- When generating agent_docs, strictly follow templates in `agent_docs/_templates/`
+- **DO NOT** modify `cock-docs/tech-guidance` unless instructed
 
 ### Key Directory Rules
 
@@ -328,12 +320,11 @@ mod tests {
 
 Before submitting your final task, perform a quick self-check:
 
-- [ ] Tech constraints: [OK/Unclear] - Checked `agent_docs/tech_guidance/*.md`?
+- [ ] Tech constraints: [OK/Unclear] - Checked `cock-docs/tech-guidance/*.md`?
 - [ ] Architecture consistency: [Yes/Needs confirmation] - [Specific architecture rule: e.g., Domain not depending on Infrastructure]?
 - [ ] Error handling: [Yes/Partial] - Using [Error Pattern]?
 - [ ] Threading: [Yes/N/A] - [Threading rule: e.g., EDT rules followed for UI code]?
 - [ ] Tests: [Yes/Deferred] - [Testing approach: e.g., TDD for core, VDD for UI]?
-- [ ] Memory update needed: [Yes/No] - Should update `active_context.md`?
 
 ## 8.5. 🔧 Problem-Solving Protocol
 
@@ -349,7 +340,7 @@ When encountering issues during development:
 ### 2. Systematic Investigation
 
 - **Isolate the problem** by creating minimal reproduction
-- **Check `tech_guidance`** for known issues and solutions
+- **Check `tech-guidance`** for known issues and solutions
 - **Consult documentation** for the framework/library being used
 - **Search similar patterns** in existing codebase
 
@@ -497,7 +488,9 @@ When using this template:
 
 1. **Replace all placeholders** with detected or user-provided values
 2. **Configure Context Switch Rules** based on detected topology (single/multi-stack)
-3. **Populate Knowledge Base** with relevant `tech_guidance` files
+3. **Populate Knowledge Base** with relevant `tech-guidance` files
 4. **Add platform-specific workarounds** in Section 10
 5. **Ensure Self-Verification Loop** includes all relevant checks for the technology stack
-6. **Update anchors** when adding new sections for cross-referencing
+6. **Emphasize Spike Test concept** for unknown technologies
+7. **Make Boy Scout Rule prominent** in Mode L section
+8. **Update anchors** when adding new sections for cross-referencing

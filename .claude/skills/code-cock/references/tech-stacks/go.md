@@ -25,7 +25,7 @@ go 1.21  // Detected: Go 1.21
 
 ## Auto-Inferred Constraint Files {#go-constraints}
 
-Based on Go detection, suggest these `agent_docs/tech_guidance` files:
+Based on Go detection, suggest these `cock-docs/tech-guidance` files:
 
 | File | Description |
 |------|-------------|
@@ -531,16 +531,16 @@ go func() {
 Add to **Tech Constraints** table:
 
 ```markdown
-| `agent_docs/tech_guidance/go-error-handling-rules.md` | Error wrapping, sentinel errors, error types |
-| `agent_docs/tech_guidance/go-goroutine-rules.md` | Goroutine usage, WaitGroup, context cancellation |
-| `agent_docs/tech_guidance/go-interface-rules.md` | Interface design, acceptance interfaces |
-| `agent_docs/tech_guidance/go-testing-rules.md` | Table-driven tests, test helpers |
+| `cock-docs/tech-guidance/go-error-handling-rules.md` | Error wrapping, sentinel errors, error types |
+| `cock-docs/tech-guidance/go-goroutine-rules.md` | Goroutine usage, WaitGroup, context cancellation |
+| `cock-docs/tech-guidance/go-interface-rules.md` | Interface design, acceptance interfaces |
+| `cock-docs/tech-guidance/go-testing-rules.md` | Table-driven tests, test helpers |
 ```
 
 ### Self-Verification Loop
 
 ```markdown
-- [ ] Go: [OK/Unclear] - Checked `agent_docs/tech_guidance/go-*-rules.md`?
+- [ ] Go: [OK/Unclear] - Checked `cock-docs/tech-guidance/go-*-rules.md`?
 - [ ] Error Handling: [Yes/No] - Proper error wrapping and context?
 - [ ] Goroutines: [Yes/N/A] - Context and WaitGroup properly used?
 - [ ] Tests: [Yes/No] - Table-driven tests with proper setup/teardown?

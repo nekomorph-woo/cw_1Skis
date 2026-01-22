@@ -141,7 +141,7 @@ Base template for all generated CLAUDE.md documents. Contains standard sections 
 
 ### tech-rule-template.md
 
-Template for generating technical rule documents in `agent_docs/tech_guidance/`.
+Template for generating technical rule documents in `cock-docs/tech-guidance/`.
 
 **Key Sections:**
 - Axioms (Core Principles)

@@ -25,7 +25,7 @@ edition = "2021"  # Detected: Rust 2021 edition
 
 ## Auto-Inferred Constraint Files {#rust-constraints}
 
-Based on Rust detection, suggest these `agent_docs/tech_guidance` files:
+Based on Rust detection, suggest these `cock-docs/tech-guidance` files:
 
 | File | Description |
 |------|-------------|
@@ -466,16 +466,16 @@ impl User {
 Add to **Tech Constraints** table:
 
 ```markdown
-| `agent_docs/tech_guidance/rust-ownership-rules.md` | Ownership, borrowing, lifetimes |
-| `agent_docs/tech_guidance/rust-error-handling-rules.md` | Result, Option, error propagation |
-| `agent_docs/tech_guidance/rust-async-rules.md` | Async/await, tokio, futures |
-| `agent_docs/tech_guidance/rust-testing-rules.md` | Unit tests, integration tests, property testing |
+| `cock-docs/tech-guidance/rust-ownership-rules.md` | Ownership, borrowing, lifetimes |
+| `cock-docs/tech-guidance/rust-error-handling-rules.md` | Result, Option, error propagation |
+| `cock-docs/tech-guidance/rust-async-rules.md` | Async/await, tokio, futures |
+| `cock-docs/tech-guidance/rust-testing-rules.md` | Unit tests, integration tests, property testing |
 ```
 
 ### Self-Verification Loop
 
 ```markdown
-- [ ] Rust: [OK/Unclear] - Checked `agent_docs/tech_guidance/rust-*-rules.md`?
+- [ ] Rust: [OK/Unclear] - Checked `cock-docs/tech-guidance/rust-*-rules.md`?
 - [ ] Ownership: [Yes/No] - Proper ownership and borrowing?
 - [ ] Error Handling: [Yes/No] - Using Result with context?
 - [ ] Clippy: [Yes/No] - No clippy warnings?

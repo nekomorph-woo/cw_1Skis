@@ -25,7 +25,7 @@ plugins {
 
 ## Auto-Inferred Constraint Files {#kotlin-constraints}
 
-Based on Kotlin/JVM detection, suggest these `agent_docs/tech_guidance` files:
+Based on Kotlin/JVM detection, suggest these `cock-docs/tech-guidance` files:
 
 | File | Description |
 |------|-------------|
@@ -372,15 +372,15 @@ fun String.toUppercaseFormat(): String = this.uppercase()
 Add to **Tech Constraints** table:
 
 ```markdown
-| `agent_docs/tech_guidance/kotlin-coroutines-rules.md` | Kotlin coroutine usage, dispatchers, scope management |
-| `agent_docs/tech_guidance/intellij-edt-rules.md` | EDT threading rules for IntelliJ Platform development |
-| `agent_docs/tech_guidance/kotlin-null-safety-rules.md` | Null safety, platform types, nullable design |
+| `cock-docs/tech-guidance/kotlin-coroutines-rules.md` | Kotlin coroutine usage, dispatchers, scope management |
+| `cock-docs/tech-guidance/intellij-edt-rules.md` | EDT threading rules for IntelliJ Platform development |
+| `cock-docs/tech-guidance/kotlin-null-safety-rules.md` | Null safety, platform types, nullable design |
 ```
 
 ### Self-Verification Loop
 
 ```markdown
-- [ ] Kotlin: [OK/Unclear] - Checked `agent_docs/tech_guidance/kotlin-*-rules.md`?
+- [ ] Kotlin: [OK/Unclear] - Checked `cock-docs/tech-guidance/kotlin-*-rules.md`?
 - [ ] Coroutines: [Yes/No] - Proper dispatcher usage?
 - [ ] Null Safety: [Yes/No] - Avoided platform types and `!!`?
 - [ ] EDT: [Yes/N/A] - All UI updates on EDT thread?

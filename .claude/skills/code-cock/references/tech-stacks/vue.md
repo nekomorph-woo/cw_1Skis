@@ -27,7 +27,7 @@ Technology-specific guidance for Vue development workflows. Use this as a supple
 
 ## Auto-Inferred Constraint Files {#vue-constraints}
 
-Based on Vue detection, suggest these `agent_docs/tech_guidance` files:
+Based on Vue detection, suggest these `cock-docs/tech-guidance` files:
 
 | File | Description |
 |------|-------------|
@@ -476,16 +476,16 @@ const increment = () => {
 Add to **Tech Constraints** table:
 
 ```markdown
-| `agent_docs/tech_guidance/vue-composition-api-rules.md` | Vue Composition API best practices, script setup |
-| `agent_docs/tech_guidance/vue-reactivity-rules.md` | Reactivity system, ref vs reactive |
-| `agent_docs/tech_guidance/vue-state-management-rules.md` | Pinia patterns, state organization |
-| `agent_docs/tech_guidance/vue-testing-rules.md` | Vue Test Utils patterns |
+| `cock-docs/tech-guidance/vue-composition-api-rules.md` | Vue Composition API best practices, script setup |
+| `cock-docs/tech-guidance/vue-reactivity-rules.md` | Reactivity system, ref vs reactive |
+| `cock-docs/tech-guidance/vue-state-management-rules.md` | Pinia patterns, state organization |
+| `cock-docs/tech-guidance/vue-testing-rules.md` | Vue Test Utils patterns |
 ```
 
 ### Self-Verification Loop
 
 ```markdown
-- [ ] Vue: [OK/Unclear] - Checked `agent_docs/tech_guidance/vue-*-rules.md`?
+- [ ] Vue: [OK/Unclear] - Checked `cock-docs/tech-guidance/vue-*-rules.md`?
 - [ ] Composition API: [Yes/No] - Using script setup and composables?
 - [ ] Reactivity: [Yes/No] - Proper use of ref vs reactive?
 - [ ] Testing: [Yes/No] - Tests follow Vue Test Utils best practices?

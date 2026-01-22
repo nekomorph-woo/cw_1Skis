@@ -28,7 +28,7 @@ Technology-specific guidance for React development workflows. Use this as a supp
 
 ## Auto-Inferred Constraint Files {#react-constraints}
 
-Based on React detection, suggest these `agent_docs/tech_guidance` files:
+Based on React detection, suggest these `cock-docs/tech-guidance` files:
 
 | File | Description |
 |------|-------------|
@@ -511,16 +511,16 @@ function Header() {
 Add to **Tech Constraints** table:
 
 ```markdown
-| `agent_docs/tech_guidance/react-hooks-rules.md` | React Hooks usage rules, ESLint configuration |
-| `agent_docs/tech_guidance/react-performance-rules.md` | Performance optimization, memoization patterns |
-| `agent_docs/tech_guidance/react-state-management-rules.md` | State management patterns (Context, Zustand, Redux) |
-| `agent_docs/tech_guidance/react-testing-rules.md` | React Testing Library patterns |
+| `cock-docs/tech-guidance/react-hooks-rules.md` | React Hooks usage rules, ESLint configuration |
+| `cock-docs/tech-guidance/react-performance-rules.md` | Performance optimization, memoization patterns |
+| `cock-docs/tech-guidance/react-state-management-rules.md` | State management patterns (Context, Zustand, Redux) |
+| `cock-docs/tech-guidance/react-testing-rules.md` | React Testing Library patterns |
 ```
 
 ### Self-Verification Loop
 
 ```markdown
-- [ ] React: [OK/Unclear] - Checked `agent_docs/tech_guidance/react-*-rules.md`?
+- [ ] React: [OK/Unclear] - Checked `cock-docs/tech-guidance/react-*-rules.md`?
 - [ ] Hooks: [Yes/No] - Following Rules of Hooks?
 - [ ] Performance: [Yes/No] - Proper memoization where needed?
 - [ ] Testing: [Yes/No] - Tests follow RTL best practices?
