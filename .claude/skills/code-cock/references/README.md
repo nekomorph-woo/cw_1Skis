@@ -11,7 +11,9 @@ references/
 │   ├── trigger-keywords.md    # Operation trigger keyword management
 │   ├── lyra-protocol.md        # CLAUDE.md generation protocol
 │   ├── claude-template.md      # CLAUDE.md base template
-│   └── tech-rule-template.md   # Technical rule document template
+│   ├── tech-rule-template.md   # Technical rule document template
+│   ├── menu-structure.md       # Interactive menu display and routing
+│   └── operations-guide.md     # Detailed operation implementation guide
 ├── tech-stacks/                # Technology-specific guidance
 │   ├── kotlin-jvm.md           # Kotlin/JVM patterns and constraints
 │   ├── react.md                # React patterns and constraints
@@ -149,6 +151,27 @@ Template for generating technical rule documents in `cock-docs/tech-guidance/`.
 - Critical Snippets (Code Patterns)
 - Verification Checklist
 - Integration with CLAUDE.md
+
+### menu-structure.md
+
+Interactive menu structure and routing rules for user input handling.
+
+**Key Sections:**
+- Main Menu Display
+- Input Handling Rules
+- Skip Menu Display conditions
+
+### operations-guide.md
+
+Detailed implementation guide for all code-cock operations.
+
+**Key Sections:**
+- Operation Details (generate, refresh, analyze, tech-rule, validate)
+- Process Steps for each operation
+- Post-Operation Guidance
+- Completion Summary Templates
+- Quick Workflows
+- Decision Guide
 
 ---
 

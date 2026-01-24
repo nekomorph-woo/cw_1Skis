@@ -48,6 +48,14 @@ Define standard anchor references for cross-document linking within the code-coc
 | `trigger-keywords.md` | Analyze Operation Keywords | `trigger-analyze` | `trigger-keywords.md#trigger-analyze` |
 | `trigger-keywords.md` | Tech-Rule Operation Keywords | `trigger-tech-rule` | `trigger-keywords.md#trigger-tech-rule` |
 | `trigger-keywords.md` | Validate Operation Keywords | `trigger-validate` | `trigger-keywords.md#trigger-validate` |
+| `menu-structure.md` | Menu Display Rules | `menu-rules` | `menu-structure.md#menu-rules` |
+| `menu-structure.md` | Input Handling | `menu-input-handling` | `menu-structure.md#menu-input-handling` |
+| `operations-guide.md` | Generate Operation | `ops-generate` | `operations-guide.md#ops-generate` |
+| `operations-guide.md` | Refresh Operation | `ops-refresh` | `operations-guide.md#ops-refresh` |
+| `operations-guide.md` | Analyze Operation | `ops-analyze` | `operations-guide.md#ops-analyze` |
+| `operations-guide.md` | Tech-Rule Operation | `ops-tech-rule` | `operations-guide.md#ops-tech-rule` |
+| `operations-guide.md` | Validate Operation | `ops-validate` | `operations-guide.md#ops-validate` |
+| `operations-guide.md` | Quick Workflows | `ops-workflows` | `operations-guide.md#ops-workflows` |
 
 ### Technology Stack Guides
 
