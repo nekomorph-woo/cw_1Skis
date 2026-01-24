@@ -106,10 +106,10 @@ npm run format
 
 ```jsx
 // components/UserProfile.jsx - Component
-import { useState, useEffect } from 'react';
-import { userService } from '../services/userService';
+import {useState, useEffect} from 'code-flow/references/frontend/react';
+import {userService} from '../services/userService';
 
-export function UserProfile({ userId }) {
+export function UserProfile({userId}) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -142,8 +142,8 @@ export function UserProfile({ userId }) {
 }
 
 // hooks/useAuth.js - Custom hook
-import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '../contexts/AuthContext';
+import {useState, useEffect, useContext} from 'code-flow/references/frontend/react';
+import {AuthContext} from '../contexts/AuthContext';
 
 export function useAuth() {
     const context = useContext(AuthContext);
@@ -154,7 +154,7 @@ export function useAuth() {
 }
 
 export function useAuthUser() {
-    const { user, login, logout } = useAuth();
+    const {user, login, logout} = useAuth();
 
     const isAuthenticated = !!user;
     const hasRole = (role) => user?.roles?.includes(role);
@@ -199,11 +199,11 @@ export const userService = {
 };
 
 // contexts/AuthContext.jsx - Context provider
-import { createContext, useState, useContext } from 'react';
+import {createContext, useState, useContext} from 'code-flow/references/frontend/react';
 
 const AuthContext = createContext(null);
 
-export function AuthProvider({ children }) {
+export function AuthProvider({children}) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -219,7 +219,7 @@ export function AuthProvider({ children }) {
     const login = async (credentials) => {
         const response = await fetch('/api/auth/login', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(credentials)
         });
         const data = await response.json();
@@ -233,16 +233,16 @@ export function AuthProvider({ children }) {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, loading }}>
+        <AuthContext.Provider value={{user, login, logout, loading}}>
             {children}
         </AuthContext.Provider>
     );
 }
 
 // App.jsx - Root component
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from './contexts/AuthContext';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import {AuthProvider} from './contexts/AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -252,9 +252,9 @@ function App() {
             <AuthProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/users" element={<UsersList />} />
-                        <Route path="/users/:id" element={<UserProfile />} />
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="/users" element={<UsersList/>}/>
+                        <Route path="/users/:id" element={<UserProfile/>}/>
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>

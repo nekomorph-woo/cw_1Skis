@@ -107,41 +107,41 @@ npm run test:e2e
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
-import { userService } from '@/services/userService';
+  import {ref, onMounted} from 'code-flow/references/frontend/vue';
+  import {useRoute} from 'vue-router';
+  import {userService} from '@/services/userService';
 
-const route = useRoute();
-const userId = route.params.id;
+  const route = useRoute();
+  const userId = route.params.id;
 
-const user = ref(null);
-const loading = ref(true);
-const error = ref(null);
+  const user = ref(null);
+  const loading = ref(true);
+  const error = ref(null);
 
-onMounted(async () => {
-  try {
-    loading.value = true;
-    user.value = await userService.getUserById(userId);
-  } catch (err) {
-    error.value = err.message;
-  } finally {
-    loading.value = false;
+  onMounted(async () => {
+    try {
+      loading.value = true;
+      user.value = await userService.getUserById(userId);
+    } catch (err) {
+      error.value = err.message;
+    } finally {
+      loading.value = false;
+    }
+  });
+
+  function formatDate(date) {
+    return new Date(date).toLocaleDateString();
   }
-});
-
-function formatDate(date) {
-  return new Date(date).toLocaleDateString();
-}
 </script>
 
 <style scoped>
-.user-profile {
-  padding: 20px;
-}
+  .user-profile {
+    padding: 20px;
+  }
 
-.user-info h1 {
-  color: #333;
-}
+  .user-info h1 {
+    color: #333;
+  }
 </style>
 ```
 
