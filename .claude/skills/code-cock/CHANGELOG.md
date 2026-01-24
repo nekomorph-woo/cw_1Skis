@@ -7,7 +7,8 @@ Version change record for tracking code-cock skill updates in this repository. I
 ## Version History
 
 | Version | Date | Type | Description |
-|---------|------|------|-------------|
+
+| 0.2.0 | 2026-01-24 | Refactored | Enhance menu with parameter guidance, add refresh structure stability constraints, add post-operation guidance for all operations |
 | 0.1.0 | 2025-01-18 | Initial | Initial release with core operations (generate, refresh, analyze, tech-rule, validate) |
 
 ---
